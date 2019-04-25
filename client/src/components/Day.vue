@@ -4,7 +4,7 @@
       <div class="day-number">{{moment(date).date()}}</div>
       <button class="add-event-btn">Add</button>
     </div>
-    <div class="events-scroller">
+    <div @scroll="scrollHandeler" class="events-scroller">
       <div class="event" v-for="(event, index) in todaysEvents" :key="index">{{event.title}}</div>
     </div>
   </div>
@@ -26,7 +26,10 @@ export default {
     };
   },
   methods: {
-    moment
+    moment,
+    scrollHandeler() {
+      console.log("scrolled");
+    }
   },
   computed: {
     isToday() {
@@ -126,7 +129,6 @@ export default {
   display: flex;
   justify-content: flex-start;
   background: rgba(255, 255, 255, 0.5);
-  z-index: 1;
 }
 
 .event {
@@ -143,12 +145,11 @@ export default {
 .events-scroller {
   position: absolute;
   padding: 5px;
-  top: 0px;
+  top: 35px;
   bottom: 0;
   left: 0;
   right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
   overflow-y: scroll;
-  padding-top: 35px;
 }
 
 .day:after {
