@@ -4,6 +4,9 @@
       <div class="day-number">{{moment(date).date()}}</div>
       <button class="add-event-btn">Add</button>
     </div>
+    <div class="events-scroller">
+      <div class="event" v-for="(event, index) in todaysEvents" :key="index">{{event.title}}</div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +15,15 @@ import moment from "moment";
 export default {
   props: {
     date: String
+  },
+  data() {
+    return {
+      events: [
+        {
+          title: "heyoo"
+        }
+      ]
+    };
   },
   methods: {
     moment
@@ -24,6 +36,9 @@ export default {
           .startOf("day")
           .toISOString()
       );
+    },
+    todaysEvents() {
+      return this.$store.getters.todaysEvents(this.date);
     }
   }
 };
@@ -41,9 +56,13 @@ export default {
 }
 
 .day {
-  height: 100%;
+  max-height: 100%;
   padding: 5px;
+  background: #fff;
   border: 1px dotted #f4f4f4;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
 
   .add-event-btn {
     margin-left: 5px;
@@ -51,8 +70,7 @@ export default {
   }
 
   &:hover {
-    background: lighten(#42b98323, 20%);
-    color: #fff;
+    background: #fcfcfc;
     .add-event-btn {
       visibility: visible;
     }
@@ -107,6 +125,46 @@ export default {
 .day-buttons {
   display: flex;
   justify-content: flex-start;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
+.event {
+  background: #f4f4f4;
+  padding: 0 5px;
+  text-align: left;
+  cursor: pointer;
+  margin-top: 2px;
+
+  &:hover {
+    background: #ccc;
+  }
+}
+.events-scroller {
+  position: absolute;
+  padding: 5px;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+  overflow-y: scroll;
+  padding-top: 35px;
+}
+
+.day:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+  width: 100%;
+  height: 15px;
 }
 </style>
 
