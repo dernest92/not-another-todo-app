@@ -60,12 +60,13 @@ export default {
 
 .day {
   max-height: 100%;
-  padding: 5px;
   background: #fff;
   border: 1px dotted #f4f4f4;
   transition: all 0.25s;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   .add-event-btn {
     margin-left: 5px;
@@ -127,8 +128,8 @@ export default {
 
 .day-buttons {
   display: flex;
+  padding: 5px;
   justify-content: flex-start;
-  background: rgba(255, 255, 255, 0.5);
 }
 
 .event {
@@ -143,29 +144,25 @@ export default {
   }
 }
 .events-scroller {
-  position: absolute;
-  padding: 5px;
+  padding: 0 5px;
+  margin-right: 2px;
+  margin-bottom: 2px;
   top: 35px;
   bottom: 0;
   left: 0;
   right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
   overflow-y: scroll;
-}
-
-.day:after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 1)
-  );
-  width: 100%;
-  height: 15px;
+  &::-webkit-scrollbar {
+    width: 4px; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+    cursor: pointer;
+  }
+  /* Optional: show position indicator in red */
+  &::-webkit-scrollbar-thumb {
+    background: #999999;
+    border-radius: 2px;
+    cursor: pointer;
+  }
 }
 </style>
 
