@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .add-event-btn {
-  height: 30px;
+  height: 20px;
   border-radius: 15px;
   padding: 0 10px;
   display: inline-block;
@@ -88,13 +88,14 @@ export default {
   display: inline-flex;
   background: #f4f4f4;
   color: #333;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   font-weight: bold;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .week-selector {
@@ -108,8 +109,8 @@ export default {
 .week-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 
   .day-header {
     background: #ccc;
@@ -117,13 +118,6 @@ export default {
     padding: 5px 0;
     font-weight: bold;
   }
-}
-
-.day-header:first-of-type {
-  border-top-left-radius: 10px;
-}
-.day-header:last-of-type {
-  border-top-right-radius: 10px;
 }
 
 .day-buttons {

@@ -49,8 +49,8 @@ export default {
 <style lang="scss" scoped>
 .week-container {
   display: grid;
-  grid-template-columns: 20px repeat(7, 1fr);
-  height: 125px;
+  grid-template-columns: 10px repeat(7, 1fr);
+  height: 150px;
 }
 
 .week-selector {
@@ -64,22 +64,20 @@ export default {
 .week-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
 
   .day-header {
     background: #ccc;
     color: #333;
-    padding: 5px 0;
+    padding: 2px 0;
     font-weight: bold;
   }
 }
 
 .day-header:first-of-type {
-  border-top-left-radius: 10px;
+  border-top-left-radius: 5px;
 }
 .day-header:last-of-type {
-  border-top-right-radius: 10px;
+  border-top-right-radius: 5px;
 }
 
 .day-buttons {
