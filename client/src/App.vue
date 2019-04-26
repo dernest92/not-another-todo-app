@@ -64,8 +64,8 @@ export default {
     modalOpen() {
       return this.$store.getters.newTaskModal;
     },
-    todaysEvents() {
-      return this.$store.getters.todaysEvents("2019-03-31T05:00:00.000Z");
+    todaysTasks() {
+      return this.$store.getters.todaysTasks("2019-03-31T05:00:00.000Z");
     },
     rangeEnd() {
       return moment(this.firstOfMonth)
@@ -77,7 +77,7 @@ export default {
       return moment(this.firstOfMonth).format("MMMM D");
     }
   },
-  created() {
+  async created() {
     const firstOfMonth = moment()
       .startOf("month")
       .startOf("week")
@@ -85,6 +85,7 @@ export default {
     // this.$store.dispatch("setMonthStart", firstOfMonth);
     this.firstOfMonth = firstOfMonth;
     this.setWeeks();
+    await this.$store.dispatch("fetchTasks");
   }
 };
 </script>

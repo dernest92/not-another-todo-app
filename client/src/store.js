@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Vue from "vue";
 import Vuex from "vuex";
+import TaskService from "./services/TaskService";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -10,44 +11,7 @@ export default new Vuex.Store({
       selectedDate: ""
     },
     monthStart: {},
-    events: [
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "Heyoo"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "another one"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "birthday"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "bird day"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "too many"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "too many"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "too many"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "too many"
-      },
-      {
-        date: "2019-04-07T05:00:00.000Z",
-        title: "wtf"
-      }
-    ]
+    tasks: []
   },
 
   mutations: {
@@ -61,7 +25,10 @@ export default new Vuex.Store({
       state.newTaskModal.selectedDate = date;
     },
     ADD_TASK(state, task) {
-      state.events.push(task);
+      state.tasks.push(task);
+    },
+    SET_TASKS(state, tasks) {
+      state.tasks = tasks;
     }
   },
   actions: {
@@ -77,11 +44,17 @@ export default new Vuex.Store({
     },
     submitNewTask({ commit }, task) {
       commit("ADD_TASK", task);
+    },
+    async fetchTasks({ commit }) {
+      const res = await TaskService.getTasks();
+      const tasks = await res.data;
+      commit("SET_TASKS", tasks);
+      console.log(tasks);
     }
   },
   getters: {
-    todaysEvents: state => date => {
-      return state.events.filter(event => event.date === date);
+    todaysTasks: state => date => {
+      return state.tasks.filter(event => event.date === date);
     },
     newTaskModal: state => {
       return state.newTaskModal.isOpen;

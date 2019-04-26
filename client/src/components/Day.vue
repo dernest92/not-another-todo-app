@@ -5,7 +5,7 @@
       <button @click="startNewTask" class="add-event-btn">Add</button>
     </div>
     <div class="events-scroller">
-      <div class="event" v-for="(event, index) in todaysEvents" :key="index">{{event.title}}</div>
+      <div class="event" v-for="(event, index) in todaysTasks" :key="index">{{event.title}}</div>
     </div>
   </div>
 </template>
@@ -40,8 +40,8 @@ export default {
           .toISOString()
       );
     },
-    todaysEvents() {
-      return this.$store.getters.todaysEvents(this.date);
+    todaysTasks() {
+      return this.$store.getters.todaysTasks(this.date);
     }
   }
 };
