@@ -11,10 +11,18 @@ export default new Vuex.Store({
       selectedDate: ""
     },
     monthStart: {},
-    tasks: []
+    tasks: [],
+    dragTask: "",
+    dragDay: ""
   },
 
   mutations: {
+    SET_DRAG_TASK(state, task) {
+      state.dragTask = task;
+    },
+    SET_DRAG_DAY(state, day) {
+      state.dragDay = day;
+    },
     SET_MONTH_START(state, start) {
       state.monthStart = start;
     },
@@ -29,9 +37,21 @@ export default new Vuex.Store({
     },
     SET_TASKS(state, tasks) {
       state.tasks = tasks;
+    },
+    REMOVE_TASK(state, id) {
+      const tasks = state.tasks.filter(task => task.id !== id);
+      state.tasks = tasks;
     }
   },
   actions: {
+    finishDrag({ commit, state }) {
+      const selectedTask = state.tasks.find(task => task.id === state.dragTask);
+      selectedTask.date = state.dragDay;
+      commit("REMOVE_TASK", selectedTask.id);
+      commit("ADD_TASK", selectedTask);
+      commit("SET_DRAG_TASK", "");
+      commit("SET_DRAG_DAY", "");
+    },
     setMonthStart({ commit }, start) {
       commit("SET_MONTH_START", start);
     },
@@ -42,14 +62,32 @@ export default new Vuex.Store({
     closeModal({ commit }) {
       commit("SET_MODAL", false);
     },
-    submitNewTask({ commit }, task) {
-      commit("ADD_TASK", task);
+    async submitNewTask({ commit }, task) {
+      try {
+        task.id = Math.ceil(Math.random() * 10000);
+        const res = await TaskService.postTask(task);
+        if (res.status === 201) {
+          commit("ADD_TASK", task);
+        } else {
+          throw new Error("Failed to create");
+        }
+      } catch (e) {
+        console.log(new Error("Failed to create"));
+      }
     },
     async fetchTasks({ commit }) {
       const res = await TaskService.getTasks();
       const tasks = await res.data;
       commit("SET_TASKS", tasks);
-      console.log(tasks);
+    },
+    async removeTask({ commit }, id) {
+      commit("REMOVE_TASK", id);
+    },
+    setDragTask({ commit }, task) {
+      commit("SET_DRAG_TASK", task);
+    },
+    setDragDay({ commit }, day) {
+      commit("SET_DRAG_DAY", day);
     }
   },
   getters: {
@@ -61,6 +99,9 @@ export default new Vuex.Store({
     },
     newTaskDate: state => {
       return state.newTaskModal.selectedDate;
+    },
+    dragDay: state => {
+      return state.dragDay;
     }
   }
 });

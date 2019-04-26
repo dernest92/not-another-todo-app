@@ -1,11 +1,25 @@
 <template>
-  <div class="day" :class="{today: isToday}">
+  <div
+    class="day"
+    :class="{today: isToday, selected: (date === dragDay)}"
+    @dragenter.prevent="dragenterHandeler"
+    @dragover.prevent="dragover_handler"
+  >
     <div class="day-buttons">
       <div class="day-number">{{moment(date).date()}}</div>
       <button @click="startNewTask" class="add-event-btn">Add</button>
     </div>
     <div class="events-scroller">
-      <div class="event" v-for="(event, index) in todaysTasks" :key="index">{{event.title}}</div>
+      <div
+        class="event"
+        v-for="(task, index) in todaysTasks"
+        :key="index"
+        draggable="true"
+        @dragstart="dragHandeler(task.id)"
+        @dragend="dragend_handler"
+      >
+        <div class="event-title">{{task.title}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +43,17 @@ export default {
     moment,
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);
+    },
+    dragHandeler(task) {
+      this.$store.dispatch("setDragTask", task);
+    },
+    dragenterHandeler(e) {
+      this.$store.dispatch("setDragDay", this.date);
+    },
+    dragover_handler(e) {},
+    dragend_handler(e) {
+      this.$store.dispatch("finishDrag");
+      console.log("drag end");
     }
   },
   computed: {
@@ -42,6 +67,9 @@ export default {
     },
     todaysTasks() {
       return this.$store.getters.todaysTasks(this.date);
+    },
+    dragDay() {
+      return this.$store.getters.dragDay;
     }
   }
 };
@@ -89,6 +117,9 @@ export default {
   }
   &.today {
     background: rgba(255, 255, 0, 0.123);
+  }
+  &.selected {
+    background: rgb(255, 198, 198);
   }
 }
 
@@ -143,9 +174,26 @@ export default {
   text-align: left;
   cursor: pointer;
   margin-top: 2px;
+  overflow-x: hidden;
+  transition: all 0.5s;
+  .event-title {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    align-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:active {
+    cursor: move;
+  }
 
   &:hover {
     background: #ccc;
+    .event-title {
+      white-space: normal;
+    }
   }
 }
 .events-scroller {
