@@ -1,7 +1,7 @@
 <template>
   <div @click="closeModal" class="modal-container">
     <div class="modal-card">
-      New task for {{dateFromCal}}
+      New task for {{displayDate}}
       <form @submit.prevent="submitNewTask">
         <input type="text" placeholder="title" v-model="newTask.title">
       </form>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
@@ -33,6 +34,9 @@ export default {
   computed: {
     dateFromCal() {
       return this.$store.getters.newTaskDate;
+    },
+    displayDate() {
+      return moment(this.newTask.date).format("MMMM D, YYYY");
     }
   },
   created() {

@@ -57,7 +57,10 @@ export default {
   border: none;
   cursor: pointer;
   transform: translate(-20px, 0);
-  transition: all 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  &:hover {
+    background: darken(#f4f4f4, 10%);
+  }
 }
 
 .day {
@@ -101,6 +104,9 @@ export default {
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
+  &:hover {
+    background: darken(#f4f4f4, 10%);
+  }
 }
 
 .week-selector {
