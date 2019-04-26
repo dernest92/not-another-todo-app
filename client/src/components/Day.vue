@@ -2,9 +2,9 @@
   <div class="day" :class="{today: isToday}">
     <div class="day-buttons">
       <div class="day-number">{{moment(date).date()}}</div>
-      <button class="add-event-btn">Add</button>
+      <button @click="startNewTask" class="add-event-btn">Add</button>
     </div>
-    <div @scroll="scrollHandeler" class="events-scroller">
+    <div class="events-scroller">
       <div class="event" v-for="(event, index) in todaysEvents" :key="index">{{event.title}}</div>
     </div>
   </div>
@@ -27,8 +27,8 @@ export default {
   },
   methods: {
     moment,
-    scrollHandeler() {
-      console.log("scrolled");
+    startNewTask() {
+      this.$store.dispatch("startNewTask", this.date);
     }
   },
   computed: {
@@ -56,6 +56,8 @@ export default {
   background: #f4f4f4;
   border: none;
   cursor: pointer;
+  transform: translate(-20px, 0);
+  transition: all 0.3s;
 }
 
 .day {
@@ -71,12 +73,15 @@ export default {
   .add-event-btn {
     margin-left: 5px;
     visibility: hidden;
+    opacity: 0;
   }
 
   &:hover {
     background: #fcfcfc;
     .add-event-btn {
       visibility: visible;
+      transform: translate(0, 0);
+      opacity: 1;
     }
   }
   &.today {

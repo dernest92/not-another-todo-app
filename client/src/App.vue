@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/calendar-icon.png" class="vue-logo">
+    <NewTaskModal v-if="modalOpen"/>
+    <h1>{{rangeStart}} to {{rangeEnd}}</h1>
     <div>
       <button @click="changeFirstOfMonth({unit: 'months', qty: -1})">last month</button>
       <button @click="changeFirstOfMonth({unit: 'months', qty: 1})">next month</button>
@@ -22,12 +23,14 @@
 
 <script>
 import Week from "./components/Week.vue";
+import NewTaskModal from "./components/NewTaskModal.vue";
 import moment from "moment";
 
 export default {
   name: "app",
   components: {
-    Week
+    Week,
+    NewTaskModal
   },
   data() {
     return {
@@ -36,6 +39,7 @@ export default {
     };
   },
   methods: {
+    moment,
     setWeeks() {
       const weeks = [];
       for (let i = 0; i < 5; i++) {
@@ -54,6 +58,23 @@ export default {
         .toISOString();
 
       this.setWeeks();
+    }
+  },
+  computed: {
+    modalOpen() {
+      return this.$store.getters.newTaskModal;
+    },
+    todaysEvents() {
+      return this.$store.getters.todaysEvents("2019-03-31T05:00:00.000Z");
+    },
+    rangeEnd() {
+      return moment(this.firstOfMonth)
+        .add(4, "weeks")
+        .endOf("week")
+        .format("MMMM D");
+    },
+    rangeStart() {
+      return moment(this.firstOfMonth).format("MMMM D");
     }
   },
   created() {
