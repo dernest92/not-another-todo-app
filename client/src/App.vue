@@ -93,7 +93,9 @@ export default {
 };
 </script>
 
-<style>
+
+
+<style lang="scss">
 * {
   margin: 0;
   padding: 0;
@@ -112,6 +114,10 @@ body {
   margin-top: 20px;
 }
 
+$color-danger: #e74c3c;
+$color-success: #2ecc71;
+$color-primary: #3498db;
+
 .vue-logo {
   height: 50px;
   width: auto;
@@ -123,5 +129,119 @@ body {
   max-width: 1500px;
   padding: 5px;
   margin: 0 auto;
+}
+
+.modal-container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.modal-card {
+  height: fit-content;
+  width: fit-content;
+  background: #fff;
+  padding: 10px;
+}
+
+.btn,
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  padding: 0 25px;
+  color: #555;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: transparent;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s;
+
+  &-flat {
+    box-shadow: none;
+    &:hover {
+      background: #f4f4f4;
+    }
+  }
+
+  &:hover {
+    color: #333;
+    border-color: #888;
+    outline: 0;
+  }
+
+  &.danger {
+    background: $color-danger;
+    color: #fff;
+    border: none;
+
+    &:hover {
+      background: lighten($color-danger, 10%);
+    }
+  }
+  &.primary {
+    background: $color-primary;
+    color: #fff;
+    border: none;
+
+    &:hover {
+      background: lighten($color-primary, 10%);
+    }
+  }
+}
+
+input,
+textarea,
+select {
+  height: 35px;
+  padding: 6px 10px;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+  box-shadow: none;
+
+  &:focus {
+    border: 1px solid #33c3f0;
+    outline: 0;
+  }
+}
+
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+  &:focus {
+    border: 1px solid #33c3f0;
+    outline: 0;
+  }
+}
+
+label,
+legend {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+label > .label-body {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-weight: normal;
 }
 </style>

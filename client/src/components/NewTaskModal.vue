@@ -1,14 +1,14 @@
 <template>
   <div @click="closeModal" class="modal-container">
     <div class="modal-card">
-      New task for {{displayDate}}
+      <h2>{{displayDate}}</h2>
       <form @submit.prevent="submitNewTask">
         <div class="form-group">
           <input type="text" placeholder="title" v-model="newTask.title">
         </div>
         <div class="form-group">
           <select v-model="newTask.priority">
-            <option value disabled selected hidden>priority</option>
+            <option value disabled selected class="placeholder-option">priority</option>
             <option
               v-for="(priority, index) in priorities"
               :key="index"
@@ -16,8 +16,8 @@
             >{{priority}}</option>
           </select>
         </div>
-        <button type="submit">save</button>
-        <button type="reset">cancel</button>
+        <button type="reset" class="btn-flat">cancel</button>
+        <button type="submit" class="btn primary">save</button>
       </form>
     </div>
   </div>
@@ -64,23 +64,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal-container {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-}
-
-.modal-card {
-  height: 500px;
-  width: 500px;
-  background: #fff;
-}
 </style>
 

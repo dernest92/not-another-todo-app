@@ -1,7 +1,7 @@
 <template>
   <div @click="closeModal" class="modal-container">
     <div class="modal-card">
-      <button @click="deleteTask">delete</button>
+      <button @click="deleteTask" class="btn danger">delete</button>
     </div>
   </div>
 </template>
@@ -35,22 +35,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal-container {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-}
-
-.modal-card {
-  height: 500px;
-  width: 500px;
-  background: #fff;
-}
 </style>
