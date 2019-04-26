@@ -11,12 +11,14 @@
     </div>
     <div class="events-scroller">
       <div
-        class="event"
         v-for="(task, index) in todaysTasks"
+        class="event"
+        :class="{'high-priority': task.priority === 'high'}"
         :key="index"
         draggable="true"
         @dragstart="dragHandeler(task.id)"
         @dragend="dragend_handler"
+        @click="startEditTask(task.id)"
       >
         <div class="event-title">{{task.title}}</div>
       </div>
@@ -41,6 +43,9 @@ export default {
   },
   methods: {
     moment,
+    startEditTask(id) {
+      this.$store.dispatch("startEditTask", id);
+    },
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);
     },
@@ -116,7 +121,7 @@ export default {
     }
   }
   &.today {
-    background: rgba(255, 255, 0, 0.123);
+    background: rgb(255, 255, 233);
   }
   &.selected {
     background: rgb(255, 198, 198);
@@ -185,8 +190,11 @@ export default {
     text-overflow: ellipsis;
   }
 
-  &:active {
-    cursor: move;
+  &.high-priority {
+    background: rgb(255, 148, 148);
+    &:hover {
+      background: lighten(rgb(255, 148, 148), 10%);
+    }
   }
 
   &:hover {

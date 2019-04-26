@@ -1,15 +1,13 @@
 <template>
   <div id="app">
-    <NewTaskModal v-if="modalOpen"/>
+    <NewTaskModal v-if="newModalOpen"/>
+    <EditTaskModal v-if="editModalState.isOpen"/>
     <h1>{{rangeStart}} to {{rangeEnd}}</h1>
     <div>
       <button @click="changeFirstOfMonth({unit: 'months', qty: -1})">last month</button>
       <button @click="changeFirstOfMonth({unit: 'months', qty: 1})">next month</button>
     </div>
-    <div>
-      <button @click="changeFirstOfMonth({unit: 'weeks', qty: -1})">last week</button>
-      <button @click="changeFirstOfMonth({unit: 'weeks', qty: 1})">next week</button>
-    </div>
+
     <div class="container">
       <Week
         v-for="(week, index) in weeks"
@@ -24,13 +22,15 @@
 <script>
 import Week from "./components/Week.vue";
 import NewTaskModal from "./components/NewTaskModal.vue";
+import EditTaskModal from "./components/EditTaskModal.vue";
 import moment from "moment";
 
 export default {
   name: "app",
   components: {
     Week,
-    NewTaskModal
+    NewTaskModal,
+    EditTaskModal
   },
   data() {
     return {
@@ -61,8 +61,11 @@ export default {
     }
   },
   computed: {
-    modalOpen() {
+    newModalOpen() {
       return this.$store.getters.newTaskModal;
+    },
+    editModalState() {
+      return this.$store.getters.editTaskModal;
     },
     todaysTasks() {
       return this.$store.getters.todaysTasks("2019-03-31T05:00:00.000Z");
@@ -95,6 +98,10 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background: #aabbcc;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

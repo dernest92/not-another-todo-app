@@ -6,9 +6,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    priorities: ["high", "medium", "low"],
     newTaskModal: {
       isOpen: false,
       selectedDate: ""
+    },
+    editTaskModal: {
+      isOpen: false,
+      selectedTask: ""
     },
     monthStart: {},
     tasks: [],
@@ -17,6 +22,12 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_EDIT_MODAL(state, modalStatus) {
+      state.editTaskModal.isOpen = modalStatus;
+    },
+    SET_EDIT_TASK(state, id) {
+      state.editTaskModal.selectedTask = id;
+    },
     SET_DRAG_TASK(state, task) {
       state.dragTask = task;
     },
@@ -44,6 +55,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    startEditTask({ commit }, id) {
+      commit("SET_EDIT_MODAL", true);
+      commit("SET_EDIT_TASK", id);
+    },
     async finishDrag({ commit, state }) {
       const selectedTask = state.tasks.find(task => task.id === state.dragTask);
       selectedTask.date = state.dragDay;
@@ -83,7 +98,8 @@ export default new Vuex.Store({
       const tasks = await res.data;
       commit("SET_TASKS", tasks);
     },
-    async removeTask({ commit }, id) {
+    async deleteTask({ commit }, id) {
+      await TaskService.deleteTask(id);
       commit("REMOVE_TASK", id);
     },
     setDragTask({ commit }, task) {
@@ -91,6 +107,9 @@ export default new Vuex.Store({
     },
     setDragDay({ commit }, day) {
       commit("SET_DRAG_DAY", day);
+    },
+    editModalClose({ commit }) {
+      commit("SET_EDIT_MODAL", false);
     }
   },
   getters: {
@@ -100,11 +119,17 @@ export default new Vuex.Store({
     newTaskModal: state => {
       return state.newTaskModal.isOpen;
     },
+    editTaskModal: state => {
+      return state.editTaskModal;
+    },
     newTaskDate: state => {
       return state.newTaskModal.selectedDate;
     },
     dragDay: state => {
       return state.dragDay;
+    },
+    priorities: state => {
+      return state.priorities;
     }
   }
 });

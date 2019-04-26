@@ -18,5 +18,8 @@ export default {
   },
   updateTask(task) {
     return apiClient.patch(`/tasks/${task.id}`, task);
+  },
+  deleteTask(id) {
+    return apiClient.delete(`/tasks/${id}`);
   }
 };

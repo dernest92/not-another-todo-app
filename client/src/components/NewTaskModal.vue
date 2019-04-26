@@ -3,7 +3,21 @@
     <div class="modal-card">
       New task for {{displayDate}}
       <form @submit.prevent="submitNewTask">
-        <input type="text" placeholder="title" v-model="newTask.title">
+        <div class="form-group">
+          <input type="text" placeholder="title" v-model="newTask.title">
+        </div>
+        <div class="form-group">
+          <select v-model="newTask.priority">
+            <option value disabled selected hidden>priority</option>
+            <option
+              v-for="(priority, index) in priorities"
+              :key="index"
+              :value="priority"
+            >{{priority}}</option>
+          </select>
+        </div>
+        <button type="submit">save</button>
+        <button type="reset">cancel</button>
       </form>
     </div>
   </div>
@@ -16,6 +30,7 @@ export default {
     return {
       newTask: {
         title: "",
+        priority: "",
         date: ""
       }
     };
@@ -37,6 +52,9 @@ export default {
     },
     displayDate() {
       return moment(this.newTask.date).format("MMMM D, YYYY");
+    },
+    priorities() {
+      return this.$store.getters.priorities;
     }
   },
   created() {
@@ -47,7 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 .modal-container {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
