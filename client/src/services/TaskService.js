@@ -15,5 +15,8 @@ export default {
   },
   postTask(task) {
     return apiClient.post("/tasks", task);
+  },
+  updateTask(task) {
+    return apiClient.patch(`/tasks/${task.id}`, task);
   }
 };

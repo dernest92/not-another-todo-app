@@ -44,13 +44,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    finishDrag({ commit, state }) {
+    async finishDrag({ commit, state }) {
       const selectedTask = state.tasks.find(task => task.id === state.dragTask);
       selectedTask.date = state.dragDay;
-      commit("REMOVE_TASK", selectedTask.id);
-      commit("ADD_TASK", selectedTask);
-      commit("SET_DRAG_TASK", "");
-      commit("SET_DRAG_DAY", "");
+      const res = await TaskService.updateTask(selectedTask);
+      if (res.status === 200) {
+        commit("REMOVE_TASK", selectedTask.id);
+        commit("ADD_TASK", selectedTask);
+        commit("SET_DRAG_TASK", "");
+        commit("SET_DRAG_DAY", "");
+      }
     },
     setMonthStart({ commit }, start) {
       commit("SET_MONTH_START", start);
