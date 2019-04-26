@@ -7,7 +7,7 @@
   >
     <div class="day-buttons">
       <div class="day-number">{{moment(date).date()}}</div>
-      <button @click="startNewTask" class="add-event-btn">Add</button>
+      <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
     <div class="events-scroller">
       <div
@@ -175,12 +175,15 @@ export default {
 
 .event {
   background: #f4f4f4;
-  padding: 0 5px;
+  padding: 2px 5px;
   text-align: left;
   cursor: pointer;
   margin-top: 2px;
+  display: flex;
+  align-items: center;
   overflow-x: hidden;
-  transition: all 0.5s;
+  transition: all 0.3s;
+  border-radius: 4px;
   .event-title {
     display: inline-block;
     width: 100%;

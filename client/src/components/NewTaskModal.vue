@@ -1,13 +1,15 @@
 <template>
-  <div @click="closeModal" class="modal-container">
+  <div @click="closeModal" class="modal-container close-modal">
     <div class="modal-card">
       <h2>{{displayDate}}</h2>
       <form @submit.prevent="submitNewTask">
         <div class="form-group">
-          <input type="text" placeholder="title" v-model="newTask.title">
+          <label for>Title</label>
+          <input class="full" type="text" placeholder="title" v-model="newTask.title" required>
         </div>
         <div class="form-group">
-          <select v-model="newTask.priority">
+          <label for>Priority</label>
+          <select v-model="newTask.priority" class="full">
             <option value disabled selected class="placeholder-option">priority</option>
             <option
               v-for="(priority, index) in priorities"
@@ -16,8 +18,14 @@
             >{{priority}}</option>
           </select>
         </div>
-        <button type="reset" class="btn-flat">cancel</button>
-        <button type="submit" class="btn primary">save</button>
+        <div class="form-group">
+          <label for>Notes</label>
+          <textarea name id cols="50" rows="15" v-model="newTask.notes"></textarea>
+        </div>
+        <div class="btn-group">
+          <button @click="closeModal" type="reset" class="btn btn-flat close-modal">cancel</button>
+          <button type="submit" class="btn primary">save</button>
+        </div>
       </form>
     </div>
   </div>
@@ -31,13 +39,15 @@ export default {
       newTask: {
         title: "",
         priority: "",
-        date: ""
+        date: "",
+        notes: ""
       }
     };
   },
   methods: {
     closeModal(e) {
-      if (e.target.classList.contains("modal-container")) {
+      console.log();
+      if (e.target.classList.contains("close-modal")) {
         this.$store.dispatch("closeModal");
       }
     },
@@ -64,5 +74,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  .btn {
+    margin-left: 10px;
+  }
+}
 </style>
 

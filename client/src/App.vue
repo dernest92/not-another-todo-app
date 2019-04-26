@@ -85,7 +85,6 @@ export default {
       .startOf("month")
       .startOf("week")
       .toISOString();
-    // this.$store.dispatch("setMonthStart", firstOfMonth);
     this.firstOfMonth = firstOfMonth;
     this.setWeeks();
     await this.$store.dispatch("fetchTasks");
@@ -148,7 +147,9 @@ $color-primary: #3498db;
   height: fit-content;
   width: fit-content;
   background: #fff;
-  padding: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
 }
 
 .btn,
@@ -167,6 +168,7 @@ button {
   background-color: transparent;
   border-radius: 4px;
   border: none;
+  outline: none;
   cursor: pointer;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
@@ -174,6 +176,7 @@ button {
 
   &-flat {
     box-shadow: none;
+    padding: 0 15px;
     &:hover {
       background: #f4f4f4;
     }
@@ -214,10 +217,16 @@ select {
   border: 1px solid #d1d1d1;
   border-radius: 4px;
   box-shadow: none;
+  font-size: 16px;
+  margin: 5px 0;
 
   &:focus {
     border: 1px solid #33c3f0;
     outline: 0;
+  }
+
+  &.full {
+    width: 100%;
   }
 }
 
@@ -225,6 +234,8 @@ textarea {
   min-height: 65px;
   padding-top: 6px;
   padding-bottom: 6px;
+  resize: vertical;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 
   &:focus {
     border: 1px solid #33c3f0;
