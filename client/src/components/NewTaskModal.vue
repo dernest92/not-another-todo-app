@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     closeModal(e) {
-      console.log();
       if (e.target.classList.contains("close-modal")) {
         this.$store.dispatch("closeModal");
       }

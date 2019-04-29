@@ -52,13 +52,12 @@ export default {
     dragHandeler(task) {
       this.$store.dispatch("setDragTask", task);
     },
-    dragenterHandeler(e) {
+    dragenterHandeler() {
       this.$store.dispatch("setDragDay", this.date);
     },
-    dragover_handler(e) {},
-    dragend_handler(e) {
+    dragover_handler() {},
+    dragend_handler() {
       this.$store.dispatch("finishDrag");
-      console.log("drag end");
     }
   },
   computed: {

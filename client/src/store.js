@@ -13,7 +13,7 @@ export default new Vuex.Store({
     },
     editTaskModal: {
       isOpen: false,
-      selectedTask: ""
+      selectedTask: {}
     },
     monthStart: {},
     tasks: [],
@@ -25,8 +25,8 @@ export default new Vuex.Store({
     SET_EDIT_MODAL(state, modalStatus) {
       state.editTaskModal.isOpen = modalStatus;
     },
-    SET_EDIT_TASK(state, id) {
-      state.editTaskModal.selectedTask = id;
+    SET_EDIT_TASK(state, task) {
+      state.editTaskModal.selectedTask = task;
     },
     SET_DRAG_TASK(state, task) {
       state.dragTask = task;
@@ -55,9 +55,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    startEditTask({ commit }, id) {
+    startEditTask({ commit, state }, id) {
+      const task = state.tasks.find(tsk => tsk.id === id);
       commit("SET_EDIT_MODAL", true);
-      commit("SET_EDIT_TASK", id);
+      commit("SET_EDIT_TASK", task);
     },
     async finishDrag({ commit, state }) {
       const selectedTask = state.tasks.find(task => task.id === state.dragTask);
@@ -90,6 +91,7 @@ export default new Vuex.Store({
           throw new Error("Failed to create");
         }
       } catch (e) {
+        // eslint-disable-next-line
         console.log(new Error("Failed to create"));
       }
     },
