@@ -122,6 +122,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    unassignedTasks: state => {
+      return state.tasks.filter(task => task.date === false);
+    },
     todaysTasks: state => date => {
       return state.tasks.filter(event => event.date === date);
     },

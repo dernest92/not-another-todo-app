@@ -2,19 +2,44 @@
   <div id="app">
     <NewTaskModal v-if="newModalOpen"/>
     <EditTaskModal v-if="editModalState.isOpen"/>
-    <h1>{{displayDate}}</h1>
-    <div>
-      <button @click="chageMonth(-1)">last month</button>
-      <button @click="chageMonth(1)">next month</button>
-    </div>
 
-    <div class="container">
-      <Week
-        v-for="(week, index) in weeks"
-        :key="week"
-        :startDay="week"
-        :isFirstWeek="index === 0 ? true : false "
-      />
+    <div class="layout">
+      <div class="container">
+        <div class="month">
+          <div class="month-banner">
+            <button class="nav-btn" @click="chageMonth(-1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="date-label">{{displayDate}}</div>
+            <button class="nav-btn" @click="chageMonth(1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+          <Week
+            v-for="(week, index) in weeks"
+            :key="week"
+            :startDay="week"
+            :isFirstWeek="index === 0 ? true : false "
+          />
+        </div>
+      </div>
+      <div>
+        <div
+          class="unassigned"
+          @dragenter.prevent="dragenterHandeler"
+          @dragover.prevent="dragover_handler"
+        >
+          <div
+            v-for="task in unassigned"
+            :key="task.id"
+            class="event"
+            draggable="true"
+            @dragstart="dragHandeler(task.id)"
+            @dragend="dragend_handler"
+            @click="startEditTask(task.id)"
+          >{{task.title}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -57,6 +82,16 @@ export default {
       }
       this.weeks = weeks;
     },
+    dragHandeler(task) {
+      this.$store.dispatch("setDragTask", task);
+    },
+    dragenterHandeler() {
+      this.$store.dispatch("setDragDay", false);
+    },
+    dragover_handler() {},
+    dragend_handler() {
+      this.$store.dispatch("finishDrag");
+    },
 
     chageMonth(qty) {
       if (this.month === 11 && qty > 0) {
@@ -77,6 +112,9 @@ export default {
     }
   },
   computed: {
+    unassigned() {
+      return this.$store.getters.unassignedTasks;
+    },
     newModalOpen() {
       return this.$store.getters.newTaskModal;
     },
@@ -108,6 +146,17 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.unassigned {
+  background: #fff;
+  width: 300px;
+  height: 100%;
 }
 
 body {
@@ -287,5 +336,75 @@ label > .label-body {
 
 .txt-area {
   resize: none;
+}
+
+.date-label {
+  width: 200px;
+  font-size: 25px;
+}
+
+.month-banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+.nav-btn {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0 10px;
+  background: #2c3e50;
+  i {
+    color: #fff;
+  }
+}
+
+.event {
+  background: #f4f4f4;
+  padding: 2px 5px;
+  text-align: left;
+  cursor: pointer;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  transition: all 0.3s;
+  border-radius: 4px;
+  .event-title {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    align-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.high-priority {
+    background: rgb(255, 182, 182);
+    &:hover {
+      background: darken(rgb(255, 182, 182), 5%);
+    }
+  }
+
+  &.completed {
+    text-decoration: line-through;
+    font-style: italic;
+    color: #aaa;
+    background: rgb(199, 224, 199);
+    &:hover {
+      background: darken(rgb(199, 224, 199), 10%);
+      color: darken(#aaa, 10%);
+    }
+  }
+
+  &:hover {
+    background: #ccc;
+    .event-title {
+      white-space: normal;
+    }
+  }
 }
 </style>
