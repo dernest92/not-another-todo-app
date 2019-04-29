@@ -161,6 +161,7 @@ $color-primary: #3498db;
   padding: 20px;
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
+  text-align: left;
 }
 
 .btn,
@@ -282,5 +283,9 @@ label > .label-body {
   .btn {
     margin-left: 10px;
   }
+}
+
+.txt-area {
+  resize: none;
 }
 </style>
