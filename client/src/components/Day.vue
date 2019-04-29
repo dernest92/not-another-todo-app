@@ -13,7 +13,7 @@
       <div
         v-for="(task, index) in todaysTasks"
         class="event"
-        :class="{'high-priority': task.priority === 'high'}"
+        :class="{'high-priority': task.priority === 'high', 'completed': task.completed}"
         :key="index"
         draggable="true"
         @dragstart="dragHandeler(task.id)"
@@ -197,6 +197,12 @@ export default {
     &:hover {
       background: lighten(rgb(255, 148, 148), 10%);
     }
+  }
+
+  &.completed {
+    text-decoration: line-through;
+    font-style: italic;
+    color: #aaa;
   }
 
   &:hover {
