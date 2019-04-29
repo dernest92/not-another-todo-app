@@ -145,6 +145,8 @@ $color-primary: #3498db;
 
 .modal-card {
   height: fit-content;
+  max-width: 900px;
+  min-width: 400px;
   width: fit-content;
   background: #fff;
   padding: 20px;

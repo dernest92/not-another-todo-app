@@ -112,6 +112,13 @@ export default new Vuex.Store({
     },
     editModalClose({ commit }) {
       commit("SET_EDIT_MODAL", false);
+    },
+    async updateTask({ commit, state }, task) {
+      const res = await TaskService.updateTask(task);
+      if (res.status === 200) {
+        commit("REMOVE_TASK", task.id);
+        commit("ADD_TASK", task);
+      }
     }
   },
   getters: {

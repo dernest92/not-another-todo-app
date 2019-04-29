@@ -1,34 +1,35 @@
 <template>
-  <div @click="closeModal" class="modal-container">
+  <div @click="attemptCloseModal" class="modal-container close-modal">
     <div class="modal-card">
-      <div class="editable">
-        <input
-          @blur="activeField.title = false"
-          ref="search"
-          v-if="activeField.title"
-          type="text"
-          v-model="taskEdits.title"
-        >
-        <div v-else>
-          <h2>{{taskEdits.title}}</h2>
-
-          <button @click="editTitle" class="edit-btn">
-            <i class="fas fa-edit fa-lg"></i>
-          </button>
+      <form @submit.prevent="updateTask">
+        <div class="form-group">
+          <label for>Title</label>
+          <input class="full" type="text" placeholder="title" v-model="taskEdits.title" required>
         </div>
-      </div>
-      <div>
-        <h3>Notes</h3>
-        <p>{{selectedTask.notes}}</p>
-      </div>
-      <div>
-        <input class="checkbox" type="checkbox" name="completed" v-model="hasEdits">
-        <span class="label-body">Completed</span>
-      </div>
+        <div class="form-group">
+          <label for>Priority</label>
+          <select v-model="taskEdits.priority" class="full">
+            <option value disabled selected class="placeholder-option">priority</option>
+            <option
+              v-for="(priority, index) in priorities"
+              :key="index"
+              :value="priority"
+            >{{priority}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea @input="resize" class="txt-area" cols="50" v-model="taskEdits.notes"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Completed</label>
+          <input type="checkbox" v-model="taskEdits.completed">
+        </div>
+      </form>
       <div class="btn-group">
-        <button @click="closeModal" type="reset" class="btn btn-flat close-modal">cancel</button>
+        <button @click="closeModal" class="btn btn-flat">cancel</button>
         <button @click="deleteTask" class="btn danger">delete</button>
-        <button type="submit" class="btn primary" :disabled="!hasEdits">save</button>
+        <button @click="updateTask" class="btn primary" :disabled="!hasEdits">save</button>
       </div>
     </div>
   </div>
@@ -38,17 +39,33 @@
 export default {
   data() {
     return {
-      hasEdits: false,
       taskEdits: {},
       activeField: {
-        title: false
+        title: false,
+        notes: false
       }
     };
   },
   methods: {
-    closeModal(e) {
-      if (e.target.classList.contains("modal-container")) {
-        this.$store.dispatch("editModalClose");
+    async updateTask() {
+      if (this.hasEdits) {
+        await this.$store.dispatch("updateTask", this.taskEdits);
+        this.closeModal();
+      } else {
+        this.closeModal();
+      }
+    },
+    resize(e) {
+      const field = e.currentTarget;
+      const offset = field.offsetHeight - field.clientHeight;
+      field.style.height = field.scrollHeight + offset + "px";
+    },
+    closeModal() {
+      this.$store.dispatch("editModalClose");
+    },
+    attemptCloseModal(e) {
+      if (e.target.classList.contains("close-modal")) {
+        this.closeModal();
       }
     },
     async deleteTask() {
@@ -64,15 +81,38 @@ export default {
           this.$refs.search.focus();
         });
       }
+    },
+    editNotes() {
+      if (this.activeField.notes) {
+        this.activeField.notes = false;
+      } else {
+        this.activeField.notes = true;
+        this.$nextTick(() => {
+          this.$refs.notes.focus();
+        });
+      }
     }
   },
   computed: {
     selectedTask() {
       return this.$store.state.editTaskModal.selectedTask;
+    },
+    priorities() {
+      return this.$store.getters.priorities;
+    },
+    hasEdits() {
+      const keys = Object.keys(this.selectedTask);
+      let edits = false;
+      for (let i = 0; i < keys.length; i++) {
+        if (this.selectedTask[keys[i]] != this.taskEdits[keys[i]]) {
+          edits = true;
+        }
+      }
+      return edits;
     }
   },
   created() {
-    this.taskEdits = this.selectedTask;
+    this.taskEdits = { ...this.selectedTask };
   }
 };
 </script>
@@ -87,33 +127,8 @@ export default {
   }
 }
 
-.checkbox {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  height: 15px;
-  width: 15px;
-  margin: auto 0;
-}
-
-.editable {
-  h2 {
-    display: inline;
-  }
-  .edit-btn {
-    box-shadow: none;
-    height: 100%;
-    display: inline-block;
-    width: fit-content;
-    padding: 0;
-    margin-left: 5px;
-    visibility: hidden;
-  }
-
-  &:hover {
-    .edit-btn {
-      visibility: visible;
-    }
-  }
+.txt-area {
+  resize: none;
+  height: "inherit";
 }
 </style>

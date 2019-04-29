@@ -19,7 +19,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for>Notes</label>
+          <label>Notes</label>
           <textarea name id cols="50" rows="15" v-model="newTask.notes"></textarea>
         </div>
         <div class="btn-group">
@@ -40,7 +40,8 @@ export default {
         title: "",
         priority: "",
         date: "",
-        notes: ""
+        notes: "",
+        completed: false
       }
     };
   },
