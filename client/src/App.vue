@@ -102,7 +102,7 @@ export default {
 }
 
 body {
-  background: #aabbcc;
+  background: #e9f1fa;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -125,7 +125,7 @@ $color-primary: #3498db;
 }
 
 .container {
-  max-width: 1500px;
+  max-width: 1150px;
   padding: 5px;
   margin: 0 auto;
 }

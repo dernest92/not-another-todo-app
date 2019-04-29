@@ -123,7 +123,7 @@ export default {
     background: rgb(255, 255, 233);
   }
   &.selected {
-    background: rgb(255, 198, 198);
+    background: rgb(240, 255, 255);
   }
 }
 
@@ -193,9 +193,9 @@ export default {
   }
 
   &.high-priority {
-    background: rgb(255, 148, 148);
+    background: rgb(255, 182, 182);
     &:hover {
-      background: lighten(rgb(255, 148, 148), 10%);
+      background: darken(rgb(255, 182, 182), 5%);
     }
   }
 
@@ -203,6 +203,11 @@ export default {
     text-decoration: line-through;
     font-style: italic;
     color: #aaa;
+    background: rgb(199, 224, 199);
+    &:hover {
+      background: darken(rgb(199, 224, 199), 10%);
+      color: darken(#aaa, 10%);
+    }
   }
 
   &:hover {
