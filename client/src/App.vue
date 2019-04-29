@@ -2,10 +2,10 @@
   <div id="app">
     <NewTaskModal v-if="newModalOpen"/>
     <EditTaskModal v-if="editModalState.isOpen"/>
-    <h1>{{rangeStart}} to {{rangeEnd}}</h1>
+    <h1>{{displayDate}}</h1>
     <div>
-      <button @click="changeFirstOfMonth({unit: 'months', qty: -1})">last month</button>
-      <button @click="changeFirstOfMonth({unit: 'months', qty: 1})">next month</button>
+      <button @click="chageMonth(-1)">last month</button>
+      <button @click="chageMonth(1)">next month</button>
     </div>
 
     <div class="container">
@@ -35,12 +35,19 @@ export default {
   data() {
     return {
       firstOfMonth: {},
-      weeks: []
+      weeks: [],
+      month: "",
+      year: ""
     };
   },
   methods: {
     moment,
     setWeeks() {
+      this.firstOfMonth = moment()
+        .set("month", this.month)
+        .set("year", this.year)
+        .startOf("month")
+        .startOf("week");
       const weeks = [];
       for (let i = 0; i < 5; i++) {
         const week = moment(this.firstOfMonth)
@@ -51,12 +58,21 @@ export default {
       this.weeks = weeks;
     },
 
-    changeFirstOfMonth({ unit, qty }) {
-      this.firstOfMonth = moment(this.firstOfMonth)
-        .add(qty, unit)
-        .startOf("week")
-        .toISOString();
-
+    chageMonth(qty) {
+      if (this.month === 11 && qty > 0) {
+        this.month = 0;
+        this.year++;
+      } else if (this.month === 0 && qty < 0) {
+        this.month = 11;
+        this.year--;
+      } else {
+        this.month += qty;
+        this.setWeeks();
+      }
+    },
+    goToToday() {
+      this.month = moment().month();
+      this.year = moment().year();
       this.setWeeks();
     }
   },
@@ -70,24 +86,17 @@ export default {
     todaysTasks() {
       return this.$store.getters.todaysTasks("2019-03-31T05:00:00.000Z");
     },
-    rangeEnd() {
-      return moment(this.firstOfMonth)
-        .add(4, "weeks")
-        .endOf("week")
-        .format("MMMM D");
-    },
-    rangeStart() {
-      return moment(this.firstOfMonth).format("MMMM D");
+
+    displayDate() {
+      return moment()
+        .set("month", this.month)
+        .set("year", this.year)
+        .format("MMMM, YYYY");
     }
   },
   async created() {
-    const firstOfMonth = moment()
-      .startOf("month")
-      .startOf("week")
-      .toISOString();
-    this.firstOfMonth = firstOfMonth;
-    this.setWeeks();
     await this.$store.dispatch("fetchTasks");
+    this.goToToday();
   }
 };
 </script>
