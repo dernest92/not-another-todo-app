@@ -265,4 +265,13 @@ label > .label-body {
   margin-left: 0.5rem;
   font-weight: normal;
 }
+
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+
+  .btn {
+    margin-left: 10px;
+  }
+}
 </style>
