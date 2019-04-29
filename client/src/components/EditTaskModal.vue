@@ -131,17 +131,4 @@ export default {
 //     }
 //   }
 // }
-.btn-group {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  .btn {
-    margin-left: 10px;
-  }
-}
-
-.txt-area {
-  resize: none;
-  height: "inherit";
-}
 </style>

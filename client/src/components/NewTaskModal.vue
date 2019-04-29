@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
           <label>Notes</label>
-          <textarea name id cols="50" rows="15" v-model="newTask.notes"></textarea>
+          <textarea @input="resize" class="txt-area" id cols="50" rows="15" v-model="newTask.notes"></textarea>
         </div>
         <div class="btn-group">
           <button @click="closeModal" type="reset" class="btn btn-flat close-modal">cancel</button>
@@ -54,6 +54,11 @@ export default {
     submitNewTask() {
       this.$store.dispatch("submitNewTask", this.newTask);
       this.$store.dispatch("closeModal");
+    },
+    resize(e) {
+      const field = e.currentTarget;
+      const offset = field.offsetHeight - field.clientHeight;
+      field.style.height = field.scrollHeight + offset + "px";
     }
   },
   computed: {
@@ -74,13 +79,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-group {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  .btn {
-    margin-left: 10px;
-  }
-}
 </style>
 
