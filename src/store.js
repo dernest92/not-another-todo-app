@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Vue from "vue";
 import Vuex from "vuex";
-import TaskService from "./services/TaskService";
+import moment from "moment";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -63,13 +63,10 @@ export default new Vuex.Store({
     async finishDrag({ commit, state }) {
       const selectedTask = state.tasks.find(task => task.id === state.dragTask);
       selectedTask.date = state.dragDay;
-      const res = await TaskService.updateTask(selectedTask);
-      if (res.status === 200) {
-        commit("REMOVE_TASK", selectedTask.id);
-        commit("ADD_TASK", selectedTask);
-        commit("SET_DRAG_TASK", "");
-        commit("SET_DRAG_DAY", "");
-      }
+      commit("REMOVE_TASK", selectedTask.id);
+      commit("ADD_TASK", selectedTask);
+      commit("SET_DRAG_TASK", "");
+      commit("SET_DRAG_DAY", "");
     },
     setMonthStart({ commit }, start) {
       commit("SET_MONTH_START", start);
@@ -81,27 +78,54 @@ export default new Vuex.Store({
     closeModal({ commit }) {
       commit("SET_MODAL", false);
     },
-    async submitNewTask({ commit }, task) {
-      try {
-        task.id = Math.ceil(Math.random() * 10000);
-        const res = await TaskService.postTask(task);
-        if (res.status === 201) {
-          commit("ADD_TASK", task);
-        } else {
-          throw new Error("Failed to create");
-        }
-      } catch (e) {
-        // eslint-disable-next-line
-        console.log(new Error("Failed to create"));
-      }
+    submitNewTask({ commit }, task) {
+      task.id = Math.ceil(Math.random() * 10000);
+      commit("ADD_TASK", task);
     },
-    async fetchTasks({ commit }) {
-      const res = await TaskService.getTasks();
-      const tasks = await res.data;
+    fetchTasks({ commit }) {
+      const tasks = [
+        {
+          title: "no date, important",
+          priority: "high",
+          date: false,
+          notes: "this task has not been assigned a date",
+          completed: false,
+          id: 1
+        },
+        {
+          title: "no date less important",
+          priority: "medium",
+          date: false,
+          notes: "this task has not been assigned a date",
+          completed: false,
+          id: 4
+        },
+        {
+          title: "task for today",
+          priority: "low",
+          date: moment()
+            .startOf("day")
+            .toISOString(),
+          notes: "this is a task for today",
+          completed: false,
+          id: 2
+        },
+        {
+          title: "task for yesterday",
+          priority: "low",
+          date: moment()
+            .startOf("day")
+            .add(-1, "days")
+            .toISOString(),
+          notes: "this is a task for yesterday. it is complete",
+          completed: true,
+          id: 3
+        }
+      ];
+
       commit("SET_TASKS", tasks);
     },
-    async deleteTask({ commit }, id) {
-      await TaskService.deleteTask(id);
+    deleteTask({ commit }, id) {
       commit("REMOVE_TASK", id);
     },
     setDragTask({ commit }, task) {
@@ -113,12 +137,9 @@ export default new Vuex.Store({
     editModalClose({ commit }) {
       commit("SET_EDIT_MODAL", false);
     },
-    async updateTask({ commit, state }, task) {
-      const res = await TaskService.updateTask(task);
-      if (res.status === 200) {
-        commit("REMOVE_TASK", task.id);
-        commit("ADD_TASK", task);
-      }
+    updateTask({ commit, state }, task) {
+      commit("REMOVE_TASK", task.id);
+      commit("ADD_TASK", task);
     }
   },
   getters: {
