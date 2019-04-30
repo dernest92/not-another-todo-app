@@ -4,8 +4,11 @@
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
-    <div class="title">Unassinged</div>
-    <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
+    <div class="title">
+      Unassinged
+      <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
+    </div>
+
     <div class="events-scroller">
       <Task v-for="task in tasks" :key="task.id" :task="task"/>
     </div>
@@ -41,6 +44,24 @@ export default {
 .title {
   background: #ccc;
   font-weight: bold;
+  height: 26px;
+  padding: 4px;
+}
+
+.add-event-btn {
+  position: absolute;
+  right: 10px;
+  height: 18px;
+  border-radius: 15px;
+  padding: 0 10px;
+  display: inline-block;
+  background: #f4f4f4;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+  &:hover {
+    background: darken(#f4f4f4, 10%);
+  }
 }
 .events-scroller {
   padding: 0 5px;
@@ -66,26 +87,18 @@ export default {
 
 .unassigned {
   background: #fff;
-  border: 1px dotted #f4f4f4;
   transition: all 0.25s;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-
-  .add-event-btn {
-    margin-left: 5px;
-    visibility: hidden;
-    opacity: 0;
-  }
+  margin-top: 60px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  height: calc(100% - 80px);
 
   &:hover {
     background: #fcfcfc;
-    .add-event-btn {
-      visibility: visible;
-      transform: translate(0, 0);
-      opacity: 1;
-    }
   }
 
   &.selected {

@@ -7,16 +7,16 @@
     </div>
     <div class="layout">
       <div class="container">
+        <div class="month-banner">
+          <button class="nav-btn" @click="chageMonth(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="date-label">{{displayDate}}</div>
+          <button class="nav-btn" @click="chageMonth(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
         <div class="month">
-          <div class="month-banner">
-            <button class="nav-btn" @click="chageMonth(-1)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="date-label">{{displayDate}}</div>
-            <button class="nav-btn" @click="chageMonth(1)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
           <Week
             v-for="(week, index) in weeks"
             class="week"
@@ -26,8 +26,8 @@
           />
         </div>
       </div>
-      <div class="container">
-        <Unassigned/>
+      <div class="container unassinged-container">
+        <Unassigned class="no-date-tasks"/>
       </div>
     </div>
   </div>
@@ -126,6 +126,14 @@ export default {
   box-sizing: border-box;
 }
 
+// .no-date-tasks {
+//   height: 100%;
+// }
+
+.container.unassinged-container {
+  height: 100vh;
+}
+
 .small-screen-warning {
   display: none;
 }
@@ -165,7 +173,7 @@ body {
 }
 
 .month {
-  height: 80%;
+  height: calc(100% - 80px);
 }
 $color-danger: #e74c3c;
 $color-success: #2ecc71;
@@ -352,6 +360,7 @@ label > .label-body {
   justify-content: center;
   align-items: center;
   height: 50px;
+  margin-bottom: 10px;
 }
 .nav-btn {
   height: 35px;
