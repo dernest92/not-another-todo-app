@@ -10,25 +10,18 @@
       <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
     <div class="events-scroller">
-      <div
-        v-for="(task, index) in todaysTasks"
-        class="event"
-        :class="{'high-priority': task.priority === 'high', 'completed': task.completed}"
-        :key="index"
-        draggable="true"
-        @dragstart="dragHandeler(task.id)"
-        @dragend="dragend_handler"
-        @click="startEditTask(task.id)"
-      >
-        <div class="event-title">{{task.title}}</div>
-      </div>
+      <Task v-for="task in todaysTasks" :key="task.id" :task="task"/>
     </div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
+import Task from "./Task.vue";
 export default {
+  components: {
+    Task
+  },
   props: {
     date: String
   },
