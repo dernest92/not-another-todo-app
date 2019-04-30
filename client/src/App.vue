@@ -17,6 +17,7 @@
           </div>
           <Week
             v-for="(week, index) in weeks"
+            class="week"
             :key="week"
             :startDay="week"
             :isFirstWeek="index === 0 ? true : false "
@@ -125,7 +126,9 @@ export default {
 
 .layout {
   display: grid;
-  grid-template-columns: auto auto;
+  position: relative;
+  grid-template-columns: 80% 20%;
+  height: 100vh;
 }
 
 body {
@@ -137,9 +140,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
 }
 
+.month {
+  height: 80%;
+}
 $color-danger: #e74c3c;
 $color-success: #2ecc71;
 $color-primary: #3498db;
@@ -152,9 +157,11 @@ $color-primary: #3498db;
 }
 
 .container {
+  width: 80%;
   max-width: 1150px;
   padding: 5px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .modal-container {
@@ -180,6 +187,11 @@ $color-primary: #3498db;
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   text-align: left;
+}
+
+.week {
+  height: 20%;
+  width: 100%;
 }
 
 .btn,

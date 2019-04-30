@@ -50,7 +50,8 @@ export default {
 .week-container {
   display: grid;
   grid-template-columns: 10px repeat(7, 1fr);
-  height: 150px;
+  height: 100%;
+  width: 100%;
 }
 
 .week-selector {
