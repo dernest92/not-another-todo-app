@@ -93,8 +93,6 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 60px;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
   height: calc(100% - 80px);
 
   &:hover {

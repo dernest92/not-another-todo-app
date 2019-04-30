@@ -126,9 +126,11 @@ export default {
   box-sizing: border-box;
 }
 
-// .no-date-tasks {
-//   height: 100%;
-// }
+.no-date-tasks {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
+  border-radius: 5px;
+  overflow: hidden;
+}
 
 .container.unassinged-container {
   height: 100vh;
@@ -157,12 +159,12 @@ export default {
 .layout {
   display: grid;
   position: relative;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: auto 400px;
   height: 100vh;
 }
 
 body {
-  background: #e9f1fa;
+  background: #f4f4f4;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -174,6 +176,9 @@ body {
 
 .month {
   height: calc(100% - 80px);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
+  border-radius: 5px;
+  overflow: hidden;
 }
 $color-danger: #e74c3c;
 $color-success: #2ecc71;

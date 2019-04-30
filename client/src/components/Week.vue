@@ -8,7 +8,6 @@
       >{{ moment(day).format("ddd")}}</div>
     </div>
     <div class="week-container">
-      <div class="week-selector"></div>
       <Day class="day" v-for="(date, index) in days" :key="index" :date="date"/>
     </div>
   </div>
@@ -49,17 +48,9 @@ export default {
 <style lang="scss" scoped>
 .week-container {
   display: grid;
-  grid-template-columns: 10px repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   height: 100%;
   width: 100%;
-}
-
-.week-selector {
-  background: #f4f4f4;
-  cursor: pointer;
-  &:hover {
-    background: darken(#f4f4f4, 10%);
-  }
 }
 
 .week-header {
@@ -72,13 +63,6 @@ export default {
     padding: 2px 0;
     font-weight: bold;
   }
-}
-
-.day-header:first-of-type {
-  border-top-left-radius: 5px;
-}
-.day-header:last-of-type {
-  border-top-right-radius: 5px;
 }
 
 .day-buttons {
