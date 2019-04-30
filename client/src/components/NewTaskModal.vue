@@ -66,7 +66,11 @@ export default {
       return this.$store.getters.newTaskDate;
     },
     displayDate() {
-      return moment(this.newTask.date).format("MMMM D, YYYY");
+      if (this.newTask.date) {
+        return moment(this.newTask.date).format("MMMM D, YYYY");
+      } else {
+        return "No Date";
+      }
     },
     priorities() {
       return this.$store.getters.priorities;
