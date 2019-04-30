@@ -4,6 +4,8 @@
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
+    <div class="title">Unassinged</div>
+    <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     <div class="events-scroller">
       <Task v-for="task in tasks" :key="task.id" :task="task"/>
     </div>
@@ -27,12 +29,19 @@ export default {
     dragenterHandeler() {
       this.$store.dispatch("setDragDay", false);
     },
-    dragover_handler() {}
+    dragover_handler() {},
+    startNewTask() {
+      this.$store.dispatch("startNewTask", false);
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.title {
+  background: #ccc;
+  font-weight: bold;
+}
 .events-scroller {
   padding: 0 5px;
   margin-right: 2px;
