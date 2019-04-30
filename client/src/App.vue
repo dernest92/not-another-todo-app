@@ -24,13 +24,7 @@
         </div>
       </div>
       <div>
-        <div
-          class="unassigned"
-          @dragenter.prevent="dragenterHandeler"
-          @dragover.prevent="dragover_handler"
-        >
-          <Task v-for="task in unassigned" :key="task.id" :task="task"/>
-        </div>
+        <Unassigned/>
       </div>
     </div>
   </div>
@@ -41,7 +35,7 @@ import Week from "./components/Week.vue";
 import NewTaskModal from "./components/NewTaskModal.vue";
 import EditTaskModal from "./components/EditTaskModal.vue";
 import moment from "moment";
-import Task from "./components/Task.vue";
+import Unassigned from "./components/Unassigned.vue";
 
 export default {
   name: "app",
@@ -49,7 +43,7 @@ export default {
     Week,
     NewTaskModal,
     EditTaskModal,
-    Task
+    Unassigned
   },
   data() {
     return {
@@ -76,16 +70,6 @@ export default {
       }
       this.weeks = weeks;
     },
-    dragHandeler(task) {
-      this.$store.dispatch("setDragTask", task);
-    },
-    dragenterHandeler() {
-      this.$store.dispatch("setDragDay", false);
-    },
-    dragover_handler() {},
-    dragend_handler() {
-      this.$store.dispatch("finishDrag");
-    },
 
     chageMonth(qty) {
       if (this.month === 11 && qty > 0) {
@@ -106,9 +90,6 @@ export default {
     }
   },
   computed: {
-    unassigned() {
-      return this.$store.getters.unassignedTasks;
-    },
     newModalOpen() {
       return this.$store.getters.newTaskModal;
     },
@@ -145,12 +126,6 @@ export default {
 .layout {
   display: grid;
   grid-template-columns: auto auto;
-}
-
-.unassigned {
-  background: #fff;
-  width: 300px;
-  height: 100%;
 }
 
 body {

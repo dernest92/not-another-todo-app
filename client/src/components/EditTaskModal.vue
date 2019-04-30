@@ -116,19 +116,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-// .form-group {
-//   input {
-//     border: none;
-//     cursor: pointer;
-//     font-weight: bold;
-//     background: #f4f4f4;
-
-//     &:focus {
-//       border: 1px solid #33c3f0;
-//       cursor: text;
-//     }
-//   }
-// }
-</style>
