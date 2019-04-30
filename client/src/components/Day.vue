@@ -26,32 +26,18 @@ export default {
     date: String
   },
   data() {
-    return {
-      events: [
-        {
-          title: "heyoo"
-        }
-      ]
-    };
+    return {};
   },
   methods: {
     moment,
-    startEditTask(id) {
-      this.$store.dispatch("startEditTask", id);
-    },
+
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);
-    },
-    dragHandeler(task) {
-      this.$store.dispatch("setDragTask", task);
     },
     dragenterHandeler() {
       this.$store.dispatch("setDragDay", this.date);
     },
-    dragover_handler() {},
-    dragend_handler() {
-      this.$store.dispatch("finishDrag");
-    }
+    dragover_handler() {}
   },
   computed: {
     isToday() {

@@ -29,15 +29,7 @@
           @dragenter.prevent="dragenterHandeler"
           @dragover.prevent="dragover_handler"
         >
-          <div
-            v-for="task in unassigned"
-            :key="task.id"
-            class="event"
-            draggable="true"
-            @dragstart="dragHandeler(task.id)"
-            @dragend="dragend_handler"
-            @click="startEditTask(task.id)"
-          >{{task.title}}</div>
+          <Task v-for="task in unassigned" :key="task.id" :task="task"/>
         </div>
       </div>
     </div>
@@ -49,13 +41,15 @@ import Week from "./components/Week.vue";
 import NewTaskModal from "./components/NewTaskModal.vue";
 import EditTaskModal from "./components/EditTaskModal.vue";
 import moment from "moment";
+import Task from "./components/Task.vue";
 
 export default {
   name: "app",
   components: {
     Week,
     NewTaskModal,
-    EditTaskModal
+    EditTaskModal,
+    Task
   },
   data() {
     return {
