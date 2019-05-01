@@ -1,10 +1,12 @@
 <template>
   <div id="app">
+    <LoginModal v-if="loginModalOpen"/>
     <NewTaskModal v-if="newModalOpen"/>
     <EditTaskModal v-if="editModalState.isOpen"/>
     <div class="small-screen-warning">
       <div>Im sorry, but this app is not optimized for small screens</div>
     </div>
+    <UserBlock class="user-block"/>
     <div class="layout">
       <div class="container">
         <div class="month-banner">
@@ -37,8 +39,10 @@
 import Week from "./components/Week.vue";
 import NewTaskModal from "./components/NewTaskModal.vue";
 import EditTaskModal from "./components/EditTaskModal.vue";
+import LoginModal from "./components/LoginModal.vue";
 import moment from "moment";
 import Unassigned from "./components/Unassigned.vue";
+import UserBlock from "./components/UserBlock.vue";
 
 export default {
   name: "app",
@@ -46,7 +50,9 @@ export default {
     Week,
     NewTaskModal,
     EditTaskModal,
-    Unassigned
+    Unassigned,
+    UserBlock,
+    LoginModal
   },
   data() {
     return {
@@ -93,6 +99,9 @@ export default {
     }
   },
   computed: {
+    loginModalOpen() {
+      return this.$store.state.loginModal.isOpen;
+    },
     newModalOpen() {
       return this.$store.getters.newTaskModal;
     },
@@ -124,6 +133,12 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.user-block {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
 }
 
 .no-date-tasks {

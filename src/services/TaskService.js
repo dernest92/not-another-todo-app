@@ -20,12 +20,14 @@ export default {
   },
   updateTask(task) {
     console.log(`/tasks/${task._id}`);
-    // const allowedUpdates = ["completed", "title", "priority", "notes"]
     const { completed, title, priority, notes, date } = task;
     const updates = { completed, title, priority, notes, date };
     return apiClient.patch(`/tasks/${task._id}`, updates);
   },
   deleteTask(id) {
     return apiClient.delete(`/tasks/${id}`);
+  },
+  login(user) {
+    return apiClient.post("/users/login", user);
   }
 };

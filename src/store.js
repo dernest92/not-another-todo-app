@@ -6,7 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: {},
+    token: "",
     priorities: ["high", "medium", "low"],
+    loginModal: {
+      isOpen: true
+    },
     newTaskModal: {
       isOpen: false,
       selectedDate: ""
@@ -52,9 +57,33 @@ export default new Vuex.Store({
     REMOVE_TASK(state, id) {
       const tasks = state.tasks.filter(task => task._id !== id);
       state.tasks = tasks;
+    },
+    SET_LOGIN_MODAL(state, open) {
+      state.loginModal.isOpen = open;
+    },
+    SET_USER(state, user) {
+      state.user = user;
+    },
+    SET_TOKEN(state, token) {
+      state.token = token;
     }
   },
   actions: {
+    async submitLogin({ commit }, credentials) {
+      const res = await TaskService.login(credentials);
+      const { user, token } = await res.data;
+      console.log(res);
+      if (res.status === 200) {
+        commit("SET_USER", user);
+        commit("SET_TOKEN", token);
+        commit("SET_LOGIN_MODAL", false);
+      } else {
+        console.log("failed to log in");
+      }
+    },
+    setLoginOpen({ commit }, open) {
+      commit("SET_LOGIN_MODAL", open);
+    },
     startEditTask({ commit, state }, id) {
       const task = state.tasks.find(tsk => tsk._id === id);
       commit("SET_EDIT_MODAL", true);
