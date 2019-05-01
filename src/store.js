@@ -158,8 +158,10 @@ export default new Vuex.Store({
     async submitNewTask({ commit }, task) {
       try {
         const res = await TaskService.postTask(task);
+
         if (res.status === 201) {
-          commit("ADD_TASK", task);
+          const newTask = await res.data;
+          commit("ADD_TASK", { _id: newTask._id, ...task });
         } else {
           throw new Error("Failed to create");
         }
