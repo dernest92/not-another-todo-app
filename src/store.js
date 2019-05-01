@@ -50,25 +50,29 @@ export default new Vuex.Store({
       state.tasks = tasks;
     },
     REMOVE_TASK(state, id) {
-      const tasks = state.tasks.filter(task => task.id !== id);
+      const tasks = state.tasks.filter(task => task._id !== id);
       state.tasks = tasks;
     }
   },
   actions: {
     startEditTask({ commit, state }, id) {
-      const task = state.tasks.find(tsk => tsk.id === id);
+      const task = state.tasks.find(tsk => tsk._id === id);
       commit("SET_EDIT_MODAL", true);
       commit("SET_EDIT_TASK", task);
     },
     async finishDrag({ commit, state }) {
-      const selectedTask = state.tasks.find(task => task.id === state.dragTask);
+      const selectedTask = state.tasks.find(
+        task => task._id === state.dragTask
+      );
       selectedTask.date = state.dragDay;
       const res = await TaskService.updateTask(selectedTask);
       if (res.status === 200) {
-        commit("REMOVE_TASK", selectedTask.id);
+        commit("REMOVE_TASK", selectedTask._id);
         commit("ADD_TASK", selectedTask);
         commit("SET_DRAG_TASK", "");
         commit("SET_DRAG_DAY", "");
+      } else {
+        console.log(res);
       }
     },
     setMonthStart({ commit }, start) {
@@ -83,7 +87,6 @@ export default new Vuex.Store({
     },
     async submitNewTask({ commit }, task) {
       try {
-        task.id = Math.ceil(Math.random() * 10000);
         const res = await TaskService.postTask(task);
         if (res.status === 201) {
           commit("ADD_TASK", task);
@@ -116,7 +119,7 @@ export default new Vuex.Store({
     async updateTask({ commit, state }, task) {
       const res = await TaskService.updateTask(task);
       if (res.status === 200) {
-        commit("REMOVE_TASK", task.id);
+        commit("REMOVE_TASK", task._id);
         commit("ADD_TASK", task);
       }
     }

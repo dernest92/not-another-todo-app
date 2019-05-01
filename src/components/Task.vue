@@ -3,9 +3,9 @@
     class="event"
     :class="{'high-priority': task.priority === 'high', 'completed': task.completed}"
     draggable="true"
-    @dragstart="dragHandeler(task.id)"
+    @dragstart="dragHandeler(task._id)"
     @dragend="dragend_handler"
-    @click="startEditTask(task.id)"
+    @click="startEditTask(task._id)"
   >
     <div class="event-title">{{task.title}}</div>
   </div>
