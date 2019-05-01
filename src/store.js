@@ -91,7 +91,6 @@ export default new Vuex.Store({
     async submitRegister({ commit }, credentials) {
       try {
         const res = await TaskService.register(credentials);
-        console.log(res);
         const { user, token } = await res.data;
         commit("SET_USER", user);
         commit("SET_TOKEN", token);
@@ -108,7 +107,6 @@ export default new Vuex.Store({
       try {
         const res = await TaskService.login(credentials);
         const { user, token } = await res.data;
-        console.log(res);
         commit("SET_USER", user);
         commit("SET_TOKEN", token);
         commit("SET_LOGIN_MODAL", false);

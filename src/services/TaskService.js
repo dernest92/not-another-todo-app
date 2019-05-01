@@ -17,7 +17,6 @@ export default {
     return apiClient.post("/tasks", task);
   },
   updateTask(task) {
-    console.log(`/tasks/${task._id}`);
     const { completed, title, priority, notes, date } = task;
     const updates = { completed, title, priority, notes, date };
     return apiClient.patch(`/tasks/${task._id}`, updates);
@@ -29,7 +28,7 @@ export default {
     return apiClient.post("/users/login", user);
   },
   logout() {
-    return apiClient.post("/users/logoutall");
+    return apiClient.post("/users/logout");
   },
   setToken(token) {
     return (apiClient.defaults.headers.common[

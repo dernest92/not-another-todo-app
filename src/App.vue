@@ -123,7 +123,6 @@ export default {
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
     TaskService.setToken(token);
-    console.log(token);
     if (token && user) {
       this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
