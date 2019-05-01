@@ -28,9 +28,15 @@ export default {
   login(user) {
     return apiClient.post("/users/login", user);
   },
+  logout() {
+    return apiClient.post("/users/logoutall");
+  },
   setToken(token) {
     return (apiClient.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${token}`);
+  },
+  register(credentials) {
+    return apiClient.post("/users", credentials);
   }
 };

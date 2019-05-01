@@ -3,6 +3,10 @@
     <div class="modal-card">
       <form @submit.prevent="submitLogin">
         <div class="form-group">
+          <label for>Name</label>
+          <input class="full" type="text" placeholder="Your Name" v-model="username" required>
+        </div>
+        <div class="form-group">
           <label for>Email</label>
           <input
             class="full"
@@ -26,6 +30,7 @@
       <div class="btn-group">
         <button @click="closeModal" class="btn btn-flat">cancel</button>
         <button @click="submitLogin" class="btn primary" :disabled="false">Login</button>
+        <button @click="submitRegister" class="btn primary" :disabled="false">Register</button>
       </div>
     </div>
   </div>
@@ -35,6 +40,7 @@
 export default {
   data() {
     return {
+      username: "",
       loginUser: {
         email: "",
         password: ""
@@ -53,6 +59,16 @@ export default {
     async submitLogin(e) {
       try {
         await this.$store.dispatch("submitLogin", this.loginUser);
+      } catch (e) {
+        console.log("could not log in");
+      }
+    },
+    async submitRegister(e) {
+      try {
+        await this.$store.dispatch("submitRegister", {
+          name: this.username,
+          ...this.loginUser
+        });
       } catch (e) {
         console.log("could not log in");
       }

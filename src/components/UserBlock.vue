@@ -1,6 +1,10 @@
 <template>
   <div class="login-card">
-    <button @click="openModal" class="btn">Login</button>
+    <div v-if="loggedIn">
+      {{user.email}}
+      <button @click="logout" class="btn">Logout</button>
+    </div>
+    <button v-else @click="openModal" class="btn">Login</button>
   </div>
 </template>
 
@@ -9,6 +13,17 @@ export default {
   methods: {
     openModal() {
       this.$store.dispatch("setLoginOpen", true);
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+    loggedIn() {
+      return this.$store.state.loggedIn;
     }
   }
 };
@@ -16,6 +31,9 @@ export default {
 
 <style lang="scss" scoped>
 .login-card {
-  background: #fff;
+  background: transparent;
+  .btn {
+    margin-left: 10px;
+  }
 }
 </style>

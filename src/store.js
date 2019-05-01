@@ -2,12 +2,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import TaskService from "./services/TaskService";
+import { longStackSupport } from "q";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     user: {},
     token: "",
+    loggedIn: false,
     priorities: ["high", "medium", "low"],
     loginModal: {
       isOpen: false
@@ -27,6 +29,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_LOGGED_IN(state, loggedIn) {
+      state.loggedIn = loggedIn;
+    },
     SET_EDIT_MODAL(state, modalStatus) {
       state.editTaskModal.isOpen = modalStatus;
     },
@@ -69,13 +74,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async logout({ commit }) {
+      await TaskService.logout();
+      commit("SET_USER", {});
+      commit("SET_TOKEN", "");
+      commit("SET_LOGGED_IN", false);
+      commit("SET_TASKS", []);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    },
     async submitRegister({ commit }, credentials) {
       try {
         const res = await TaskService.register(credentials);
         console.log(res);
         const { user, token } = await res.data;
         commit("SET_USER", user);
+        commit("SET_LOGGED_IN", true);
         localStorage.setItem("token", JSON.stringify(token));
+        TaskService.setToken(token);
       } catch (e) {
         console.log("error regeistering");
       }
@@ -88,6 +104,8 @@ export default new Vuex.Store({
         commit("SET_USER", user);
         commit("SET_TOKEN", token);
         commit("SET_LOGIN_MODAL", false);
+        commit("SET_LOGGED_IN", true);
+
         localStorage.setItem("token", JSON.stringify(token));
         TaskService.setToken(token);
         dispatch("fetchTasks");
