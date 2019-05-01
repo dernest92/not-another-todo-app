@@ -48,20 +48,19 @@ export default {
   },
   methods: {
     closeModal() {
-      console.log("close modal");
       this.$store.dispatch("setLoginOpen", false);
     },
     async submitLogin(e) {
-      await this.$store.dispatch("submitLogin", this.loginUser);
+      try {
+        await this.$store.dispatch("submitLogin", this.loginUser);
+      } catch (e) {
+        console.log("could not log in");
+      }
     },
     attemptCloseModal(e) {
       if (e.target.classList.contains("close-modal")) {
         this.closeModal();
       }
-    },
-    async deleteTask() {
-      await this.$store.dispatch("deleteTask", this.selectedTask.id);
-      this.$store.dispatch("editModalClose");
     },
     editTitle() {
       if (this.activeField.title) {

@@ -43,7 +43,7 @@ import LoginModal from "./components/LoginModal.vue";
 import moment from "moment";
 import Unassigned from "./components/Unassigned.vue";
 import UserBlock from "./components/UserBlock.vue";
-
+import TaskService from "./services/TaskService.js";
 export default {
   name: "app",
   components: {
@@ -120,7 +120,15 @@ export default {
     }
   },
   async created() {
-    await this.$store.dispatch("fetchTasks");
+    const token = JSON.parse(localStorage.getItem("token"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    TaskService.setToken(token);
+    console.log(token);
+    if (token) {
+      await this.$store.dispatch("fetchTasks");
+    } else {
+      this.$store.dispatch("setLoginOpen", true);
+    }
     this.goToToday();
   }
 };

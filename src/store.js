@@ -10,7 +10,7 @@ export default new Vuex.Store({
     token: "",
     priorities: ["high", "medium", "low"],
     loginModal: {
-      isOpen: true
+      isOpen: false
     },
     newTaskModal: {
       isOpen: false,
@@ -69,16 +69,30 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async submitLogin({ commit }, credentials) {
-      const res = await TaskService.login(credentials);
-      const { user, token } = await res.data;
-      console.log(res);
-      if (res.status === 200) {
+    async submitRegister({ commit }, credentials) {
+      try {
+        const res = await TaskService.register(credentials);
+        console.log(res);
+        const { user, token } = await res.data;
+        commit("SET_USER", user);
+        localStorage.setItem("token", JSON.stringify(token));
+      } catch (e) {
+        console.log("error regeistering");
+      }
+    },
+    async submitLogin({ commit, dispatch }, credentials) {
+      try {
+        const res = await TaskService.login(credentials);
+        const { user, token } = await res.data;
+        console.log(res);
         commit("SET_USER", user);
         commit("SET_TOKEN", token);
         commit("SET_LOGIN_MODAL", false);
-      } else {
-        console.log("failed to log in");
+        localStorage.setItem("token", JSON.stringify(token));
+        TaskService.setToken(token);
+        dispatch("fetchTasks");
+      } catch (e) {
+        console.log("unable to log in");
       }
     },
     setLoginOpen({ commit }, open) {

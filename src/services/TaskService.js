@@ -4,8 +4,6 @@ const apiClient = axios.create({
   baseURL: "http://localhost:3000",
   withCredentials: false,
   headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2M5YmVhYmNhNGE4YjIwOTAyNWJkMzciLCJpYXQiOjE1NTY3Mjc0NTV9.wGFoj2UYOwCY-c8-ihB7MpULeId8lZE-xqnUE6SFZZM",
     Accept: "application/json",
     "Content-type": "application/json"
   }
@@ -29,5 +27,10 @@ export default {
   },
   login(user) {
     return apiClient.post("/users/login", user);
+  },
+  setToken(token) {
+    return (apiClient.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${token}`);
   }
 };
