@@ -74,6 +74,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setUserToken({ commit }, { user, token }) {
+      commit("SET_USER", user);
+      commit("SET_LOGGED_IN", true);
+      commit("SET_TOKEN", token);
+    },
     async logout({ commit }) {
       await TaskService.logout();
       commit("SET_USER", {});
@@ -89,8 +94,11 @@ export default new Vuex.Store({
         console.log(res);
         const { user, token } = await res.data;
         commit("SET_USER", user);
+        commit("SET_TOKEN", token);
         commit("SET_LOGGED_IN", true);
+        commit("SET_LOGIN_MODAL", false);
         localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("user", JSON.stringify(user));
         TaskService.setToken(token);
       } catch (e) {
         console.log("error regeistering");
@@ -106,8 +114,9 @@ export default new Vuex.Store({
         commit("SET_LOGIN_MODAL", false);
         commit("SET_LOGGED_IN", true);
 
-        localStorage.setItem("token", JSON.stringify(token));
         TaskService.setToken(token);
+        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("user", JSON.stringify(user));
         dispatch("fetchTasks");
       } catch (e) {
         console.log("unable to log in");

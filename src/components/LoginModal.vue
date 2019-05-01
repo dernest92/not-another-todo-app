@@ -2,7 +2,7 @@
   <div @click="attemptCloseModal" class="modal-container close-modal">
     <div class="modal-card">
       <form @submit.prevent="submitLogin">
-        <div class="form-group">
+        <div v-if="newUser" class="form-group">
           <label for>Name</label>
           <input class="full" type="text" placeholder="Your Name" v-model="username" required>
         </div>
@@ -29,8 +29,27 @@
       </form>
       <div class="btn-group">
         <button @click="closeModal" class="btn btn-flat">cancel</button>
-        <button @click="submitLogin" class="btn primary" :disabled="false">Login</button>
-        <button @click="submitRegister" class="btn primary" :disabled="false">Register</button>
+        <button
+          v-if="newUser"
+          @click="submitRegister"
+          class="btn primary"
+          :disabled="false"
+        >Register</button>
+        <button v-else @click="submitLogin" class="btn primary" :disabled="false">Login</button>
+      </div>
+      <div class="modal-footer">
+        <div v-if="newUser">
+          Already have an account?
+          <a class="link" @click="newUser = !newUser">Login</a>
+        </div>
+        <div v-else>
+          Dont have an account?
+          <a class="link" @click="newUser = !newUser">Register</a>
+        </div>
+        <div>
+          Continue as
+          <a class="link">Guest</a>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +59,7 @@
 export default {
   data() {
     return {
+      newUser: false,
       username: "",
       loginUser: {
         email: "",
@@ -122,3 +142,22 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.modal-footer {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: #999 dotted 1px;
+  line-height: 1.5;
+}
+.link {
+  color: blue;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+</style>

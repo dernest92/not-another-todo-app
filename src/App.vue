@@ -124,7 +124,8 @@ export default {
     const user = JSON.parse(localStorage.getItem("user"));
     TaskService.setToken(token);
     console.log(token);
-    if (token) {
+    if (token && user) {
+      this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
     } else {
       this.$store.dispatch("setLoginOpen", true);

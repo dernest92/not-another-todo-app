@@ -69,7 +69,7 @@ export default {
       }
     },
     async deleteTask() {
-      await this.$store.dispatch("deleteTask", this.selectedTask.id);
+      await this.$store.dispatch("deleteTask", this.selectedTask._id);
       this.$store.dispatch("editModalClose");
     },
     editTitle() {
