@@ -30,10 +30,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-card {
-  background: transparent;
-  .btn {
-    margin-left: 10px;
-  }
-}
 </style>

@@ -2,7 +2,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import TaskService from "./services/TaskService";
-import { longStackSupport } from "q";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
