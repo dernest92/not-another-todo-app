@@ -473,6 +473,16 @@ label > .label-body {
 }
 
 @media screen and (max-width: 700px) {
+  .modal-card {
+    min-width: 50px;
+    width: 100%;
+    margin: 0 5px;
+    padding: 10px;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    text-align: left;
+  }
+
   .day {
     .day-buttons {
       justify-content: center;
