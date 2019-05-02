@@ -2,7 +2,8 @@
   <div
     class="day"
     :class="{today: isToday, selected: (date === dragDay)}"
-    @touchstart="goToDay"
+    @touchend="touchend_handler"
+    @touchmove="touchmove_handler"
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
@@ -27,7 +28,9 @@ export default {
     date: String
   },
   data() {
-    return {};
+    return {
+      scrolled: false
+    };
   },
   methods: {
     moment,
@@ -35,8 +38,17 @@ export default {
       this.$store.dispatch("setCurrentDay", this.date);
       this.$router.push({ name: "day-view" });
     },
-    touch_handler() {
-      console.log("touched");
+    touchend_handler() {
+      if (this.scrolled) {
+        console.log("scrolled");
+      } else {
+        this.goToDay();
+        console.log("clicked");
+      }
+      this.scrolled = false;
+    },
+    touchmove_handler() {
+      this.scrolled = true;
     },
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);
