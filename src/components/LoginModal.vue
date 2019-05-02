@@ -1,7 +1,7 @@
 <template>
   <div @click="attemptCloseModal" class="modal-container close-modal">
     <div class="modal-card">
-      <form @submit.prevent="submitLogin">
+      <form @submit.prevent>
         <div v-if="newUser" class="form-group">
           <label for>Name</label>
           <input class="full" type="text" placeholder="Your Name" v-model="username" required>
@@ -26,17 +26,24 @@
             required
           >
         </div>
+        <div class="btn-group">
+          <button type="reset" @click="closeModal" class="btn btn-flat">cancel</button>
+          <button
+            v-if="newUser"
+            type="submit"
+            @click="submitRegister"
+            class="btn primary"
+            :disabled="false"
+          >Register</button>
+          <button
+            type="submit"
+            v-else
+            @click="submitLogin"
+            class="btn primary"
+            :disabled="false"
+          >Login</button>
+        </div>
       </form>
-      <div class="btn-group">
-        <button @click="closeModal" class="btn btn-flat">cancel</button>
-        <button
-          v-if="newUser"
-          @click="submitRegister"
-          class="btn primary"
-          :disabled="false"
-        >Register</button>
-        <button v-else @click="submitLogin" class="btn primary" :disabled="false">Login</button>
-      </div>
       <div class="modal-footer">
         <div v-if="newUser">
           Already have an account?

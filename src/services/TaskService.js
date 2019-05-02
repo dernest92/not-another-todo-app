@@ -1,7 +1,7 @@
 import axios from "axios";
-
+const baseURL = process.env.VUE_APP_MONGO_DB_URL;
 const apiClient = axios.create({
-  baseURL: "https://not-another-todo-api.herokuapp.com/",
+  baseURL,
   withCredentials: false,
   headers: {
     Accept: "application/json",
