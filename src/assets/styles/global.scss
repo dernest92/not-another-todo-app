@@ -592,5 +592,10 @@ label > .label-body {
     left: 0;
     right: 0; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+      cursor: pointer;
+    }
   }
 }
