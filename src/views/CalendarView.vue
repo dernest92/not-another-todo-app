@@ -6,7 +6,12 @@
 
     <UserBlock class="user-block"/>
     <div class="layout">
-      <div class="container month-container">
+      <div
+        @touchstart="touchstart_handler"
+        @touchend="touchend_handler"
+        @touchmove="touchmove_handler"
+        class="container month-container"
+      >
         <div class="month-banner">
           <button class="nav-btn" @click="chageMonth(-1)">
             <i class="fas fa-chevron-left"></i>
@@ -63,6 +68,10 @@ export default {
   },
   data() {
     return {
+      touchstart: {
+        clientX: null,
+        clientY: null
+      },
       firstOfMonth: {},
       weeks: [],
       month: "",
@@ -70,6 +79,30 @@ export default {
     };
   },
   methods: {
+    touchstart_handler(e) {
+      const { clientX, clientY } = e.changedTouches[0];
+      this.touchstart = { clientX, clientY };
+    },
+    touchend_handler(e) {
+      const { clientX, clientY } = e.changedTouches[0];
+      const startX = this.touchstart.clientX;
+      const startY = this.touchstart.clientY;
+      const diffX = clientX - startX;
+      const diffY = clientY - startY;
+      if (diffY > 100 && diffX < 100) {
+        console.log("swipe down");
+      } else if (diffY < -100 && diffX < 100) {
+        console.log("swipe up");
+      } else if (diffY < 100 && diffX < -100) {
+        console.log("swipe left");
+      } else if (diffY < 100 && diffX > 100) {
+        console.log("swipe right");
+      }
+    },
+    touchmove_handler(e) {
+      // console.log(e);
+      // this.touchStartPos
+    },
     moment,
     setWeeks() {
       this.firstOfMonth = moment()

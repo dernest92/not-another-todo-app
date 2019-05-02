@@ -39,9 +39,7 @@ export default {
       this.$router.push({ name: "day-view" });
     },
     touchend_handler() {
-      if (this.scrolled) {
-        console.log("scrolled");
-      } else {
+      if (!this.scrolled) {
         this.goToDay();
         console.log("clicked");
       }

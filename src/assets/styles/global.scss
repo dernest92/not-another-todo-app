@@ -108,7 +108,7 @@ body {
 }
 
 .month {
-  height: calc(100% - 80px);
+  height: calc(100% - 60px);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
   border-radius: 5px;
   overflow: hidden;
@@ -473,6 +473,14 @@ label > .label-body {
 }
 
 @media screen and (max-width: 700px) {
+  .month-banner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 5px;
+  }
   .modal-card {
     min-width: 50px;
     width: 100%;
@@ -545,18 +553,7 @@ label > .label-body {
     }
   }
   .user-block {
-    position: fixed;
-    top: 5px;
-    right: 5px;
-    z-index: 10;
-
-    .login-card {
-      background: transparent;
-
-      .btn {
-        width: 10px;
-      }
-    }
+    display: none;
   }
   .layout {
     grid-template-columns: auto auto;
@@ -573,7 +570,7 @@ label > .label-body {
 
     .month-container {
       position: fixed;
-      top: 35px;
+      top: 0;
       right: 0;
       left: 0;
       bottom: 0;
