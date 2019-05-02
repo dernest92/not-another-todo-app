@@ -23,14 +23,17 @@
 }
 
 .container.unassinged-container {
-  height: 100vh;
+  height: 100%;
 }
 
 .layout {
   display: grid;
-  position: relative;
+  position: fixed;
   grid-template-columns: auto 400px;
-  height: 100vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 @media screen and (max-width: 700px) {
