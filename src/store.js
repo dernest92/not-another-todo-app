@@ -32,6 +32,12 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    UPDATE_TASK(state, updatedTask) {
+      const index = state.tasks.findIndex(task => task._id === updatedTask._id);
+      state.tasks[index] = updatedTask;
+      state.tasks.push("blank");
+      state.tasks.pop();
+    },
     SET_CURRENT_DAY(state, day) {
       state.dayView.currentDay = day;
     },
@@ -139,8 +145,7 @@ export default new Vuex.Store({
       selectedTask.date = state.dragDay;
       const res = await TaskService.updateTask(selectedTask);
       if (res.status === 200) {
-        commit("REMOVE_TASK", selectedTask._id);
-        commit("ADD_TASK", selectedTask);
+        commit("UPDATE_TASK", selectedTask);
         commit("SET_DRAG_TASK", "");
         commit("SET_DRAG_DAY", "");
       } else {
@@ -193,8 +198,7 @@ export default new Vuex.Store({
     async updateTask({ commit, state }, task) {
       const res = await TaskService.updateTask(task);
       if (res.status === 200) {
-        commit("REMOVE_TASK", task._id);
-        commit("ADD_TASK", task);
+        commit("UPDATE_TASK", task);
       }
     },
     setCurrentDay({ commit }, day) {
