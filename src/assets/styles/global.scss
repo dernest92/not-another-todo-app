@@ -591,6 +591,6 @@ label > .label-body {
     bottom: 0;
     left: 0;
     right: 0; /* Increase/Decrease this value for cross-browser compatibility */
-    overflow-y: hidden;
+    overflow-y: scroll;
   }
 }
