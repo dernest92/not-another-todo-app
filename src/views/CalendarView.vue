@@ -95,8 +95,10 @@ export default {
         console.log("swipe up");
       } else if (diffY < 100 && diffX < -100) {
         console.log("swipe left");
+        this.chageMonth(1);
       } else if (diffY < 100 && diffX > 100) {
         console.log("swipe right");
+        this.chageMonth(-1);
       }
     },
     touchmove_handler(e) {
