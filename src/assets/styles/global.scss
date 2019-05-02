@@ -509,6 +509,7 @@ label > .label-body {
     transition: all 0.3s;
     border-radius: 0;
     font-size: 10px;
+    pointer-events: none;
     .event-title {
       display: inline-block;
       width: 100%;
