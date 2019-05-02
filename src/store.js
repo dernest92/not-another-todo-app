@@ -2,6 +2,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import TaskService from "./services/TaskService";
+import router from "./router.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -86,6 +87,7 @@ export default new Vuex.Store({
       commit("SET_TASKS", []);
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+      router.push({ name: "login-view" });
     },
     async submitRegister({ commit }, credentials) {
       try {

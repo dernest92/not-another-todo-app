@@ -2,6 +2,7 @@
   <div
     class="day"
     :class="{today: isToday, selected: (date === dragDay)}"
+    @touchstart="touch_handler"
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
@@ -30,7 +31,9 @@ export default {
   },
   methods: {
     moment,
-
+    touch_handler() {
+      console.log("touched");
+    },
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);
     },
