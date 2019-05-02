@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import TaskService from "../services/TaskService.js";
+
 export default {
   data() {
     return {
@@ -103,7 +105,18 @@ export default {
     }
   },
   computed: {},
-  created() {}
+  async created() {
+    const token = JSON.parse(localStorage.getItem("token"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    TaskService.setToken(token);
+    if (token && user) {
+      this.$store.dispatch("setUserToken", { token, user });
+      await this.$store.dispatch("fetchTasks");
+      this.$router.push("calendar");
+    } else {
+      this.$store.dispatch("setLoginOpen", true);
+    }
+  }
 };
 </script>
 
@@ -112,6 +125,8 @@ export default {
   width: 60%;
   height: 100%;
   background-image: url("../assets/images/neil-rosenstech-467457-unsplash.jpg");
+  // background-image: url("https://source.unsplash.com/1600x900/?nature");
+
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

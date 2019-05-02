@@ -3,6 +3,7 @@ import Router from "vue-router";
 
 import LoginView from "./views/LoginView.vue";
 import CalendarView from "./views/CalendarView.vue";
+import DayView from "./views/DayView.vue";
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path: "/calendar",
       name: "calendar-view",
       component: CalendarView
+    },
+    {
+      path: "/day",
+      name: "day-view",
+      component: DayView
     }
   ]
 });

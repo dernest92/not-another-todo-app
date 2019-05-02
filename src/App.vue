@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import TaskService from "./services/TaskService.js";
 export default {
   name: "app",
@@ -15,16 +16,20 @@ export default {
   methods: {},
   computed: {},
   async created() {
+    console.log("create app ran");
+
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
     TaskService.setToken(token);
     if (token && user) {
       this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
-      this.$router.push("calendar");
-    } else {
-      this.$store.dispatch("setLoginOpen", true);
     }
+
+    const today = moment()
+      .startOf("day")
+      .toISOString();
+    this.$store.dispatch("setCurrentDay", today);
   }
 };
 </script>

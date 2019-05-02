@@ -7,7 +7,7 @@
     @dragover.prevent="dragover_handler"
   >
     <div class="day-buttons">
-      <div class="day-number">{{moment(date).date()}}</div>
+      <div @click="goToDay" class="day-number">{{moment(date).date()}}</div>
       <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
     <div class="events-scroller">
@@ -31,6 +31,10 @@ export default {
   },
   methods: {
     moment,
+    goToDay() {
+      this.$store.dispatch("setCurrentDay", this.date);
+      this.$router.push({ name: "day-view" });
+    },
     touch_handler() {
       console.log("touched");
     },

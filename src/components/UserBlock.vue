@@ -11,9 +11,6 @@
 <script>
 export default {
   methods: {
-    openModal() {
-      this.$store.dispatch("setLoginOpen", true);
-    },
     logout() {
       this.$store.dispatch("logout");
     }

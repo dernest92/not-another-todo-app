@@ -7,6 +7,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    dayView: {
+      currentDay: ""
+    },
     user: {},
     token: "",
     loggedIn: false,
@@ -29,6 +32,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_CURRENT_DAY(state, day) {
+      state.dayView.currentDay = day;
+    },
     SET_LOGGED_IN(state, loggedIn) {
       state.loggedIn = loggedIn;
     },
@@ -121,9 +127,6 @@ export default new Vuex.Store({
         console.log("unable to log in");
       }
     },
-    setLoginOpen({ commit }, open) {
-      commit("SET_LOGIN_MODAL", open);
-    },
     startEditTask({ commit, state }, id) {
       const task = state.tasks.find(tsk => tsk._id === id);
       commit("SET_EDIT_MODAL", true);
@@ -193,6 +196,9 @@ export default new Vuex.Store({
         commit("REMOVE_TASK", task._id);
         commit("ADD_TASK", task);
       }
+    },
+    setCurrentDay({ commit }, day) {
+      commit("SET_CURRENT_DAY", day);
     }
   },
   getters: {
