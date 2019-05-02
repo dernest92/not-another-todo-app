@@ -2,7 +2,7 @@
   <div
     class="day"
     :class="{today: isToday, selected: (date === dragDay)}"
-    @touchstart="touch_handler"
+    @touchstart="goToDay"
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
