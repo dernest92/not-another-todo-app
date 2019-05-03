@@ -2,15 +2,6 @@
   <div id="app">
     <EditTaskModal v-if="editModalState.isOpen"/>
     <NewTaskModal v-if="newModalOpen"/>
-    <div
-      class="create-item"
-      @touchstart="startTouchItem"
-      @touchmove="moveTouchItem"
-      @touchend="endTouchItem"
-      :style="{bottom: (itemPos.bottom + 'px'), right: (itemPos.right + 'px')}"
-    >
-      <i class="fas fa-plus"></i>
-    </div>
     <div class="layout">
       <div
         class="container month-container"
@@ -91,34 +82,6 @@ export default {
     };
   },
   methods: {
-    startTouchItem(e) {
-      this.itemPosStart.x = e.changedTouches[0].clientX;
-      this.itemPosStart.y = e.changedTouches[0].clientY;
-      this.itemPosStart.startTime = e.timeStamp;
-    },
-    moveTouchItem(e) {
-      const moveX = this.itemPosStart.x - e.changedTouches[0].clientX;
-      const moveY = this.itemPosStart.y - e.changedTouches[0].clientY;
-      this.itemPos.bottom = 5 + moveY;
-      this.itemPos.right = 5 + moveX;
-    },
-    endTouchItem(e) {
-      const moveX = e.changedTouches[0].clientX;
-      const moveY = e.changedTouches[0].clientY;
-      this.itemPos.bottom = 5;
-      this.itemPos.right = 5;
-      const hovered = document.elementsFromPoint(moveX, moveY);
-      const day = hovered.find(el => el.classList.contains("day"));
-      const date = day ? day.getAttribute("data-date") : false;
-      const durr = e.timeStamp - this.itemPosStart.startTime;
-      setTimeout(() => {
-        if (durr < 200) {
-          this.$store.dispatch("startNewTask", false);
-        } else {
-          this.$store.dispatch("startNewTask", date);
-        }
-      }, 0);
-    },
     touchstart_handler(e) {
       const { clientX, clientY } = e.changedTouches[0];
       this.touchstart = { clientX, clientY };
@@ -130,21 +93,16 @@ export default {
       const diffX = clientX - startX;
       const diffY = clientY - startY;
       if (diffY > 100 && diffX < 100) {
-        console.log("swipe down");
         this.$store.dispatch("setNavMenu", true);
       } else if (diffY < -100 && diffX < 100) {
         this.$store.dispatch("setNavMenu", false);
-        console.log("swipe up");
       } else if (diffY < 100 && diffX < -100) {
-        console.log("swipe left");
         this.changeMonth(1);
       } else if (diffY < 100 && diffX > 100) {
-        console.log("swipe right");
         this.changeMonth(-1);
       }
     },
     touchmove_handler(e) {
-      console.log(e);
       // this.touchStartPos
     },
     moment,
