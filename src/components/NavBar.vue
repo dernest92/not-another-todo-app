@@ -1,10 +1,21 @@
 <template>
   <div>
     <nav class="nav-container" :class="{'nav-open': navMenuOpen}">
-      <div>{{user.email}}</div>
-      <button @click="logout" class="btn">Logout</button>
+      <div class="nav-contents">
+        <div @click="closeNav" class="close-btn">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="view">
+          <router-link to="/calendar" class="veiw-type">Month</router-link>
+          <router-link to="/day" class="veiw-type">Week</router-link>
+          <router-link to="/day" class="veiw-type">Day</router-link>
+          <router-link to="/list" class="veiw-type">List</router-link>
+        </div>
+        <div class="account-info">
+          <button @click="logout" class="btn">Logout</button>
+        </div>
+      </div>
     </nav>
-    <div @click="closeNav" class="background" :class="{'nav-open': navMenuOpen}"></div>
   </div>
 </template>
 
@@ -62,24 +73,49 @@ export default {
 }
 
 @media screen and (max-width: 700px) {
-  .nav-container {
-    top: -48px;
-    &.nav-open {
-      top: 0px;
-    }
+  .veiw-type {
+    padding: 5px;
+    margin: 5px;
+    color: #fff;
   }
 
-  .background {
+  .close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: red;
+    cursor: pointer;
+  }
+  .nav-container {
+    opacity: 0;
+    pointer-events: none;
+    justify-content: center;
+    top: 0;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.25);
+    .nav-contents {
+      position: relative;
+      background: #34495e;
+      padding: 15px;
+      border-radius: 10px;
+      & > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 5px 0;
+      }
+    }
     &.nav-open {
       opacity: 1;
-      display: flex;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 4;
       pointer-events: all;
     }
   }

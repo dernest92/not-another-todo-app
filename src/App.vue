@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <nav-bar/>
     <LoadingModal v-if="loading"/>
     <router-view :key="$route.fullPath"/>
   </div>

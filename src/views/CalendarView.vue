@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <nav-bar/>
     <EditTaskModal v-if="editModalState.isOpen"/>
     <NewTaskModal v-if="newModalOpen"/>
     <div class="layout">
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import NavBar from "../components/NavBar.vue";
 import Week from "../components/Week.vue";
 import NewTaskModal from "../components/NewTaskModal.vue";
 import EditTaskModal from "../components/EditTaskModal.vue";
@@ -58,7 +60,8 @@ export default {
     Week,
     NewTaskModal,
     EditTaskModal,
-    Unassigned
+    Unassigned,
+    NavBar
   },
   data() {
     return {
@@ -96,6 +99,7 @@ export default {
         this.$store.dispatch("setNavMenu", true);
       } else if (diffY < -100 && diffX < 100) {
         this.$store.dispatch("setNavMenu", false);
+        this.$store.dispatch("startNewTask", false);
       } else if (diffY < 100 && diffX < -100) {
         this.changeMonth(1);
       } else if (diffY < 100 && diffX > 100) {

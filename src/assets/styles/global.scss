@@ -479,12 +479,20 @@ label > .label-body {
 
 @media screen and (max-width: 700px) {
   .month-banner {
+    .date-label {
+      font-size: 18px;
+    }
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 40px;
-    margin-bottom: 5px;
+    height: 30px;
+    margin-bottom: 0;
+    background: #2c3e50;
+    color: #fff;
+    .nav-btn {
+      display: none;
+    }
   }
   .modal-card {
     min-width: 50px;
@@ -583,6 +591,7 @@ label > .label-body {
         box-shadow: none;
         border-radius: 0;
         overflow: hidden;
+        height: calc(100% - 30px);
       }
     }
   }

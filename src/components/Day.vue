@@ -60,7 +60,6 @@ export default {
       this.scrolled = true;
     },
     startNewTask() {
-      console.log("started new task");
       this.$store.dispatch("startNewTask", this.date);
     },
     dragenterHandeler() {
