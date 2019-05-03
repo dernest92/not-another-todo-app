@@ -255,6 +255,9 @@ export default new Vuex.Store({
       const today = moment().startOf('day').toISOString();
       const tasks = state.tasks.filter(task => (task.date !== false && task.completed === false));
       return tasks.filter(task => (task.date && moment(task.date).isSameOrBefore(today)));
+    },
+    taskQuery: state => query => {
+      return state.tasks.filter(task => query(task))
     }
   }
 });

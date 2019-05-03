@@ -1,6 +1,5 @@
 <template>
   <div class="task-list">
-    {{title}}
     <DayViewTask v-for="task in tasks" :key="task._id" :task="task"/>
   </div>
 </template>
