@@ -122,7 +122,7 @@ export default {
 .login-image {
   width: 60%;
   height: 100%;
-  background-image: url("../assets/images/neil-rosenstech-467457-unsplash.jpg");
+  background-image: url("../assets/images/neil-rosenstech-467457-unsplash-min.jpg");
   // background-image: url("https://source.unsplash.com/1600x900/?nature");
 
   background-size: cover;

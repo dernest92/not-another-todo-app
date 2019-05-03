@@ -4,7 +4,6 @@
       {{user.email}}
       <button @click="logout" class="btn">Logout</button>
     </div>
-    <button v-else @click="openModal" class="btn">Login</button>
   </div>
 </template>
 

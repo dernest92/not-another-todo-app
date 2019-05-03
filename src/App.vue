@@ -1,20 +1,29 @@
 <template>
   <div id="app">
+    <LoadingModal v-if="loading"/>
     <router-view :key="$route.fullPath"/>
   </div>
 </template>
 
 <script>
+import LoadingModal from "./components/LoadingModal.vue";
 import moment from "moment";
 import TaskService from "./services/TaskService.js";
+import LoadingModalVue from "./components/LoadingModal.vue";
 export default {
   name: "app",
-  components: {},
+  components: {
+    LoadingModal
+  },
   data() {
     return {};
   },
   methods: {},
-  computed: {},
+  computed: {
+    loading() {
+      return this.$store.state.loading;
+    }
+  },
   async created() {
     console.log("create app ran");
 
@@ -24,6 +33,8 @@ export default {
     if (token && user) {
       this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
+    } else {
+      this.$store.dispatch("setLoading", false);
     }
 
     const today = moment()

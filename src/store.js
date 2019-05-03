@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    loading: true,
     navmenu: {
       isOpen: false
     },
@@ -35,6 +36,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_LOADING(state, loading) {
+      state.loading = loading;
+    },
     SET_NAV_MENU(state, menuState) {
       state.navmenu.isOpen = menuState;
     },
@@ -92,6 +96,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setLoading({ commit }, loading) {
+      commit("SET_LOADING", loading);
+    },
     setNavMenu({ commit }, menuState) {
       commit("SET_NAV_MENU", menuState);
     },
@@ -101,6 +108,7 @@ export default new Vuex.Store({
       commit("SET_TOKEN", token);
     },
     async logout({ commit }) {
+      commit("SET_LOADING", true);
       await TaskService.logout();
       commit("SET_USER", {});
       commit("SET_TOKEN", "");
@@ -109,9 +117,11 @@ export default new Vuex.Store({
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       router.push({ name: "login-view" });
+      commit("SET_LOADING", false);
     },
     async submitRegister({ commit }, credentials) {
       try {
+        commit("SET_LOADING", true);
         const res = await TaskService.register(credentials);
         const { user, token } = await res.data;
         commit("SET_USER", user);
@@ -123,23 +133,26 @@ export default new Vuex.Store({
         TaskService.setToken(token);
       } catch (e) {
         console.log("error regeistering");
+      } finally {
+        commit("SET_LOADING", true);
       }
     },
     async submitLogin({ commit, dispatch }, credentials) {
       try {
+        commit("SET_LOADING", true);
         const res = await TaskService.login(credentials);
         const { user, token } = await res.data;
         commit("SET_USER", user);
         commit("SET_TOKEN", token);
-        commit("SET_LOGIN_MODAL", false);
         commit("SET_LOGGED_IN", true);
-
         TaskService.setToken(token);
         localStorage.setItem("token", JSON.stringify(token));
         localStorage.setItem("user", JSON.stringify(user));
         dispatch("fetchTasks");
       } catch (e) {
         console.log("unable to log in");
+      } finally {
+        commit("SET_LOADING", false);
       }
     },
     startEditTask({ commit, state }, id) {
@@ -190,6 +203,7 @@ export default new Vuex.Store({
       const res = await TaskService.getTasks();
       const tasks = await res.data;
       commit("SET_TASKS", tasks);
+      commit("SET_LOADING", false);
     },
     async deleteTask({ commit }, id) {
       await TaskService.deleteTask(id);
