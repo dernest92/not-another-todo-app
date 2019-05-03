@@ -134,6 +134,8 @@ export default {
   margin: 5px 0;
 }
 .login-page {
+  background: #34495e;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -156,16 +158,16 @@ export default {
 }
 
 .modal-footer {
-  color: #999;
+  color: #f4f4f4;
   font-style: italic;
   text-align: center;
   margin-top: 15px;
   padding-top: 10px;
-  border-top: #999 dotted 1px;
+  border-top: #f4f4f4 dotted 1px;
   line-height: 1.5;
 }
 .link {
-  color: blue;
+  color: #41b883;
   cursor: pointer;
   &:hover {
     text-decoration: underline;

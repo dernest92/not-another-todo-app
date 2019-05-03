@@ -134,7 +134,7 @@ export default new Vuex.Store({
       } catch (e) {
         console.log("error regeistering");
       } finally {
-        commit("SET_LOADING", true);
+        commit("SET_LOADING", false);
       }
     },
     async submitLogin({ commit, dispatch }, credentials) {

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <EditTaskModal v-if="editModalState.isOpen"/>
+    <NewTaskModal v-if="newModalOpen"/>
     <div v-if="navMenuOpen">LOOK IM A MENU</div>
     <UserBlock class="user-block"/>
     <div class="layout">
