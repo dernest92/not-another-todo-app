@@ -2,13 +2,21 @@
   <div id="app">
     <EditTaskModal v-if="editModalState.isOpen"/>
     <NewTaskModal v-if="newModalOpen"/>
-    <div v-if="navMenuOpen">LOOK IM A MENU</div>
+    <div
+      class="create-item"
+      @touchstart="startTouchItem"
+      @touchmove="moveTouchItem"
+      @touchend="endTouchItem"
+      :style="{bottom: (itemPos.bottom + 'px'), right: (itemPos.right + 'px')}"
+    >
+      <i class="fas fa-plus"></i>
+    </div>
     <div class="layout">
       <div
+        class="container month-container"
         @touchstart="touchstart_handler"
         @touchend="touchend_handler"
         @touchmove="touchmove_handler"
-        class="container month-container"
       >
         <div class="month-banner">
           <button class="nav-btn" @click="changeMonth(-1)">
@@ -52,6 +60,7 @@ import EditTaskModal from "../components/EditTaskModal.vue";
 import moment from "moment";
 import Unassigned from "../components/Unassigned.vue";
 import TaskService from "../services/TaskService.js";
+import { setTimeout } from "timers";
 export default {
   name: "app",
   components: {
@@ -62,6 +71,15 @@ export default {
   },
   data() {
     return {
+      itemPosStart: {
+        x: 0,
+        y: 0,
+        startTime: 0
+      },
+      itemPos: {
+        bottom: 5,
+        right: 5
+      },
       touchstart: {
         clientX: null,
         clientY: null
@@ -73,6 +91,34 @@ export default {
     };
   },
   methods: {
+    startTouchItem(e) {
+      this.itemPosStart.x = e.changedTouches[0].clientX;
+      this.itemPosStart.y = e.changedTouches[0].clientY;
+      this.itemPosStart.startTime = e.timeStamp;
+    },
+    moveTouchItem(e) {
+      const moveX = this.itemPosStart.x - e.changedTouches[0].clientX;
+      const moveY = this.itemPosStart.y - e.changedTouches[0].clientY;
+      this.itemPos.bottom = 5 + moveY;
+      this.itemPos.right = 5 + moveX;
+    },
+    endTouchItem(e) {
+      const moveX = e.changedTouches[0].clientX;
+      const moveY = e.changedTouches[0].clientY;
+      this.itemPos.bottom = 5;
+      this.itemPos.right = 5;
+      const hovered = document.elementsFromPoint(moveX, moveY);
+      const day = hovered.find(el => el.classList.contains("day"));
+      const date = day ? day.getAttribute("data-date") : false;
+      const durr = e.timeStamp - this.itemPosStart.startTime;
+      setTimeout(() => {
+        if (durr < 200) {
+          this.$store.dispatch("startNewTask", false);
+        } else {
+          this.$store.dispatch("startNewTask", date);
+        }
+      }, 0);
+    },
     touchstart_handler(e) {
       const { clientX, clientY } = e.changedTouches[0];
       this.touchstart = { clientX, clientY };
@@ -98,7 +144,7 @@ export default {
       }
     },
     touchmove_handler(e) {
-      // console.log(e);
+      console.log(e);
       // this.touchStartPos
     },
     moment,
@@ -181,5 +227,18 @@ export default {
   display: grid;
   grid-template-columns: repeat(7, auto);
   background: #ccc;
+}
+
+.create-item {
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 40px;
+  width: 40px;
+  background: #34495e;
+  color: #fff;
+  border-radius: 50%;
 }
 </style>

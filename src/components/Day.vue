@@ -1,6 +1,7 @@
 <template>
   <div
     class="day"
+    :data-date="date"
     :class="{today: isToday, selected: (date === dragDay)}"
     @touchend="touchend_handler"
     @touchmove="touchmove_handler"
