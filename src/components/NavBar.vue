@@ -50,12 +50,10 @@ export default {
   }
   padding: 0 5px;
   position: fixed;
-  display: flex;
   z-index: 5;
   top: 0;
   left: 0;
   right: 0;
-  height: 48px;
   background: #34495e;
   color: #fff;
   align-items: center;
@@ -63,6 +61,19 @@ export default {
   transition: all 0.5s;
   .btn {
     background: #41b883;
+  }
+  .nav-contents {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px;
+
+    .close-btn {
+      display: none;
+    }
   }
 }
 
@@ -72,27 +83,16 @@ export default {
   pointer-events: none;
 }
 
-@media screen and (max-width: 700px) {
-  .veiw-type {
-    padding: 5px;
-    margin: 5px;
-    color: #fff;
-  }
+.veiw-type {
+  padding: 5px;
+  margin: 5px;
+  color: #fff;
+}
 
-  .close-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: -10px;
-    right: -5px;
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    background: red;
-    cursor: pointer;
-  }
+@media screen and (max-width: 700px) {
   .nav-container {
+    display: flex;
+
     opacity: 0;
     pointer-events: none;
     justify-content: center;
@@ -103,6 +103,21 @@ export default {
     left: 0;
     background: rgba(0, 0, 0, 0.25);
     .nav-contents {
+      .close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -10px;
+        right: -5px;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background: red;
+        cursor: pointer;
+      }
+      display: block;
+      width: fit-content;
       position: relative;
       background: #34495e;
       padding: 15px;

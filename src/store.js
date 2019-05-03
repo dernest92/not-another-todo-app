@@ -3,6 +3,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import TaskService from "./services/TaskService";
 import router from "./router.js";
+import moment from 'moment'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -249,6 +250,11 @@ export default new Vuex.Store({
     },
     priorities: state => {
       return state.priorities;
+    },
+    pastDueTasks: state => {
+      const today = moment().startOf('day').toISOString();
+      const tasks = state.tasks.filter(task => (task.date !== false && task.completed === false));
+      return tasks.filter(task => (task.date && moment(task.date).isSameOrBefore(today)));
     }
   }
 });

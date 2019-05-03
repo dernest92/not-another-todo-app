@@ -22,6 +22,7 @@
 <script>
 import moment from "moment";
 import Task from "./Task.vue";
+import { setTimeout } from "timers";
 export default {
   components: {
     Task
@@ -51,7 +52,9 @@ export default {
         if (durr < 250) {
           this.goToDay();
         } else {
-          this.startNewTask();
+          setTimeout(() => {
+            this.startNewTask();
+          }, 0);
         }
       }
       this.scrolled = false;

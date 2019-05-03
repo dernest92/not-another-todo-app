@@ -65,15 +65,6 @@ export default {
   },
   data() {
     return {
-      itemPosStart: {
-        x: 0,
-        y: 0,
-        startTime: 0
-      },
-      itemPos: {
-        bottom: 5,
-        right: 5
-      },
       touchstart: {
         clientX: null,
         clientY: null

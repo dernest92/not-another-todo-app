@@ -32,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 .day-task {
   background: #f4f4f4;
-  margin: 2px;
+  margin: 5px 2px;
   border-radius: 5px;
   display: grid;
   grid-template-columns: 20px calc(100% - 25px);
