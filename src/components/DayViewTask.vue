@@ -1,7 +1,7 @@
 <template>
   <div class="day-task">
     <input @change="toggleComplete" class="check" type="checkbox" v-model="taskEdits.completed">
-    {{task.title}}
+    <div @click="startEditTask(task._id)" class="task-title">{{task.title}}</div>
   </div>
 </template>
 
@@ -18,6 +18,9 @@ export default {
   methods: {
     toggleComplete() {
       this.$store.dispatch("updateTask", this.taskEdits);
+    },
+    startEditTask(id) {
+      this.$store.dispatch("startEditTask", id);
     }
   },
   created() {
@@ -26,5 +29,27 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.day-task {
+  background: #f4f4f4;
+  margin: 2px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 20px calc(100% - 25px);
+  justify-content: start;
+  align-items: center;
+  padding: 5px;
+  grid-gap: 5px;
+  .check {
+    display: block;
+    justify-self: center;
+    height: 15px;
+    width: 15px;
+  }
+}
+.task-title {
+  width: 100%;
+  text-align: left;
+  text-overflow: ellipsis;
+}
 </style>

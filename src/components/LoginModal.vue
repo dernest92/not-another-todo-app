@@ -1,5 +1,5 @@
 <template>
-  <div @click="attemptCloseModal" class="modal-container close-modal">
+  <div class="modal-container close-modal">
     <div class="modal-card">
       <form @submit.prevent>
         <div v-if="newUser" class="form-group">
@@ -27,7 +27,6 @@
           >
         </div>
         <div class="btn-group">
-          <button type="reset" @click="closeModal" class="btn btn-flat">cancel</button>
           <button
             v-if="newUser"
             type="submit"
@@ -80,9 +79,6 @@ export default {
     };
   },
   methods: {
-    closeModal() {
-      this.$store.dispatch("setLoginOpen", false);
-    },
     async submitLogin(e) {
       try {
         await this.$store.dispatch("submitLogin", this.loginUser);
@@ -98,11 +94,6 @@ export default {
         });
       } catch (e) {
         console.log("could not log in");
-      }
-    },
-    attemptCloseModal(e) {
-      if (e.target.classList.contains("close-modal")) {
-        this.closeModal();
       }
     },
     editTitle() {

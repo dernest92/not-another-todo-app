@@ -7,6 +7,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    navmenu: {
+      isOpen: false
+    },
     dayView: {
       currentDay: ""
     },
@@ -32,6 +35,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_NAV_MENU(state, menuState) {
+      state.navmenu.isOpen = menuState;
+    },
     UPDATE_TASK(state, updatedTask) {
       const index = state.tasks.findIndex(task => task._id === updatedTask._id);
       state.tasks[index] = updatedTask;
@@ -86,6 +92,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setNavMenu({ commit }, menuState) {
+      commit("SET_NAV_MENU", menuState);
+    },
     setUserToken({ commit }, { user, token }) {
       commit("SET_USER", user);
       commit("SET_LOGGED_IN", true);

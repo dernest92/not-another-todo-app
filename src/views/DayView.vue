@@ -1,9 +1,11 @@
 <template>
   <div>
+    <router-link to="/calendar">back to calendar</router-link>
+    <EditTaskModal v-if="editModalState.isOpen"/>
     <div class="day-card">
       hello
       <div>
-        <DayViewTask v-for="task in todaysTasks" :key="task._id" class="day-task" :task="task"/>
+        <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
   </div>
@@ -83,30 +85,12 @@ export default {
 
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .day-card {
   background: #fff;
   overflow: hidden;
   padding: 10px;
   height: 100%;
-  width: 500px;
-}
-
-.day-task {
-  background: #f4f4f4;
-  margin: 2px;
-  border-radius: 5px;
-  display: grid;
-  grid-template-columns: 20px auto;
-  justify-content: start;
-  align-items: center;
-  padding: 5px;
-  grid-gap: 5px;
-  .check {
-    display: block;
-    justify-self: center;
-    height: 15px;
-    width: 15px;
-  }
+  width: 100%;
 }
 </style>

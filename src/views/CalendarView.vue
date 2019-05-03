@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <LoginModal v-if="loginModalOpen"/>
-    <NewTaskModal v-if="newModalOpen"/>
     <EditTaskModal v-if="editModalState.isOpen"/>
-
+    <div v-if="navMenuOpen">LOOK IM A MENU</div>
     <UserBlock class="user-block"/>
     <div class="layout">
       <div
@@ -13,11 +11,11 @@
         class="container month-container"
       >
         <div class="month-banner">
-          <button class="nav-btn" @click="chageMonth(-1)">
+          <button class="nav-btn" @click="changeMonth(-1)">
             <i class="fas fa-chevron-left"></i>
           </button>
           <div class="date-label">{{displayDate}}</div>
-          <button class="nav-btn" @click="chageMonth(1)">
+          <button class="nav-btn" @click="changeMonth(1)">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
@@ -91,14 +89,16 @@ export default {
       const diffY = clientY - startY;
       if (diffY > 100 && diffX < 100) {
         console.log("swipe down");
+        this.$store.dispatch("setNavMenu", true);
       } else if (diffY < -100 && diffX < 100) {
+        this.$store.dispatch("setNavMenu", false);
         console.log("swipe up");
       } else if (diffY < 100 && diffX < -100) {
         console.log("swipe left");
-        this.chageMonth(1);
+        this.changeMonth(1);
       } else if (diffY < 100 && diffX > 100) {
         console.log("swipe right");
-        this.chageMonth(-1);
+        this.changeMonth(-1);
       }
     },
     touchmove_handler(e) {
@@ -122,7 +122,7 @@ export default {
       this.weeks = weeks;
     },
 
-    chageMonth(qty) {
+    changeMonth(qty) {
       if (this.month === 11 && qty > 0) {
         this.month = 0;
         this.year++;
@@ -141,6 +141,9 @@ export default {
     }
   },
   computed: {
+    navMenuOpen() {
+      return this.$store.state.navmenu.isOpen;
+    },
     loginModalOpen() {
       return this.$store.state.loginModal.isOpen;
     },

@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
           <label>Notes</label>
-          <textarea @input="resize" class="txt-area" cols="50" v-model="taskEdits.notes"></textarea>
+          <textarea @input="resize" class="txt-area" v-model="taskEdits.notes"></textarea>
         </div>
         <div class="form-group">
           <label>Completed</label>

@@ -113,8 +113,6 @@ export default {
       this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
       this.$router.push("calendar");
-    } else {
-      this.$store.dispatch("setLoginOpen", true);
     }
   }
 };
