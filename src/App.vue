@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <nav-bar/>
     <LoadingModal v-if="loading"/>
     <router-view :key="$route.fullPath"/>
   </div>
@@ -10,10 +11,12 @@ import LoadingModal from "./components/LoadingModal.vue";
 import moment from "moment";
 import TaskService from "./services/TaskService.js";
 import LoadingModalVue from "./components/LoadingModal.vue";
+import NavBar from "./components/NavBar.vue";
 export default {
   name: "app",
   components: {
-    LoadingModal
+    LoadingModal,
+    NavBar
   },
   data() {
     return {};

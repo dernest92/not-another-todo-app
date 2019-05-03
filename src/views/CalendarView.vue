@@ -3,7 +3,6 @@
     <EditTaskModal v-if="editModalState.isOpen"/>
     <NewTaskModal v-if="newModalOpen"/>
     <div v-if="navMenuOpen">LOOK IM A MENU</div>
-    <UserBlock class="user-block"/>
     <div class="layout">
       <div
         @touchstart="touchstart_handler"
@@ -50,10 +49,8 @@
 import Week from "../components/Week.vue";
 import NewTaskModal from "../components/NewTaskModal.vue";
 import EditTaskModal from "../components/EditTaskModal.vue";
-import LoginModal from "../components/LoginModal.vue";
 import moment from "moment";
 import Unassigned from "../components/Unassigned.vue";
-import UserBlock from "../components/UserBlock.vue";
 import TaskService from "../services/TaskService.js";
 export default {
   name: "app",
@@ -61,9 +58,7 @@ export default {
     Week,
     NewTaskModal,
     EditTaskModal,
-    Unassigned,
-    UserBlock,
-    LoginModal
+    Unassigned
   },
   data() {
     return {
