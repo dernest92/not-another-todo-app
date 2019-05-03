@@ -95,7 +95,10 @@ export default {
 <style>
 
 .full-page {
-  min-height: 100vh;
-  min-width: 100vw;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 </style>
