@@ -1,25 +1,21 @@
 <template>
-  <div class="full-page"
-        @touchstart="touchstart_handler"
-        @touchend="touchend_handler"
-  >
-   <nav-bar/>
-  <div>
-  <select v-model="query">
-    <option v-for="option in queryOptions" :value="option">{{option.name}}</option>
-  </select>
-
-  </div>
+  <div class="full-fixed-page" @touchstart="touchstart_handler" @touchend="touchend_handler">
+    <nav-bar/>
     <EditTaskModal v-if="editModalState.isOpen"/>
-    <task-list :title="query.name" :tasks="tasks"/>
+    <div class="page__contents">
+      <select v-model="query">
+        <option v-for="(option, index) in queryOptions" :value="option" :key="index">{{option.name}}</option>
+      </select>
+      <task-list :title="query.name" :tasks="tasks"/>
+    </div>
   </div>
 </template>
 
 <script>
 import TaskList from "../components/TaskList.vue";
 import EditTaskModal from "../components/EditTaskModal.vue";
-import NavBar from '../components/NavBar.vue'
-import moment from 'moment'
+import NavBar from "../components/NavBar.vue";
+import moment from "moment";
 export default {
   components: {
     TaskList,
@@ -31,20 +27,22 @@ export default {
       query: {},
       queryOptions: [
         {
-          name: 'Incomplete',
+          name: "Incomplete",
           query: task => task.completed !== true
         },
         {
-          name: 'Past Due',
+          name: "Past Due",
           query: task => {
-            const today = moment().startOf('day').toISOString();
+            const today = moment()
+              .startOf("day")
+              .toISOString();
             if (task.date && !task.completed) {
-              return moment(task.date).isBefore(today)
+              return moment(task.date).isBefore(today);
             }
           }
         },
         {
-          name: 'No Date',
+          name: "No Date",
           query: task => task.date === false
         }
       ]
@@ -69,10 +67,9 @@ export default {
       } else if (diffY < 100 && diffX > 100) {
       }
     }
-
   },
   created() {
-    this.query = this.queryOptions[0]
+    this.query = this.queryOptions[0];
     this.$store.dispatch("setNavMenu", false);
   },
   computed: {
@@ -80,21 +77,21 @@ export default {
       return this.$store.getters.unassignedTasks;
     },
     pastDueTasks() {
-      return this.$store.getters.pastDueTasks
+      return this.$store.getters.pastDueTasks;
     },
     editModalState() {
       return this.$store.getters.editTaskModal;
     },
     tasks() {
-      return this.$store.getters.taskQuery(this.query.query)
+      return this.$store.getters.taskQuery(this.query.query);
     }
   }
 };
 </script>
 
 <style>
-
 .full-page {
+  padding-top: 48px;
   position: absolute;
   top: 0;
   bottom: 0;

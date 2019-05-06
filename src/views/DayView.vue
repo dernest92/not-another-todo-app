@@ -1,21 +1,20 @@
 <template>
-  <div class="full-page"
-          @touchstart="touchstart_handler"
-        @touchend="touchend_handler"
-  >
-    <nav-bar />
+  <div class="full-fixed-page" @touchstart="touchstart_handler" @touchend="touchend_handler">
     <EditTaskModal v-if="editModalState.isOpen"/>
-    <div class="day-card">
-      {{displayDate}}
-      <div>
-        <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
+    <nav-bar/>
+    <div class="page__content">
+      <div class="day-card">
+        {{displayDate}}
+        <div>
+          <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import NavBar from '../components/NavBar.vue'
+import NavBar from "../components/NavBar.vue";
 import NewTaskModal from "../components/NewTaskModal.vue";
 import EditTaskModal from "../components/EditTaskModal.vue";
 import DayViewTask from "../components/DayViewTask.vue";
@@ -39,8 +38,10 @@ export default {
   },
   methods: {
     changeDay(qty) {
-      const day = moment(this.todaysDate).add('days',qty).toISOString()
-      this.$store.dispatch('setCurrentDay', day)
+      const day = moment(this.todaysDate)
+        .add("days", qty)
+        .toISOString();
+      this.$store.dispatch("setCurrentDay", day);
     },
     touchstart_handler(e) {
       const { clientX, clientY } = e.changedTouches[0];
@@ -57,9 +58,9 @@ export default {
       } else if (diffY < -100 && diffX < 100) {
         this.$store.dispatch("setNavMenu", false);
       } else if (diffY < 100 && diffX < -100) {
-        this.changeDay(1)
+        this.changeDay(1);
       } else if (diffY < 100 && diffX > 100) {
-        this.changeDay(-1)
+        this.changeDay(-1);
       }
     },
     setWeeks() {
@@ -89,7 +90,9 @@ export default {
       return this.$store.state.dayView.currentDay;
     },
     displayDate() {
-      return moment(this.$store.state.dayView.currentDay).format('dddd, MMMM Do YYYY')
+      return moment(this.$store.state.dayView.currentDay).format(
+        "dddd, MMMM Do YYYY"
+      );
     },
     todaysTasks() {
       return this.$store.getters.todaysTasks(this.todaysDate);
@@ -119,6 +122,7 @@ export default {
 }
 
 .full-page {
+  padding-top: 48px;
   position: absolute;
   top: 0;
   bottom: 0;

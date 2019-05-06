@@ -1,45 +1,47 @@
 <template>
-  <div id="app">
+  <div
+    class="full-fixed-page"
+    @touchstart="touchstart_handler"
+    @touchend="touchend_handler"
+    @touchmove="touchmove_handler"
+  >
     <nav-bar/>
     <EditTaskModal v-if="editModalState.isOpen"/>
     <NewTaskModal v-if="newModalOpen"/>
-    <div class="layout">
-      <div
-        class="container month-container"
-        @touchstart="touchstart_handler"
-        @touchend="touchend_handler"
-        @touchmove="touchmove_handler"
-      >
-        <div class="month-banner">
-          <button class="nav-btn" @click="changeMonth(-1)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <div class="date-label">{{displayDate}}</div>
-          <button class="nav-btn" @click="changeMonth(1)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-        <div class="month">
-          <div class="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Teu</div>
-            <div>Wed</div>
-            <div>Thr</div>
-            <div>Fri</div>
-            <div>Sat</div>
+    <div class="page__content">
+      <div class="page-content__calendar-veiw">
+        <div class="month-col">
+          <div class="month-banner">
+            <button class="nav-btn" @click="changeMonth(-1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="date-label">{{displayDate}}</div>
+            <button class="nav-btn" @click="changeMonth(1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
-          <Week
-            v-for="(week, index) in weeks"
-            class="week"
-            :key="week"
-            :startDay="week"
-            :isFirstWeek="index === 0 ? true : false "
-          />
+          <div class="month">
+            <div class="weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Teu</div>
+              <div>Wed</div>
+              <div>Thr</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+            <Week
+              v-for="(week, index) in weeks"
+              class="week"
+              :key="week"
+              :startDay="week"
+              :isFirstWeek="index === 0 ? true : false "
+            />
+          </div>
         </div>
-      </div>
-      <div class="container unassinged-container">
-        <Unassigned class="no-date-tasks"/>
+        <div class="container unassinged-container">
+          <Unassigned class="no-date-tasks"/>
+        </div>
       </div>
     </div>
   </div>
@@ -160,7 +162,7 @@ export default {
     }
   },
   async created() {
-        this.$store.dispatch("setNavMenu", false);
+    this.$store.dispatch("setNavMenu", false);
 
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));

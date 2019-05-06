@@ -27,8 +27,6 @@ export default {
     }
   },
   async created() {
-    console.log("create app ran");
-
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
     TaskService.setToken(token);
@@ -51,10 +49,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/styles/global.scss";
+@import "./assets/styles/layout.scss";
 
-.weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, auto);
-  background: #ccc;
-}
+@import "./assets/styles/layout-mobile.scss";
 </style>
