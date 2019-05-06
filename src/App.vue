@@ -33,6 +33,7 @@ export default {
     if (token && user) {
       this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
+      await this.$store.dispatch("fetchCategories");
     } else {
       this.$store.dispatch("setLoading", false);
     }

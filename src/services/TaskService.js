@@ -10,6 +10,9 @@ const apiClient = axios.create({
 });
 
 export default {
+  getCategories() {
+    return apiClient.get("/category");
+  },
   getTasks() {
     return apiClient.get("/tasks");
   },
@@ -17,8 +20,8 @@ export default {
     return apiClient.post("/tasks", task);
   },
   updateTask(task) {
-    const { completed, title, priority, notes, date } = task;
-    const updates = { completed, title, priority, notes, date };
+    const { completed, title, priority, notes, date, category } = task;
+    const updates = { completed, title, priority, notes, date, category };
     return apiClient.patch(`/tasks/${task._id}`, updates);
   },
   deleteTask(id) {

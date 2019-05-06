@@ -3,11 +3,12 @@ import Vue from "vue";
 import Vuex from "vuex";
 import TaskService from "./services/TaskService";
 import router from "./router.js";
-import moment from 'moment'
+import moment from "moment";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    categories: [],
     loading: true,
     navmenu: {
       isOpen: false
@@ -33,10 +34,17 @@ export default new Vuex.Store({
     monthStart: {},
     tasks: [],
     dragTask: "",
-    dragDay: ""
+    dragDay: "",
+    sideMenu: true
   },
 
   mutations: {
+    SET_SIDE_MENU(state, isOpen) {
+      state.sideMenu = isOpen;
+    },
+    SET_CATEGORIES(state, categories) {
+      state.categories = categories;
+    },
     SET_LOADING(state, loading) {
       state.loading = loading;
     },
@@ -97,6 +105,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    toggleMenu({ commit, state }) {
+      const menuOpen = !state.sideMenu;
+      commit("SET_SIDE_MENU", menuOpen);
+    },
+    setCategories({ commit }, categories) {
+      commit("SET_CATEGORIES", categories);
+    },
+    async fetchCategories({ commit }) {
+      const res = await TaskService.getCategories();
+      const categories = await res.data;
+      commit("SET_CATEGORIES", categories);
+    },
     setLoading({ commit }, loading) {
       commit("SET_LOADING", loading);
     },
@@ -230,6 +250,14 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    categories: state => {
+      return state.categories.map(category => {
+        return {
+          name: category.name,
+          id: category._id
+        };
+      });
+    },
     unassignedTasks: state => {
       return state.tasks.filter(task => task.date === false);
     },
@@ -252,12 +280,18 @@ export default new Vuex.Store({
       return state.priorities;
     },
     pastDueTasks: state => {
-      const today = moment().startOf('day').toISOString();
-      const tasks = state.tasks.filter(task => (task.date !== false && task.completed === false));
-      return tasks.filter(task => (task.date && moment(task.date).isSameOrBefore(today)));
+      const today = moment()
+        .startOf("day")
+        .toISOString();
+      const tasks = state.tasks.filter(
+        task => task.date !== false && task.completed === false
+      );
+      return tasks.filter(
+        task => task.date && moment(task.date).isSameOrBefore(today)
+      );
     },
     taskQuery: state => query => {
-      return state.tasks.filter(task => query(task))
+      return state.tasks.filter(task => query(task));
     }
   }
 });

@@ -19,6 +19,17 @@
           </select>
         </div>
         <div class="form-group">
+          <label for>Category</label>
+          <select v-model="newTask.category" class="full">
+            <option value disabled selected class="placeholder-option">category</option>
+            <option
+              v-for="(category, index) in categories"
+              :key="index"
+              :value="category.id"
+            >{{category.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label>Notes</label>
           <textarea @input="resize" class="txt-area" id cols="50" rows="15" v-model="newTask.notes"></textarea>
         </div>
@@ -41,7 +52,8 @@ export default {
         priority: "",
         date: "",
         notes: "",
-        completed: false
+        completed: false,
+        category: ""
       }
     };
   },
@@ -62,6 +74,9 @@ export default {
     }
   },
   computed: {
+    categories() {
+      return this.$store.getters.categories;
+    },
     dateFromCal() {
       return this.$store.getters.newTaskDate;
     },

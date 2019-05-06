@@ -18,6 +18,17 @@
           </select>
         </div>
         <div class="form-group">
+          <label for>Category</label>
+          <select v-model="taskEdits.category" class="full">
+            <option value disabled selected class="placeholder-option">category</option>
+            <option
+              v-for="(category, index) in categories"
+              :key="index"
+              :value="category.id"
+            >{{category.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label>Notes</label>
           <textarea @input="resize" class="txt-area" v-model="taskEdits.notes"></textarea>
         </div>
@@ -94,6 +105,9 @@ export default {
     }
   },
   computed: {
+    categories() {
+      return this.$store.getters.categories;
+    },
     selectedTask() {
       return this.$store.state.editTaskModal.selectedTask;
     },

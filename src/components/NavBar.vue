@@ -5,6 +5,9 @@
         <div @click="closeNav" class="close-btn">
           <i class="fas fa-times"></i>
         </div>
+        <div class="menu-btn">
+          <button @click="toggleMenu">menu</button>
+        </div>
         <div class="view">
           <router-link to="/calendar" class="veiw-type">Month</router-link>
           <router-link to="/day" class="veiw-type">Day</router-link>
@@ -21,6 +24,10 @@
 <script>
 export default {
   methods: {
+    toggleMenu() {
+      console.log("toggle menu");
+      this.$store.dispatch("toggleMenu");
+    },
     logout() {
       this.$store.dispatch("logout");
     },
@@ -41,5 +48,8 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
 
 

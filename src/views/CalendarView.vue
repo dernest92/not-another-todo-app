@@ -10,6 +10,7 @@
     <NewTaskModal v-if="newModalOpen"/>
     <div class="page__content">
       <div class="page-content__calendar-veiw">
+        <div class="page-content__menu" :class="{open: sideMenu}">heyoo</div>
         <div class="month-col">
           <div class="month-banner">
             <button class="nav-btn" @click="changeMonth(-1)">
@@ -138,6 +139,9 @@ export default {
     }
   },
   computed: {
+    sideMenu() {
+      return this.$store.state.sideMenu;
+    },
     navMenuOpen() {
       return this.$store.state.navmenu.isOpen;
     },
@@ -178,7 +182,16 @@ export default {
 
 
 <style lang="scss">
-@import "../assets/styles/global.scss";
+.page-content__menu {
+  width: 0;
+  background: red;
+  overflow: hidden;
+  transition: all 0.5s;
+
+  &.open {
+    width: 400px;
+  }
+}
 
 .weekdays {
   display: grid;
