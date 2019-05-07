@@ -6,25 +6,32 @@
       <router-link to="/list" class="link">List</router-link>
     </div>
     <div class="categories">
-      <h2>Category</h2>
-      <div
-        class="checkbox-label"
-        v-for="(category, index) in categories"
-        :key="index"
-        :value="category.id"
-      >
-        <input type="checkbox" :value="category.id" v-model="selectedCategories" @change="update">
-        {{category.name}}
+      <div>
+        Filter Category
+        <toggle-slider @input="changeFilter" v-model="filter"/>
       </div>
-      <div v-if="addingCategory">
-        <input type="text" ref="newCat" v-model="newCatName">
-      </div>
-      <div v-if="!addingCategory">
-        <button @click="addCategory">Add Category</button>
-      </div>
-      <div v-if="addingCategory">
-        <button @click="saveCategory">Save</button>
-        <button @click="cancelCategory">Cancel</button>
+
+      <div v-if="filter" class="filter-categories">
+        <div
+          class="checkbox-label"
+          v-for="(category, index) in categories"
+          :key="index"
+          :value="category.id"
+        >
+          <input type="checkbox" :value="category.id" v-model="selectedCategories" @change="update">
+          {{category.name}}
+        </div>
+
+        <div v-if="addingCategory">
+          <input type="text" ref="newCat" v-model="newCatName">
+        </div>
+        <div v-if="!addingCategory">
+          <button @click="addCategory">Add Category</button>
+        </div>
+        <div v-if="addingCategory">
+          <button @click="saveCategory">Save</button>
+          <button @click="cancelCategory">Cancel</button>
+        </div>
       </div>
     </div>
     <button @click="logout" class="btn">Logout</button>
@@ -35,6 +42,7 @@
 export default {
   data() {
     return {
+      filter: false,
       addingCategory: false,
       newCatName: "",
       selectedCategories: [],
@@ -61,6 +69,9 @@ export default {
     }, 0);
   },
   methods: {
+    changeFilter() {
+      this.$store.dispatch("toggleCatFilter", this.filter);
+    },
     closeMobileMenu() {
       this.$store.dispatch("closeMobileMenu");
     },

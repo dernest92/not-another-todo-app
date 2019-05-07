@@ -47,7 +47,6 @@ export default {
     },
     touchend_handler(e) {
       const durr = e.timeStamp - this.startTouch;
-      console.log(durr);
       if (!this.scrolled) {
         if (durr < 250) {
           this.goToDay();

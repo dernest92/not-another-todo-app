@@ -95,7 +95,6 @@ export default {
     }
   },
   created() {
-    console.log("ran created");
     this.newTask.date = this.dateFromCal;
   }
 };

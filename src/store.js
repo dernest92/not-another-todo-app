@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    filterCategory: false,
     selectedCategories: [],
     categories: [],
     loading: true,
@@ -41,6 +42,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    TOGGLE_CAT_FILTER(state, filter) {
+      state.filterCategory = filter;
+    },
     SET_SELECTED_CATEGORIES(state, categories) {
       state.selectedCategories = categories;
     },
@@ -113,6 +117,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    toggleCatFilter({ commit }, filter) {
+      commit("TOGGLE_CAT_FILTER", filter);
+    },
     selectCategory({ commit }, categories) {
       commit("SET_SELECTED_CATEGORIES", categories);
     },
@@ -177,7 +184,6 @@ export default new Vuex.Store({
         localStorage.setItem("user", JSON.stringify(user));
         TaskService.setToken(token);
       } catch (e) {
-        console.log("error regeistering");
       } finally {
         commit("SET_LOADING", false);
       }
@@ -195,7 +201,6 @@ export default new Vuex.Store({
         localStorage.setItem("user", JSON.stringify(user));
         dispatch("fetchTasks");
       } catch (e) {
-        console.log("unable to log in");
       } finally {
         commit("SET_LOADING", false);
       }
@@ -216,7 +221,6 @@ export default new Vuex.Store({
         commit("SET_DRAG_TASK", "");
         commit("SET_DRAG_DAY", "");
       } else {
-        console.log(res);
       }
     },
     setMonthStart({ commit }, start) {
@@ -239,10 +243,7 @@ export default new Vuex.Store({
         } else {
           throw new Error("Failed to create");
         }
-      } catch (e) {
-        // eslint-disable-next-line
-        console.log(new Error("Failed to create"));
-      }
+      } catch (e) {}
     },
     async fetchTasks({ commit }) {
       const res = await TaskService.getTasks();
@@ -295,11 +296,15 @@ export default new Vuex.Store({
       return state.tasks.filter(task => task.date === false);
     },
     todaysTasks: state => date => {
-      return state.tasks.filter(
-        event =>
-          event.date === date &&
-          state.selectedCategories.includes(event.category)
-      );
+      if (state.filterCategory) {
+        return state.tasks.filter(
+          event =>
+            event.date === date &&
+            state.selectedCategories.includes(event.category)
+        );
+      } else {
+        return state.tasks.filter(event => event.date === date);
+      }
     },
     newTaskModal: state => {
       return state.newTaskModal.isOpen;
