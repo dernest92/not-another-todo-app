@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <LoadingModal v-if="loading"/>
-    <router-view :key="$route.fullPath"/>
+    <nav-bar class="nav-area"/>
+    <SideMenu class="menu-area"/>
+    <div class="content-area">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -11,11 +15,13 @@ import moment from "moment";
 import TaskService from "./services/TaskService.js";
 import LoadingModalVue from "./components/LoadingModal.vue";
 import NavBar from "./components/NavBar.vue";
+import SideMenu from "./components/SideMenu.vue";
 export default {
   name: "app",
   components: {
     LoadingModal,
-    NavBar
+    NavBar,
+    SideMenu
   },
   data() {
     return {};
@@ -51,6 +57,32 @@ export default {
 <style lang="scss">
 @import "./assets/styles/global.scss";
 @import "./assets/styles/layout.scss";
-
 @import "./assets/styles/layout-mobile.scss";
+
+#app {
+  display: grid;
+  grid-template-rows: 48px auto;
+  grid-auto-columns: minmax(0, max-content) auto;
+  grid-template-areas:
+    "top top"
+    "menu content";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.nav-area {
+  grid-area: top;
+}
+
+.menu-area {
+  grid-area: menu;
+}
+
+.content-area {
+  grid-area: content;
+  background: #fff;
+}
 </style>

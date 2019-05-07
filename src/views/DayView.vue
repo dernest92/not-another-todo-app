@@ -1,20 +1,15 @@
 <template>
-  <div class="full-fixed-page" @touchstart="touchstart_handler" @touchend="touchend_handler">
-    <EditTaskModal v-if="editModalState.isOpen"/>
-    <nav-bar/>
-    <div class="page__content">
-      <div class="day-card">
-        {{displayDate}}
-        <div>
-          <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
-        </div>
+  <div>
+    <div class="day-card">
+      {{displayDate}}
+      <div>
+        <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import NavBar from "../components/NavBar.vue";
 import NewTaskModal from "../components/NewTaskModal.vue";
 import EditTaskModal from "../components/EditTaskModal.vue";
 import DayViewTask from "../components/DayViewTask.vue";
@@ -25,8 +20,7 @@ export default {
   components: {
     NewTaskModal,
     EditTaskModal,
-    DayViewTask,
-    NavBar
+    DayViewTask
   },
   data() {
     return {

@@ -1,49 +1,36 @@
 <template>
-  <div
-    class="full-fixed-page"
-    @touchstart="touchstart_handler"
-    @touchend="touchend_handler"
-    @touchmove="touchmove_handler"
-  >
-    <nav-bar/>
-    <EditTaskModal v-if="editModalState.isOpen"/>
-    <NewTaskModal v-if="newModalOpen"/>
-    <div class="page__content">
-      <div class="page-content__calendar-veiw">
-        <SideMenu/>
-        <div class="month-col">
-          <div class="month-banner">
-            <button class="nav-btn" @click="changeMonth(-1)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="date-label">{{displayDate}}</div>
-            <button class="nav-btn" @click="changeMonth(1)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-          <div class="month">
-            <div class="weekdays">
-              <div>Sun</div>
-              <div>Mon</div>
-              <div>Teu</div>
-              <div>Wed</div>
-              <div>Thr</div>
-              <div>Fri</div>
-              <div>Sat</div>
-            </div>
-            <Week
-              v-for="(week, index) in weeks"
-              class="week"
-              :key="week"
-              :startDay="week"
-              :isFirstWeek="index === 0 ? true : false "
-            />
-          </div>
-        </div>
-        <div class="container unassinged-container">
-          <Unassigned class="no-date-tasks"/>
-        </div>
+  <div class="month-view">
+    <div class="month-col">
+      <div class="month-banner">
+        <button class="nav-btn" @click="changeMonth(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="date-label">{{displayDate}}</div>
+        <button class="nav-btn" @click="changeMonth(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
+      <div class="month">
+        <div class="weekdays">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Teu</div>
+          <div>Wed</div>
+          <div>Thr</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <Week
+          v-for="(week, index) in weeks"
+          class="week"
+          :key="week"
+          :startDay="week"
+          :isFirstWeek="index === 0 ? true : false "
+        />
+      </div>
+    </div>
+    <div class="container unassinged-container">
+      <Unassigned class="no-date-tasks"/>
     </div>
   </div>
 </template>
@@ -184,6 +171,12 @@ export default {
 
 
 <style lang="scss">
+.month-view {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 250px;
+}
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, auto);

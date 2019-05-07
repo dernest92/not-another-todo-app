@@ -5,7 +5,7 @@
     @dragover.prevent="dragover_handler"
   >
     <div class="title">
-      Unassinged
+      No Date
       <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
 

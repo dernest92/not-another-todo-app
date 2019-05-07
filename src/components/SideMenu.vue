@@ -93,6 +93,9 @@ export default {
 .checkbox-label {
   display: flex;
   align-items: center;
+  border-bottom: #333333 dotted 1px;
+  margin-bottom: 5px;
+
   input[type="checkbox"] {
     display: inline-block;
     width: 15px;

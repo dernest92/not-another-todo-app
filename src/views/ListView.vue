@@ -1,26 +1,18 @@
 <template>
-  <div class="full-fixed-page" @touchstart="touchstart_handler" @touchend="touchend_handler">
-    <nav-bar/>
-    <EditTaskModal v-if="editModalState.isOpen"/>
-    <div class="page__contents">
-      <select v-model="query">
-        <option v-for="(option, index) in queryOptions" :value="option" :key="index">{{option.name}}</option>
-      </select>
-      <task-list :title="query.name" :tasks="tasks"/>
-    </div>
+  <div>
+    <select v-model="query">
+      <option v-for="(option, index) in queryOptions" :value="option" :key="index">{{option.name}}</option>
+    </select>
+    <task-list :title="query.name" :tasks="tasks"/>
   </div>
 </template>
 
 <script>
 import TaskList from "../components/TaskList.vue";
-import EditTaskModal from "../components/EditTaskModal.vue";
-import NavBar from "../components/NavBar.vue";
 import moment from "moment";
 export default {
   components: {
-    TaskList,
-    EditTaskModal,
-    NavBar
+    TaskList
   },
   data() {
     return {
