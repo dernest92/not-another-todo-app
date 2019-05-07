@@ -13,6 +13,9 @@ export default {
   getCategories() {
     return apiClient.get("/category");
   },
+  createCategory(category) {
+    return apiClient.post("/category", category);
+  },
   getTasks() {
     return apiClient.get("/tasks");
   },

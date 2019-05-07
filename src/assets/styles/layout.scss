@@ -62,5 +62,5 @@ $navbar-height: 45px;
 .page-content__calendar-veiw {
   height: 100%;
   display: grid;
-  grid-template-columns: auto auto 400px;
+  grid-template-columns: minmax(auto, max-content) auto 400px;
 }

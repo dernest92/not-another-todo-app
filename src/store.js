@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    selectedCategories: [],
     categories: [],
     loading: true,
     navmenu: {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_SELECTED_CATEGORIES(state, categories) {
+      state.selectedCategories = categories;
+    },
     SET_SIDE_MENU(state, isOpen) {
       state.sideMenu = isOpen;
     },
@@ -105,6 +109,17 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    selectCategory({ commit }, categories) {
+      commit("SET_SELECTED_CATEGORIES", categories);
+    },
+    async addCategory({ commit, state }, newCat) {
+      const categories = state.categories;
+
+      const res = await TaskService.createCategory(newCat);
+      const newCatRes = await res.data;
+      categories.push(newCatRes);
+      commit("SET_CATEGORIES", categories);
+    },
     toggleMenu({ commit, state }) {
       const menuOpen = !state.sideMenu;
       commit("SET_SIDE_MENU", menuOpen);
@@ -250,6 +265,15 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    selectedTasks: state => {
+      if (state.selectedCategories.length === 0) {
+        return state.tasks;
+      } else {
+        return state.tasks.filter(task =>
+          state.selectedCategories.includes(task.category)
+        );
+      }
+    },
     categories: state => {
       return state.categories.map(category => {
         return {
@@ -262,7 +286,11 @@ export default new Vuex.Store({
       return state.tasks.filter(task => task.date === false);
     },
     todaysTasks: state => date => {
-      return state.tasks.filter(event => event.date === date);
+      return state.tasks.filter(
+        event =>
+          event.date === date &&
+          state.selectedCategories.includes(event.category)
+      );
     },
     newTaskModal: state => {
       return state.newTaskModal.isOpen;
