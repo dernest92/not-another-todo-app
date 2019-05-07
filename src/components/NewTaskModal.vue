@@ -1,5 +1,5 @@
 <template>
-  <div @click="closeModal" class="modal-container close-modal">
+  <div v-if="modalOpen" @click="closeModal" class="modal-container close-modal">
     <div class="modal-card">
       <h2>{{displayDate}}</h2>
       <form @submit.prevent="submitNewTask">
@@ -74,6 +74,9 @@ export default {
     }
   },
   computed: {
+    modalOpen() {
+      return this.$store.state.newTaskModal.isOpen;
+    },
     categories() {
       return this.$store.getters.categories;
     },

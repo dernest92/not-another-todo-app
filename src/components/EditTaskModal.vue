@@ -1,5 +1,5 @@
 <template>
-  <div @click="attemptCloseModal" class="modal-container close-modal">
+  <div v-if="modalOpen" @click="attemptCloseModal" class="modal-container close-modal">
     <div class="modal-card">
       <form @submit.prevent="updateTask">
         <div class="form-group">
@@ -105,6 +105,9 @@ export default {
     }
   },
   computed: {
+    modalOpen() {
+      return this.$store.state.editTaskModal.isOpen;
+    },
     categories() {
       return this.$store.getters.categories;
     },

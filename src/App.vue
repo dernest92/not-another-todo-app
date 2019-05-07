@@ -1,10 +1,15 @@
 <template>
   <div id="app">
+    <NewTaskModal/>
+    <EditTaskModal/>
     <LoadingModal v-if="loading"/>
     <nav-bar class="nav-area"/>
     <SideMenu class="menu-area"/>
     <div class="content-area">
       <router-view></router-view>
+    </div>
+    <div id="add-event">
+      <i class="fas fa-plus"></i>
     </div>
   </div>
 </template>
@@ -16,12 +21,16 @@ import TaskService from "./services/TaskService.js";
 import LoadingModalVue from "./components/LoadingModal.vue";
 import NavBar from "./components/NavBar.vue";
 import SideMenu from "./components/SideMenu.vue";
+import NewTaskModal from "./components/NewTaskModal.vue";
+import EditTaskModal from "./components/EditTaskModal.vue";
 export default {
   name: "app",
   components: {
     LoadingModal,
     NavBar,
-    SideMenu
+    SideMenu,
+    NewTaskModal,
+    EditTaskModal
   },
   data() {
     return {};
@@ -86,6 +95,9 @@ export default {
   background: #fff;
 }
 
+#add-event {
+  display: none;
+}
 @media screen and (max-width: 700px) {
   #app {
     display: grid;
@@ -117,6 +129,21 @@ export default {
   .content-area {
     grid-area: content;
     background: #fff;
+  }
+  #add-event {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #333;
+    color: #fff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.375);
+    cursor: pointer;
   }
 }
 </style>

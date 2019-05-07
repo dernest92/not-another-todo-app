@@ -10,7 +10,13 @@
           <i class="fas fa-chevron-right"></i>
         </button>
       </div>
-      <div class="month">
+      <div
+        class="month"
+        ref="month"
+        @touchstart="touchstart_handler"
+        @touchend="touchend_handler"
+        @touchmove="touchmove_handler"
+      >
         <div class="weekdays">
           <div>Sun</div>
           <div>Mon</div>
@@ -36,24 +42,16 @@
 </template>
 
 <script>
-import NavBar from "../components/NavBar.vue";
 import Week from "../components/Week.vue";
-import NewTaskModal from "../components/NewTaskModal.vue";
-import EditTaskModal from "../components/EditTaskModal.vue";
 import moment from "moment";
 import Unassigned from "../components/Unassigned.vue";
 import TaskService from "../services/TaskService.js";
 import { setTimeout } from "timers";
-import SideMenu from "../components/SideMenu.vue";
 export default {
   name: "app",
   components: {
     Week,
-    NewTaskModal,
-    EditTaskModal,
-    Unassigned,
-    NavBar,
-    SideMenu
+    Unassigned
   },
   data() {
     return {
@@ -88,9 +86,16 @@ export default {
       } else if (diffY < 100 && diffX > 100) {
         this.changeMonth(-1);
       }
+      const monthEl = this.$refs.month;
+      monthEl.style.position = "static";
     },
     touchmove_handler(e) {
-      // this.touchStartPos
+      const monthEl = this.$refs.month;
+      const startX = this.touchstart.clientX;
+      const { clientX, clientY } = e.changedTouches[0];
+      const diffX = clientX - startX;
+      monthEl.style.position = "relative";
+      monthEl.style.left = diffX + "px";
     },
     moment,
     setWeeks() {
