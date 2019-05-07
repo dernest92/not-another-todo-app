@@ -133,6 +133,7 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
+    height: auto;
     background: #fff;
   }
   #add-event {
