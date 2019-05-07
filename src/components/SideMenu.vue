@@ -6,7 +6,7 @@
       <router-link to="/list" class="link">List</router-link>
     </div>
     <div class="categories">
-      <div>
+      <div class="some-header">
         Filter Category
         <toggle-slider @input="changeFilter" v-model="filter"/>
       </div>
@@ -102,6 +102,12 @@ export default {
 
 
 <style lang="scss" scoped>
+.some-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
 .side-menu {
   border-right: none;
   width: 0;

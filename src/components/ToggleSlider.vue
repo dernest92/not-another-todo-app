@@ -24,6 +24,7 @@ $height: $width * (34/60);
 
 .toggle-container {
   display: inline-block;
+  height: $height;
 }
 .switch {
   display: inline-block;

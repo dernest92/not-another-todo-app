@@ -51,5 +51,6 @@ export default {
   width: 100%;
   text-align: left;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 </style>
