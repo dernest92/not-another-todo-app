@@ -17,7 +17,7 @@
         @touchend="touchend_handler"
         @touchmove="touchmove_handler"
       >
-        <div class="weekdays">
+        <div class="week-header">
           <div>Sun</div>
           <div>Mon</div>
           <div>Teu</div>
@@ -35,7 +35,7 @@
         />
       </div>
     </div>
-    <div class="nodate-col container unassinged-container">
+    <div class="nodate-col unassinged-container">
       <Unassigned class="no-date-tasks"/>
     </div>
   </div>
@@ -76,6 +76,11 @@ export default {
       const startY = this.touchstart.clientY;
       const diffX = clientX - startX;
       const diffY = clientY - startY;
+
+      if (diffX != 0) {
+        const monthEl = this.$refs.month;
+        monthEl.style.position = "static";
+      }
       if (diffY > 100 && diffX < 100) {
         this.$store.dispatch("setNavMenu", true);
       } else if (diffY < -100 && diffX < 100) {
@@ -86,8 +91,6 @@ export default {
       } else if (diffY < 100 && diffX > 100) {
         this.changeMonth(-1);
       }
-      const monthEl = this.$refs.month;
-      monthEl.style.position = "static";
     },
     touchmove_handler(e) {
       const monthEl = this.$refs.month;

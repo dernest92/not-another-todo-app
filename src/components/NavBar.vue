@@ -3,7 +3,7 @@
     <nav class="page__navbar" :class="{'nav-open': navMenuOpen}">
       <div class="nav-contents">
         <div class="menu-btn">
-          <button @click="toggleMenu">??</button>
+          <button @click="toggleMenu">Menu</button>
         </div>
       </div>
     </nav>

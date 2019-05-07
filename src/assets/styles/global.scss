@@ -82,7 +82,6 @@
 }
 .no-date-tasks {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
-  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -102,9 +101,8 @@ body {
 }
 
 .month {
-  height: calc(100% - 60px);
+  height: 100%;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
-  border-radius: 5px;
   overflow: hidden;
 }
 $color-danger: #e74c3c;
@@ -152,7 +150,7 @@ $color-primary: #3498db;
 }
 
 .week {
-  height: 20%;
+  height: calc(20% - 5px);
   width: 100%;
 }
 
@@ -288,12 +286,16 @@ label > .label-body {
 }
 
 .month-banner {
+  width: 100%;
+  right: 0;
+  color: #fff;
   display: flex;
+  position: fixed;
+  top: 5px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  margin-bottom: 10px;
+  height: 30px;
 }
 .nav-btn {
   height: 35px;
@@ -301,9 +303,9 @@ label > .label-body {
   border-radius: 50%;
   padding: 0;
   margin: 0 10px;
-  background: #2c3e50;
+  background: #fff;
   i {
-    color: #fff;
+    color: #333;
   }
 }
 
@@ -449,16 +451,12 @@ label > .label-body {
 
 .week-header {
   display: grid;
+  height: 26px;
   grid-template-columns: repeat(7, 1fr);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-
-  .day-header {
-    background: #ccc;
-    color: #333;
-    padding: 5px 0;
-    font-weight: bold;
-  }
+  align-items: center;
+  justify-content: center;
+  background: #ccc;
+  font-weight: bold;
 }
 
 .day-buttons {
@@ -469,16 +467,10 @@ label > .label-body {
 
 @media screen and (max-width: 700px) {
   .month-banner {
-    position: fixed;
     top: 5px;
     width: 100%;
     padding: 0 100px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     height: 30px;
-    margin-bottom: 0;
     color: #fff;
     .nav-btn {
     }

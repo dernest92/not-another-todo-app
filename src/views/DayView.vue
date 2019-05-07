@@ -96,7 +96,6 @@ export default {
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
     if (token && user) {
-      console.log("welcome to today");
     } else {
       this.$router.push({ name: "login-view" });
     }

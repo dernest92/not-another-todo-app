@@ -92,8 +92,7 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
-  height: calc(100% - 80px);
+  height: 100%;
 
   &:hover {
     background: #fcfcfc;
