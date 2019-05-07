@@ -181,6 +181,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-columns: auto 250px;
+  border: 2px blue solid;
 }
 .weekdays {
   display: grid;

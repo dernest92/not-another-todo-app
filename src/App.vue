@@ -80,6 +80,7 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
+  border: 2px red solid;
 }
 
 .nav-area {
@@ -93,6 +94,7 @@ export default {
 .content-area {
   grid-area: content;
   background: #fff;
+  border: 2px yellow solid;
 }
 
 #add-event {
