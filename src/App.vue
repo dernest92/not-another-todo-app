@@ -92,7 +92,6 @@ export default {
 }
 
 .content-area {
-  grid-area: content;
   background: #fff;
   border: 2px yellow solid;
   height: 100%;
@@ -103,8 +102,7 @@ export default {
 }
 @media screen and (max-width: 700px) {
   #app {
-    display: grid;
-    grid-template-rows: 45px auto;
+    grid-template-rows: 45px 100%;
     grid-auto-columns: auto;
     grid-template-areas:
       "top"
