@@ -95,6 +95,7 @@ export default {
   grid-area: content;
   background: #fff;
   border: 2px yellow solid;
+  height: 100%;
 }
 
 #add-event {
