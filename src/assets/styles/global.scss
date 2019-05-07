@@ -469,9 +469,10 @@ label > .label-body {
 
 @media screen and (max-width: 700px) {
   .month-banner {
-    .date-label {
-      font-size: 18px;
-    }
+    position: fixed;
+    top: 5px;
+    width: 100%;
+    padding: 0 100px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -481,7 +482,9 @@ label > .label-body {
     background: #2c3e50;
     color: #fff;
     .nav-btn {
-      display: none;
+    }
+    .date-label {
+      font-size: 18px;
     }
   }
   .modal-card {
