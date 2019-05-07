@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <NewTaskModal/>
-    <EditTaskModal/>
+    <NewTaskModal v-if="newModalOpen"/>
+    <EditTaskModal v-if="editModalOpen"/>
     <LoadingModal v-if="loading"/>
     <nav-bar class="nav-area"/>
     <SideMenu class="menu-area"/>
@@ -39,6 +39,12 @@ export default {
   computed: {
     loading() {
       return this.$store.state.loading;
+    },
+    newModalOpen() {
+      return this.$store.state.newTaskModal.isOpen;
+    },
+    editModalOpen() {
+      return this.$store.state.editTaskModal.isOpen;
     }
   },
   async created() {
@@ -80,7 +86,6 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  border: 2px red solid;
 }
 
 .nav-area {
@@ -93,7 +98,6 @@ export default {
 
 .content-area {
   background: #fff;
-  border: 2px yellow solid;
   height: 100%;
 }
 

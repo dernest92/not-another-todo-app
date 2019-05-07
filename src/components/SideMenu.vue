@@ -1,8 +1,10 @@
 <template>
-  <div class="side-menu" :class="{open: sideMenu}">
-    <router-link to="/calendar" class="link">Month</router-link>
-    <router-link to="/day" class="link">Day</router-link>
-    <router-link to="/list" class="link">List</router-link>
+  <div class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
+    <div @click="closeMobileMenu">
+      <router-link to="/calendar" class="link">Month</router-link>
+      <router-link to="/day" class="link">Day</router-link>
+      <router-link to="/list" class="link">List</router-link>
+    </div>
     <div class="categories">
       <h2>Category</h2>
       <div
@@ -43,6 +45,9 @@ export default {
     sideMenu() {
       return this.$store.state.sideMenu;
     },
+    mobileOpen() {
+      return this.$store.state.sideMenuMobile;
+    },
     categories() {
       return this.$store.getters.categories;
     },
@@ -56,8 +61,10 @@ export default {
     }, 0);
   },
   methods: {
+    closeMobileMenu() {
+      this.$store.dispatch("closeMobileMenu");
+    },
     update() {
-      console.log("update");
       this.$store.dispatch("selectCategory", this.selectedCategories);
     },
     addCategory() {
@@ -120,6 +127,16 @@ export default {
 @media screen and (max-width: 700px) {
   .side-menu {
     padding-top: 48px;
+
+    &.open {
+      width: 0;
+      border-right: none;
+    }
+
+    &.mobile-open {
+      width: 250px;
+      border-right: 1px #ccc solid;
+    }
   }
 }
 </style>

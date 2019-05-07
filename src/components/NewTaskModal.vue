@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalOpen" @click="closeModal" class="modal-container close-modal">
+  <div @click="closeModal" class="modal-container close-modal">
     <div class="modal-card">
       <h2>{{displayDate}}</h2>
       <form @submit.prevent="submitNewTask">
@@ -95,6 +95,7 @@ export default {
     }
   },
   created() {
+    console.log("ran created");
     this.newTask.date = this.dateFromCal;
   }
 };
