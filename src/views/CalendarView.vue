@@ -29,7 +29,7 @@
         />
       </div>
     </div>
-    <div class="container unassinged-container">
+    <div class="nodate-col container unassinged-container">
       <Unassigned class="no-date-tasks"/>
     </div>
   </div>
@@ -194,5 +194,21 @@ export default {
   background: #34495e;
   color: #fff;
   border-radius: 50%;
+}
+
+@media screen and (max-width: 700px) {
+  .month-view {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+  }
+
+  .month-col {
+    width: 100%;
+  }
+  .nodate-col {
+    display: none;
+  }
 }
 </style>

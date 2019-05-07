@@ -61,7 +61,7 @@ export default {
 
 #app {
   display: grid;
-  grid-template-rows: 48px auto;
+  grid-template-rows: 45px auto;
   grid-auto-columns: minmax(0, max-content) auto;
   grid-template-areas:
     "top top"
@@ -84,5 +84,39 @@ export default {
 .content-area {
   grid-area: content;
   background: #fff;
+}
+
+@media screen and (max-width: 700px) {
+  #app {
+    display: grid;
+    grid-template-rows: 45px auto;
+    grid-auto-columns: auto;
+    grid-template-areas:
+      "top"
+      "content";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .nav-area {
+    grid-area: top;
+  }
+
+  .menu-area {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    z-index: 15;
+  }
+
+  .content-area {
+    grid-area: content;
+    background: #fff;
+  }
 }
 </style>

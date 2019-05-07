@@ -1,5 +1,8 @@
 <template>
   <div class="side-menu" :class="{open: sideMenu}">
+    <router-link to="/calendar" class="link">Month</router-link>
+    <router-link to="/day" class="link">Day</router-link>
+    <router-link to="/list" class="link">List</router-link>
     <div class="categories">
       <h2>Category</h2>
       <div
@@ -22,6 +25,7 @@
         <button @click="cancelCategory">Cancel</button>
       </div>
     </div>
+    <button @click="logout" class="btn">Logout</button>
   </div>
 </template>
 
@@ -70,6 +74,9 @@ export default {
       this.$store.dispatch("addCategory", { name: this.newCatName });
       this.addingCategory = false;
       this.newCatName = "";
+    },
+    logout() {
+      this.$store.dispatch("logout");
     }
   }
 };
@@ -108,5 +115,11 @@ export default {
   border: 1px #ccc solid;
   border-radius: 10px;
   padding: 5px;
+}
+
+@media screen and (max-width: 700px) {
+  .side-menu {
+    padding-top: 48px;
+  }
 }
 </style>
