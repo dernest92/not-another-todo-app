@@ -40,7 +40,7 @@ export default {
     moment,
     goToDay() {
       this.$store.dispatch("setCurrentDay", this.date);
-      this.$router.push({ name: "day-view" });
+      this.$router.push({ name: "Day" });
     },
     touchstart_handler(e) {
       this.startTouch = e.timeStamp;
