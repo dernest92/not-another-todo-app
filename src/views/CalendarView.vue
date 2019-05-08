@@ -2,11 +2,11 @@
   <div class="month-view">
     <div class="month-col">
       <div class="month-banner">
-        <button class="nav-btn" @click="changeMonth(-1)">
+        <button class="button button--round nav-button" @click="changeMonth(-1)">
           <i class="fas fa-chevron-left"></i>
         </button>
         <div class="date-label">{{displayDate}}</div>
-        <button class="nav-btn" @click="changeMonth(1)">
+        <button class="button button--round nav-button" @click="changeMonth(1)">
           <i class="fas fa-chevron-right"></i>
         </button>
       </div>
@@ -205,6 +205,9 @@ export default {
 }
 
 @media screen and (max-width: 700px) {
+  .nav-button {
+    display: none !important;
+  }
   .month-view {
     height: 100%;
     width: 100%;

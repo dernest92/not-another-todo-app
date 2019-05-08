@@ -4,6 +4,9 @@
       <b-field label="Title">
         <b-input v-model="taskEdits.title" placeholder="title"></b-input>
       </b-field>
+      <b-field label="Date">
+        <b-datepicker placeholder="Select date..." icon="calendar-today" v-model="datepickerDate"></b-datepicker>
+      </b-field>
       <b-field label="Priority">
         <b-select placeholder="Select a priority" expanded v-model="taskEdits.priority">
           <option
@@ -44,6 +47,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
@@ -72,6 +76,14 @@ export default {
     }
   },
   computed: {
+    datepickerDate: {
+      get() {
+        return new Date(this.taskEdits.date);
+      },
+      set(date) {
+        this.taskEdits.date = moment(date).toISOString();
+      }
+    },
     categories() {
       return this.$store.getters.categories;
     },

@@ -5,6 +5,9 @@
       <b-field label="Title">
         <b-input v-model="newTask.title" placeholder="title"></b-input>
       </b-field>
+      <b-field label="Date">
+        <b-datepicker placeholder="Select date..." icon="calendar-today" v-model="datepickerDate"></b-datepicker>
+      </b-field>
       <b-field label="Priority">
         <b-select placeholder="Select a priority" expanded v-model="newTask.priority">
           <option
@@ -65,6 +68,18 @@ export default {
     }
   },
   computed: {
+    datepickerDate: {
+      get() {
+        if (this.newTask.date === false) {
+          return undefined;
+        } else {
+          return new Date(this.newTask.date);
+        }
+      },
+      set(date) {
+        this.newTask.date = moment(date).toISOString();
+      }
+    },
     modalOpen() {
       return this.$store.state.newTaskModal.isOpen;
     },

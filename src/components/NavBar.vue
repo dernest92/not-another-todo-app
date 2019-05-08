@@ -3,7 +3,7 @@
     <nav class="page__navbar" :class="{'nav-open': navMenuOpen}">
       <div class="nav-contents">
         <div class="menu-btn">
-          <button @click="toggleMenu">Menu</button>
+          <b-button @click="toggleMenu" icon-left="menu" rounded></b-button>
         </div>
       </div>
     </nav>
