@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <NewTaskModal v-if="newModalOpen"/>
-    <EditTaskModal v-if="editModalOpen"/>
+    <b-modal :active.sync="newModalOpen" :canCancel="['escape', 'x']" has-modal-card>
+      <NewTaskModal/>
+    </b-modal>
+    <b-modal :active.sync="editModalOpen" :canCancel="['escape', 'x']" has-modal-card>
+      <EditTaskModal/>
+    </b-modal>
     <LoadingModal v-if="loading"/>
     <nav-bar class="nav-area"/>
     <SideMenu class="menu-area"/>
@@ -40,11 +44,21 @@ export default {
     loading() {
       return this.$store.state.loading;
     },
-    newModalOpen() {
-      return this.$store.state.newTaskModal.isOpen;
+    newModalOpen: {
+      get() {
+        return this.$store.state.newTaskModal.isOpen;
+      },
+      set() {
+        this.$store.dispatch("closeModal");
+      }
     },
-    editModalOpen() {
-      return this.$store.state.editTaskModal.isOpen;
+    editModalOpen: {
+      get() {
+        return this.$store.state.editTaskModal.isOpen;
+      },
+      set() {
+        this.$store.dispatch("editModalClose");
+      }
     }
   },
   async created() {

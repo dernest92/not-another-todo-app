@@ -4,7 +4,7 @@
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
-    <div class="title">
+    <div class="title-block">
       No Date
       <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
+.title-block {
   background: #ccc;
   font-weight: bold;
   height: 26px;

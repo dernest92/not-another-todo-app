@@ -1,5 +1,5 @@
 <template>
-  <section class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
+  <div class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
     <div class="overlay"></div>
     <div @click="closeMobileMenu">
       <router-link to="/calendar" class="link">Month</router-link>
@@ -19,9 +19,9 @@
         <b-switch>Show Completed</b-switch>
       </div>
     </div>
-    <b-datepicker inline size="is-small" class="date-picker"></b-datepicker>
+    <!-- <b-datepicker inline size="is-small" class="date-picker"></b-datepicker> -->
     <button @click="logout" class="btn">Logout</button>
-  </section>
+  </div>
 </template>
 
 <script>
