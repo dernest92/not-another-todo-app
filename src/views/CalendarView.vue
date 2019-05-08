@@ -215,9 +215,6 @@ export default {
     grid-template-columns: auto;
   }
 
-  .month-col {
-    width: 100%;
-  }
   .nodate-col {
     display: none;
   }

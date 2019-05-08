@@ -86,7 +86,6 @@ export default {
 <style lang="scss">
 @import "./assets/styles/global.scss";
 @import "./assets/styles/layout.scss";
-@import "./assets/styles/layout-mobile.scss";
 
 #app {
   display: grid;

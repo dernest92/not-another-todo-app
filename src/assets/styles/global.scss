@@ -89,7 +89,7 @@ body {
 }
 
 .month {
-  height: 100%;
+  height: calc(100% - 40px);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
   overflow: hidden;
 }
@@ -153,16 +153,15 @@ $color-primary: #3498db;
 }
 
 .month-banner {
+  background: #ccc;
   width: 100%;
-  right: 0;
-  color: #fff;
+  color: #333;
   display: flex;
-  position: fixed;
-  top: 5px;
+
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 30px;
+  height: 40px;
 }
 .nav-btn {
   height: 35px;
@@ -333,12 +332,15 @@ $color-primary: #3498db;
 }
 
 @media screen and (max-width: 700px) {
+  .month {
+    height: calc(100% - 30px);
+  }
   .month-banner {
-    top: 5px;
     width: 100%;
-    padding: 0 100px;
+    padding: 0;
+    margin: 0;
     height: 30px;
-    color: #fff;
+    pointer-events: none;
     .nav-btn {
     }
     .date-label {
@@ -430,20 +432,6 @@ $color-primary: #3498db;
       padding: 0;
       margin: 0 auto;
       height: 100%;
-    }
-
-    .month-container {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      .month {
-        box-shadow: none;
-        border-radius: 0;
-        overflow: hidden;
-        height: calc(100% - 30px);
-      }
     }
   }
 

@@ -42,9 +42,12 @@ export default {
 
 <style lang="scss" scoped>
 .title-block {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
   background: #ccc;
   font-weight: bold;
-  height: 26px;
+  height: 66px;
   padding: 4px;
 }
 

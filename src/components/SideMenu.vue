@@ -1,11 +1,6 @@
 <template>
   <div class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
     <div class="overlay"></div>
-    <div @click="closeMobileMenu">
-      <router-link to="/calendar" class="link">Month</router-link>
-      <router-link to="/day" class="link">Day</router-link>
-      <router-link to="/list" class="link">List</router-link>
-    </div>
     <div class="categories">
       <b-switch v-model="filterCategories" @input="changeFilter">Filter Categories</b-switch>
       <b-collapse :open="filterCategories">

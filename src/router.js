@@ -18,17 +18,17 @@ export default new Router({
     },
     {
       path: "/calendar",
-      name: "calendar-view",
+      name: "Month",
       component: CalendarView
     },
     {
       path: "/day",
-      name: "day-view",
+      name: "Day",
       component: DayView
     },
     {
       path: "/list",
-      name: "list-view",
+      name: "List",
       component: ListView
     }
   ]
