@@ -1,48 +1,35 @@
 <template>
-  <div class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
+  <section class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
+    <div class="overlay"></div>
     <div @click="closeMobileMenu">
       <router-link to="/calendar" class="link">Month</router-link>
       <router-link to="/day" class="link">Day</router-link>
       <router-link to="/list" class="link">List</router-link>
     </div>
     <div class="categories">
+      <b-switch v-model="filterCategories" @input="changeFilter">Filter Categories</b-switch>
+      <b-collapse :open="filterCategories">
+        <div class="field" v-for="category in categories" :key="category.id" @change="update">
+          <b-checkbox v-model="selectedCategories" :native-value="category.id">{{category.name}}</b-checkbox>
+        </div>
+      </b-collapse>
+    </div>
+    <div class="categories">
       <div class="some-header">
-        Filter Category
-        <toggle-slider @input="changeFilter" v-model="filter"/>
-      </div>
-
-      <div v-if="filter" class="filter-categories">
-        <div
-          class="checkbox-label"
-          v-for="(category, index) in categories"
-          :key="index"
-          :value="category.id"
-        >
-          <input type="checkbox" :value="category.id" v-model="selectedCategories" @change="update">
-          {{category.name}}
-        </div>
-
-        <div v-if="addingCategory">
-          <input type="text" ref="newCat" v-model="newCatName">
-        </div>
-        <div v-if="!addingCategory">
-          <button @click="addCategory">Add Category</button>
-        </div>
-        <div v-if="addingCategory">
-          <button @click="saveCategory">Save</button>
-          <button @click="cancelCategory">Cancel</button>
-        </div>
+        <b-switch>Show Completed</b-switch>
       </div>
     </div>
+    <b-datepicker inline size="is-small" class="date-picker"></b-datepicker>
     <button @click="logout" class="btn">Logout</button>
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      filter: false,
+      filterCategories: false,
+      showCompleted: true,
       addingCategory: false,
       newCatName: "",
       selectedCategories: [],
@@ -69,8 +56,12 @@ export default {
     }, 0);
   },
   methods: {
+    changeShowComplete() {
+      console.log("toggle show complete");
+    },
     changeFilter() {
-      this.$store.dispatch("toggleCatFilter", this.filter);
+      console.log("filter categories", this.filterCategories);
+      this.$store.dispatch("toggleCatFilter", this.filterCategories);
     },
     closeMobileMenu() {
       this.$store.dispatch("closeMobileMenu");
@@ -102,13 +93,12 @@ export default {
 
 
 <style lang="scss" scoped>
-.some-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5px;
+.date-picker {
+  text-align: center;
+  margin: 0;
 }
 .side-menu {
+  text-align: left;
   border-right: none;
   width: 0;
   background: #f4f4f4;
@@ -116,8 +106,9 @@ export default {
   transition: all 0.5s;
 
   &.open {
-    width: 250px;
+    width: 350px;
     border-right: 1px #ccc solid;
+    padding-left: 5px;
   }
 }
 
@@ -134,25 +125,50 @@ export default {
   }
 }
 
-.categories {
-  margin: 5px;
-  border: 1px #ccc solid;
-  border-radius: 10px;
-  padding: 5px;
+.overlay {
+  display: none;
 }
 
 @media screen and (max-width: 700px) {
   .side-menu {
     padding-top: 48px;
 
+    .overlay {
+      display: block;
+      pointer-events: none;
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      transition: all 0.5s;
+    }
+
     &.open {
       width: 0;
       border-right: none;
+      padding-left: 0;
     }
 
     &.mobile-open {
-      width: 250px;
+      width: 275px;
       border-right: 1px #ccc solid;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+      padding-left: 0;
+
+      .overlay {
+        display: block;
+        pointer-events: all;
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        left: 275px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
     }
   }
 }
