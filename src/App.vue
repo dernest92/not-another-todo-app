@@ -6,7 +6,7 @@
     <b-modal :active.sync="editModalOpen" :canCancel="['escape', 'x']" has-modal-card>
       <EditTaskModal/>
     </b-modal>
-    <LoadingModal v-if="loading"/>
+    <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
     <nav-bar class="nav-area"/>
     <SideMenu class="menu-area"/>
     <div class="content-area">

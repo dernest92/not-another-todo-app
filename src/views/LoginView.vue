@@ -4,45 +4,25 @@
     <div class="login-container">
       <div>
         <form @submit.prevent>
-          <div v-if="newUser" class="form-group">
-            <label for>Name</label>
-            <input class="full" type="text" placeholder="Your Name" v-model="username" required>
-          </div>
-          <div class="form-group">
-            <label for>Email</label>
-            <input
-              class="full"
-              type="email"
-              placeholder="example@email.com"
-              v-model="loginUser.email"
-              required
-            >
-          </div>
-          <div class="form-group">
-            <label for>Password</label>
-            <input
-              class="full"
+          <b-field v-if="newUser" label="Name" custom-class="has-text-white">
+            <b-input v-model="username" placeholder="Your Name" icon="account"></b-input>
+          </b-field>
+          <b-field label="Email" custom-class="has-text-white">
+            <b-input placeholder="Email" v-model="loginUser.email" type="email" icon="email"></b-input>
+          </b-field>
+          <b-field label="Password" custom-class="has-text-white">
+            <b-input
+              icon="lock"
               type="password"
-              placeholder="password"
+              placeholder="Password"
               v-model="loginUser.password"
-              required
-            >
-          </div>
+              password-reveal
+            ></b-input>
+          </b-field>
+
           <div class="btn-group">
-            <button
-              v-if="newUser"
-              type="submit"
-              @click="submitRegister"
-              class="btn primary full"
-              :disabled="false"
-            >Register</button>
-            <button
-              type="submit"
-              v-else
-              @click="submitLogin"
-              class="btn primary full"
-              :disabled="false"
-            >Login</button>
+            <b-button v-if="newUser" @click="submitRegister" type="is-primary">Register</b-button>
+            <b-button v-else @click="submitLogin" type="is-primary">Login</b-button>
           </div>
         </form>
         <div class="modal-footer">
@@ -129,10 +109,7 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
 }
-.btn.full {
-  width: 100%;
-  margin: 5px 0;
-}
+
 .login-page {
   background: #34495e;
   color: #fff;
