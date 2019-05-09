@@ -10,27 +10,13 @@
         </b-field>
 
         <b-field label="Category">
-          <b-autocomplete
-            v-model="searchCategory"
-            placeholder="Category"
-            :open-on-focus="true"
-            :data="filteredCategories"
-            field="name"
-            @select="option => {
-              if(option) {
-              taskEdits.category = option.id
-              } else {
-                taskEdits.category = undefined;
-              }
-            }"
-          >
-            <template slot="header">
-              <a @click="addCategory">
-                <span>Add new...</span>
-              </a>
-            </template>
-            <template slot="empty">No results for {{searchCategory}}</template>
-          </b-autocomplete>
+          <b-select placeholder="Select a category" expanded v-model="taskEdits.category">
+            <option
+              v-for="(category, index) in categories"
+              :key="index"
+              :value="category.id"
+            >{{category.name}}</option>
+          </b-select>
         </b-field>
         <b-field label="Priority">
           <b-select placeholder="Select a priority" expanded v-model="taskEdits.priority">
@@ -75,6 +61,9 @@ export default {
     };
   },
   methods: {
+    log(msg) {
+      console.log(msg);
+    },
     addCategory() {
       this.$dialog.prompt({
         message: "Category",
@@ -147,6 +136,10 @@ export default {
   },
   created() {
     this.taskEdits = { ...this.selectedTask };
+    const category = this.categories.find(
+      cat => (cat._id = this.selectedTask.category)
+    );
+    this.searchCategory = category.name;
   }
 };
 </script>
