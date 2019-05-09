@@ -1,21 +1,23 @@
 <template>
   <div class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
     <div class="overlay"></div>
-    <div class="categories">
-      <b-switch v-model="filterCategories" @input="changeFilter">Filter Categories</b-switch>
-      <b-collapse :open="filterCategories">
-        <div class="field" v-for="category in categories" :key="category.id" @change="update">
-          <b-checkbox v-model="selectedCategories" :native-value="category.id">{{category.name}}</b-checkbox>
-        </div>
-      </b-collapse>
-    </div>
-    <div class="categories">
-      <div class="some-header">
-        <b-switch>Show Completed</b-switch>
+    <div class="menu-content">
+      <div class="categories">
+        <b-switch v-model="filterCategories" @input="changeFilter">Filter Categories</b-switch>
+        <b-collapse :open="filterCategories">
+          <div class="field" v-for="category in categories" :key="category.id" @change="update">
+            <b-checkbox v-model="selectedCategories" :native-value="category.id">{{category.name}}</b-checkbox>
+          </div>
+        </b-collapse>
       </div>
+      <div class="categories">
+        <div class="some-header">
+          <b-switch>Show Completed</b-switch>
+        </div>
+      </div>
+      <button @click="logout" class="button is-primary">Logout</button>
     </div>
     <!-- <b-datepicker inline size="is-small" class="date-picker"></b-datepicker> -->
-    <button @click="logout" class="btn">Logout</button>
   </div>
 </template>
 
@@ -93,6 +95,7 @@ export default {
   margin: 0;
 }
 .side-menu {
+  z-index: 4;
   text-align: left;
   border-right: none;
   width: 0;
@@ -100,10 +103,32 @@ export default {
   overflow: hidden;
   transition: all 0.5s;
 
+  .menu-content {
+    margin: 20px 10px;
+    position: relative;
+    right: 300px;
+    transition: all 0.5s;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .collapse {
+    margin: 10px;
+  }
+
+  .button {
+    margin-top: auto;
+  }
+
   &.open {
-    width: 350px;
+    width: 275px;
     border-right: 1px #ccc solid;
     padding-left: 5px;
+
+    .menu-content {
+      right: 0;
+    }
   }
 }
 
@@ -142,17 +167,7 @@ export default {
     }
 
     &.open {
-      width: 0;
-      border-right: none;
-      padding-left: 0;
-    }
-
-    &.mobile-open {
       width: 275px;
-      border-right: 1px #ccc solid;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-      padding-left: 0;
-
       .overlay {
         display: block;
         pointer-events: all;

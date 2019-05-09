@@ -1,48 +1,67 @@
 <template>
   <div class="modal-card">
-    <form @submit.prevent="updateTask">
-      <b-field label="Title">
-        <b-input v-model="taskEdits.title" placeholder="title"></b-input>
-      </b-field>
-      <b-field label="Date">
-        <b-datepicker placeholder="Select date..." icon="calendar-today" v-model="datepickerDate"></b-datepicker>
-      </b-field>
-      <b-field label="Priority">
-        <b-select placeholder="Select a priority" expanded v-model="taskEdits.priority">
-          <option
-            v-for="(priority, index) in priorities"
-            :key="index"
-            :value="priority"
-          >{{priority}}</option>
-        </b-select>
-      </b-field>
-      <b-field label="Category">
-        <b-select placeholder="Select a category" expanded v-model="taskEdits.category">
-          <option
-            v-for="(category, index) in categories"
-            :key="index"
-            :value="category.id"
-          >{{category.name}}</option>
-        </b-select>
-      </b-field>
+    <section class="modal-card-body">
+      <form @submit.prevent="updateTask">
+        <b-field label="Title">
+          <b-input v-model="taskEdits.title" placeholder="title"></b-input>
+        </b-field>
+        <b-field label="Date">
+          <b-datepicker placeholder="Select date..." icon="calendar-today" v-model="datepickerDate"></b-datepicker>
+        </b-field>
 
-      <b-field label="Notes">
-        <b-input type="textarea" v-model="taskEdits.notes"></b-input>
-      </b-field>
-      <b-field label="Complete">
-        <b-checkbox v-model="taskEdits.completed"></b-checkbox>
-      </b-field>
-    </form>
-    <div class="buttons">
-      <b-button type="is-light" @click="closeModal">cancel</b-button>
-      <b-button type="is-danger" icon-left="delete" @click="deleteTask">delete</b-button>
-      <b-button
-        type="is-primary"
-        icon-left="content-save"
-        @click="updateTask"
-        :disabled="!hasEdits"
-      >save</b-button>
-    </div>
+        <b-field label="Category">
+          <b-autocomplete
+            v-model="searchCategory"
+            placeholder="Category"
+            :open-on-focus="true"
+            :data="filteredCategories"
+            field="name"
+            @select="option => {
+              if(option) {
+              taskEdits.category = option.id
+              } else {
+                taskEdits.category = undefined;
+              }
+            }"
+          >
+            <template slot="header">
+              <a @click="addCategory">
+                <span>Add new...</span>
+              </a>
+            </template>
+            <template slot="empty">No results for {{searchCategory}}</template>
+          </b-autocomplete>
+        </b-field>
+        <b-field label="Priority">
+          <b-select placeholder="Select a priority" expanded v-model="taskEdits.priority">
+            <option
+              v-for="(priority, index) in priorities"
+              :key="index"
+              :value="priority"
+            >{{priority}}</option>
+          </b-select>
+        </b-field>
+
+        <b-field label="Notes">
+          <b-input type="textarea" v-model="taskEdits.notes"></b-input>
+        </b-field>
+        <b-field label="Complete">
+          <b-checkbox v-model="taskEdits.completed"></b-checkbox>
+        </b-field>
+      </form>
+    </section>
+    <footer class="modal-card-foot">
+      <div class="buttons">
+        <b-button type="is-light" @click="closeModal">cancel</b-button>
+        <b-button type="is-danger" icon-left="delete" @click="deleteTask">delete</b-button>
+        <b-button
+          type="is-primary"
+          icon-left="content-save"
+          @click="updateTask"
+          :disabled="!hasEdits"
+        >save</b-button>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -52,13 +71,24 @@ export default {
   data() {
     return {
       taskEdits: {},
-      activeField: {
-        title: false,
-        notes: false
-      }
+      searchCategory: ""
     };
   },
   methods: {
+    addCategory() {
+      this.$dialog.prompt({
+        message: "Category",
+        inputAttrs: {
+          placeholder: "e.g. Business",
+          maxlength: 20,
+          value: this.name
+        },
+        confirmText: "Add",
+        onConfirm: value => {
+          this.$store.dispatch("addCategory", { name: value });
+        }
+      });
+    },
     async updateTask() {
       if (this.hasEdits) {
         await this.$store.dispatch("updateTask", this.taskEdits);
@@ -76,6 +106,17 @@ export default {
     }
   },
   computed: {
+    filteredCategories() {
+      this.$store.getters.categories;
+      return this.$store.getters.categories.filter(category => {
+        return (
+          category.name
+            .toString()
+            .toLowerCase()
+            .indexOf(this.searchCategory.toLowerCase()) >= 0
+        );
+      });
+    },
     datepickerDate: {
       get() {
         return new Date(this.taskEdits.date);
@@ -112,6 +153,7 @@ export default {
 
 <style lang="scss" scoped>
 .buttons {
+  width: 100%;
   justify-content: flex-end !important;
 }
 </style>
