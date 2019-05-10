@@ -5,6 +5,7 @@
     </select>
     <task-list :title="query.name" :tasks="tasks"/>
     <AddEventBtn/>
+    <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
   </div>
 </template>
 
@@ -44,6 +45,9 @@ export default {
     };
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     touchstart_handler(e) {
       const { clientX, clientY } = e.changedTouches[0];
       this.touchstart = { clientX, clientY };
@@ -84,13 +88,10 @@ export default {
 };
 </script>
 
-<style>
-.full-page {
-  padding-top: 48px;
+<style scoped>
+.back-btn {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 10px;
+  left: 10px;
 }
 </style>

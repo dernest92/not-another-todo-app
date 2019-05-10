@@ -7,6 +7,7 @@
       </div>
     </div>
     <AddEventBtn :date="todaysDate"/>
+    <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
   </div>
 </template>
 
@@ -30,6 +31,9 @@ export default {
     };
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     changeDay(qty) {
       const day = moment(this.todaysDate)
         .add("days", qty)
@@ -105,6 +109,12 @@ export default {
 
 
 <style lang="scss" scoped>
+.back-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
 .day-card {
   background: #fff;
   overflow: hidden;

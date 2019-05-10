@@ -101,6 +101,7 @@ export default {
   background: #fff;
   height: 100%;
   overflow-y: auto;
+  position: relative;
 }
 
 @media screen and (max-width: 700px) {
