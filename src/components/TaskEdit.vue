@@ -30,6 +30,9 @@
             >{{priority}}</option>
           </b-select>
         </b-field>
+        <b-field label="Completed">
+          <b-switch v-model="newTask.completed"></b-switch>
+        </b-field>
 
         <b-field label="Notes">
           <b-input type="textarea" v-model="newTask.notes"></b-input>
@@ -188,7 +191,9 @@ export default {
 .centered-flex {
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 }
+
 .buttons {
   width: 100%;
   margin-top: 10px;
@@ -196,6 +201,7 @@ export default {
 
 .task-edit-content {
   height: fit-content;
+  text-align: left;
 }
 .task-edit-container {
   max-width: 900px;
