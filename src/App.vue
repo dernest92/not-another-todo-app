@@ -100,6 +100,7 @@ export default {
 .content-area {
   background: #fff;
   height: 100%;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 700px) {

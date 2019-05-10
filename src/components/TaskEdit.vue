@@ -204,10 +204,9 @@ export default {
   text-align: left;
 }
 .task-edit-container {
-  max-width: 900px;
+  max-width: 800px;
   padding: 10px 30px;
   height: calc(100vh - 46px);
-  overflow-y: auto;
 }
 </style>
 
