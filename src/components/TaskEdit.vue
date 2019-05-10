@@ -192,11 +192,10 @@ export default {
 .buttons {
   width: 100%;
   margin-top: 10px;
-  height: fit-content;
 }
 
 .task-edit-content {
-  height: calc(fit-content + 20px);
+  height: fit-content;
 }
 .task-edit-container {
   max-width: 900px;
