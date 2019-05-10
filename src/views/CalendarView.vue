@@ -32,11 +32,12 @@
           :key="week"
           :startDay="week"
           :isFirstWeek="index === 0 ? true : false "
+          :tasks="filteredTasks"
         />
       </div>
     </div>
     <div class="nodate-col unassinged-container">
-      <Unassigned class="no-date-tasks"/>
+      <Unassigned class="no-date-tasks" :tasks="filteredTasks.filter(task => task.date === false)"/>
     </div>
     <AddEventBtn/>
   </div>
@@ -50,7 +51,6 @@ import TaskService from "../services/TaskService.js";
 import AddEventBtn from "../components/AddEventBtn.vue";
 import { setTimeout } from "timers";
 export default {
-  name: "app",
   components: {
     Week,
     Unassigned,
@@ -139,6 +139,24 @@ export default {
     }
   },
   computed: {
+    filteredTasks() {
+      return this.tasks.filter(task => {
+        if (!this.showComplete && task.completed) return false;
+        if (this.filterCategories) {
+          return this.selectedCategories.includes(task.category);
+        }
+        return true;
+      });
+    },
+    showComplete() {
+      return this.$store.state.showCompleted;
+    },
+    filterCategories() {
+      return this.$store.state.filterCategory;
+    },
+    selectedCategories() {
+      return this.$store.state.selectedCategories;
+    },
     sideMenu() {
       return this.$store.state.sideMenu;
     },
@@ -154,8 +172,8 @@ export default {
     editModalState() {
       return this.$store.getters.editTaskModal;
     },
-    todaysTasks() {
-      return this.$store.getters.todaysTasks("2019-03-31T05:00:00.000Z");
+    tasks() {
+      return this.$store.state.tasks;
     },
 
     displayDate() {

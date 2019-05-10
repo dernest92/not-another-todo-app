@@ -19,11 +19,8 @@ export default {
   components: {
     Task
   },
-  props: {},
-  computed: {
-    tasks() {
-      return this.$store.getters.unassignedTasks;
-    }
+  props: {
+    tasks: Array
   },
   methods: {
     dragenterHandeler() {

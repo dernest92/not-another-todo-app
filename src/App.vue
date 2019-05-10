@@ -47,6 +47,18 @@ export default {
       set() {
         this.$store.dispatch("editModalClose");
       }
+    },
+    showComplete() {
+      return this.$store.state.showCompleted;
+    },
+    filterCategories() {
+      return this.$store.state.filterCategory;
+    },
+    selectedCategories() {
+      return this.$store.state.selectedCategories;
+    },
+    tasks() {
+      return this.$store.getters.filteredTasks;
     }
   },
   async created() {

@@ -77,11 +77,27 @@ export default {
     }
   },
   computed: {
-    newModalOpen() {
-      return this.$store.getters.newTaskModal;
+    filteredTasks() {
+      return this.tasks.filter(task => {
+        if (!this.showComplete && task.completed) return false;
+        if (this.filterCategories) {
+          return this.selectedCategories.includes(task.category);
+        }
+        return true;
+      });
     },
-    editModalState() {
-      return this.$store.getters.editTaskModal;
+    tasks() {
+      return this.$store.state.tasks;
+    },
+
+    showComplete() {
+      return this.$store.state.showCompleted;
+    },
+    filterCategories() {
+      return this.$store.state.filterCategory;
+    },
+    selectedCategories() {
+      return this.$store.state.selectedCategories;
     },
     todaysDate() {
       return this.$store.state.dayView.currentDay;
@@ -92,7 +108,8 @@ export default {
       );
     },
     todaysTasks() {
-      return this.$store.getters.todaysTasks(this.todaysDate);
+      const tasks = this.filteredTasks;
+      return tasks.filter(task => task.date === this.todaysDate);
     }
   },
   async created() {

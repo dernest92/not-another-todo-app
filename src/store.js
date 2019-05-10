@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    showCompleted: false,
     filterCategory: false,
     selectedCategories: [],
     categories: [],
@@ -42,6 +43,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_SHOW_COMPLETED(state, showCompleted) {
+      state.showCompleted = showCompleted;
+    },
     TOGGLE_CAT_FILTER(state, filter) {
       state.filterCategory = filter;
     },
@@ -117,6 +121,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setShowCompleted({ commit }, showCompleted) {
+      commit("SET_SHOW_COMPLETED", showCompleted);
+    },
     toggleCatFilter({ commit }, filter) {
       commit("TOGGLE_CAT_FILTER", filter);
     },

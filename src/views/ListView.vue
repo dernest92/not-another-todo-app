@@ -1,9 +1,12 @@
 <template>
   <div>
-    <select v-model="query">
-      <option v-for="(option, index) in queryOptions" :value="option" :key="index">{{option.name}}</option>
-    </select>
-    <task-list :title="query.name" :tasks="tasks"/>
+    <b-field label="Show">
+      <b-select v-model="query">
+        <option v-for="(option, index) in queryOptions" :value="option" :key="index">{{option.name}}</option>
+      </b-select>
+    </b-field>
+
+    <task-list :title="query.name" :tasks="displayTasks"/>
     <AddEventBtn/>
     <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
   </div>
@@ -47,24 +50,6 @@ export default {
   methods: {
     back() {
       this.$router.go(-1);
-    },
-    touchstart_handler(e) {
-      const { clientX, clientY } = e.changedTouches[0];
-      this.touchstart = { clientX, clientY };
-    },
-    touchend_handler(e) {
-      const { clientX, clientY } = e.changedTouches[0];
-      const startX = this.touchstart.clientX;
-      const startY = this.touchstart.clientY;
-      const diffX = clientX - startX;
-      const diffY = clientY - startY;
-      if (diffY > 100 && diffX < 100) {
-        this.$store.dispatch("setNavMenu", true);
-      } else if (diffY < -100 && diffX < 100) {
-        this.$store.dispatch("setNavMenu", false);
-      } else if (diffY < 100 && diffX < -100) {
-      } else if (diffY < 100 && diffX > 100) {
-      }
     }
   },
   created() {
@@ -72,6 +57,28 @@ export default {
     this.$store.dispatch("setNavMenu", false);
   },
   computed: {
+    filteredTasks() {
+      return this.tasks.filter(task => {
+        if (!this.showComplete && task.completed) return false;
+        if (this.filterCategories) {
+          return this.selectedCategories.includes(task.category);
+        }
+        return true;
+      });
+    },
+    tasks() {
+      return this.$store.state.tasks;
+    },
+
+    showComplete() {
+      return this.$store.state.showCompleted;
+    },
+    filterCategories() {
+      return this.$store.state.filterCategory;
+    },
+    selectedCategories() {
+      return this.$store.state.selectedCategories;
+    },
     unassignedTasks() {
       return this.$store.getters.unassignedTasks;
     },
@@ -81,8 +88,8 @@ export default {
     editModalState() {
       return this.$store.getters.editTaskModal;
     },
-    tasks() {
-      return this.$store.getters.taskQuery(this.query.query);
+    displayTasks() {
+      return this.filteredTasks.filter(task => this.query.query(task));
     }
   }
 };

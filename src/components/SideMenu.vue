@@ -12,7 +12,7 @@
       </div>
       <div class="categories">
         <div class="some-header">
-          <b-switch>Show Completed</b-switch>
+          <b-switch v-model="showCompleted">Show Completed</b-switch>
         </div>
       </div>
       <button @click="logout" class="button is-primary">Logout</button>
@@ -26,7 +26,6 @@ export default {
   data() {
     return {
       filterCategories: false,
-      showCompleted: true,
       addingCategory: false,
       newCatName: "",
       selectedCategories: [],
@@ -45,6 +44,14 @@ export default {
     },
     selectedTasks() {
       return this.$store.getters.selectedTasks;
+    },
+    showCompleted: {
+      get() {
+        return this.$store.showCompleted;
+      },
+      set(value) {
+        this.$store.dispatch("setShowCompleted", value);
+      }
     }
   },
   created() {

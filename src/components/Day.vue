@@ -14,7 +14,7 @@
       <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
     <div class="events-scroller">
-      <Task v-for="task in todaysTasks" :key="task.id" :task="task"/>
+      <Task v-for="task in tasks" :key="task.id" :task="task"/>
     </div>
   </div>
 </template>
@@ -28,7 +28,8 @@ export default {
     Task
   },
   props: {
-    date: String
+    date: String,
+    tasks: Array
   },
   data() {
     return {
@@ -79,11 +80,12 @@ export default {
           .toISOString()
       );
     },
-    todaysTasks() {
-      return this.$store.getters.todaysTasks(this.date);
-    },
+
     dragDay() {
       return this.$store.getters.dragDay;
+    },
+    showCompleted() {
+      return this.$store.state.showCompleted;
     }
   }
 };
