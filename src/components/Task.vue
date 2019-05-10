@@ -19,6 +19,7 @@ export default {
   methods: {
     startEditTask(id) {
       this.$store.dispatch("startEditTask", id);
+      this.$router.push("/edit-task");
     },
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);

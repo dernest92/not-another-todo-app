@@ -35,6 +35,7 @@ export default {
     dragover_handler() {},
     startNewTask() {
       this.$store.dispatch("startNewTask", false);
+      this.$router.push("/new-task");
     }
   }
 };

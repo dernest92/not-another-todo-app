@@ -1,7 +1,7 @@
 <template>
-  <div class="modal-card">
-    <section class="modal-card-body">
-      <form @submit.prevent="submitNewTask">
+  <div class="task-edit-container">
+    <section class="task-edit-content">
+      <form @submit.prevent="submitTask">
         <b-field label="Title">
           <b-input v-model="newTask.title" placeholder="title"></b-input>
         </b-field>
@@ -10,28 +10,17 @@
         </b-field>
 
         <b-field label="Category">
-          <b-autocomplete
-            v-model="searchCategory"
-            placeholder="Category"
-            :open-on-focus="true"
-            :data="filteredCategories"
-            field="name"
-            @select="option => {
-              if(option) {
-              newTask.category = option.id
-              } else {
-                newTask.category = undefined;
-              }
-            }"
-          >
-            <template slot="header">
-              <a @click="addCategory">
-                <span>Add new...</span>
-              </a>
-            </template>
-            <template slot="empty">No results for {{searchCategory}}</template>
-          </b-autocomplete>
+          <b-select placeholder="Select a category" expanded v-model="newTask.category">
+            <option
+              v-for="(category, index) in categories"
+              :key="index"
+              :value="category.id"
+            >{{category.name}}</option>
+          </b-select>
         </b-field>
+        <a class="centered-flex" @click="addCategory">
+          <b-icon icon="plus"></b-icon>Add new category
+        </a>
         <b-field label="Priority">
           <b-select placeholder="Select a priority" expanded v-model="newTask.priority">
             <option
@@ -45,34 +34,58 @@
         <b-field label="Notes">
           <b-input type="textarea" v-model="newTask.notes"></b-input>
         </b-field>
+        <div v-if="isNew" class="buttons">
+          <b-button type="is-light" @click="closeModal">cancel</b-button>
+          <b-button type="is-primary" native-type="submit" icon-left="content-save">save</b-button>
+        </div>
+        <div v-else class="buttons">
+          <b-button type="is-light" @click="closeModal">cancel</b-button>
+          <b-button type="is-danger" icon-left="delete" @click="deleteTask">delete</b-button>
+          <b-button
+            type="is-primary"
+            icon-left="content-save"
+            native-type="submit"
+            :disabled="!hasEdits"
+          >save</b-button>
+        </div>
       </form>
     </section>
-    <footer class="modal-card-foot">
-      <div class="buttons">
-        <b-button type="is-light" @click="closeModal">cancel</b-button>
-        <b-button type="is-primary" @click="submitNewTask" icon-left="content-save">save</b-button>
-      </div>
-    </footer>
   </div>
 </template>
 
 <script>
 import moment from "moment";
 export default {
+  props: {
+    task: Object,
+    isNew: Boolean
+  },
   data() {
     return {
-      newTask: {
-        title: undefined,
-        priority: undefined,
-        date: undefined,
-        notes: undefined,
-        completed: false,
-        category: undefined
-      },
+      newTask: {},
       searchCategory: ""
     };
   },
   methods: {
+    submitTask() {
+      if (this.isNew) {
+        this.submitNewTask();
+      } else {
+        this.updateTask();
+      }
+    },
+    async updateTask() {
+      if (this.hasEdits) {
+        await this.$store.dispatch("updateTask", this.newTask);
+        this.$router.go(-1);
+      } else {
+        this.$router.go(-1);
+      }
+    },
+    async deleteTask() {
+      await this.$store.dispatch("deleteTask", this.newTask._id);
+      this.$router.go(-1);
+    },
     addCategory() {
       this.$dialog.prompt({
         message: "Category",
@@ -88,11 +101,11 @@ export default {
       });
     },
     closeModal(e) {
-      this.$parent.close();
+      this.$router.go(-1);
     },
     submitNewTask() {
       this.$store.dispatch("submitNewTask", this.newTask);
-      this.$store.dispatch("closeModal");
+      this.$router.go(-1);
     },
     resize(e) {
       const field = e.currentTarget;
@@ -101,6 +114,16 @@ export default {
     }
   },
   computed: {
+    hasEdits() {
+      const keys = Object.keys(this.newTask);
+      let edits = false;
+      for (let i = 0; i < keys.length; i++) {
+        if (this.newTask[keys[i]] != this.task[keys[i]]) {
+          edits = true;
+        }
+      }
+      return edits;
+    },
     filteredCategories() {
       this.$store.getters.categories;
       return this.$store.getters.categories.filter(category => {
@@ -145,15 +168,41 @@ export default {
     }
   },
   created() {
-    this.newTask.date = this.dateFromCal;
+    if (this.isNew) {
+      this.newTask = {
+        title: undefined,
+        priority: undefined,
+        date: this.dateFromCal,
+        notes: undefined,
+        completed: false,
+        category: undefined
+      };
+    } else {
+      this.newTask = { ...this.task };
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.centered-flex {
+  display: flex;
+  align-items: center;
+}
 .buttons {
   width: 100%;
-  justify-content: flex-end !important;
+  margin-top: 10px;
+  height: fit-content;
+}
+
+.task-edit-content {
+  height: calc(fit-content + 20px);
+}
+.task-edit-container {
+  max-width: 900px;
+  padding: 10px 30px;
+  height: calc(100vh - 46px);
+  overflow-y: auto;
 }
 </style>
 

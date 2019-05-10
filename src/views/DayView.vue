@@ -10,16 +10,12 @@
 </template>
 
 <script>
-import NewTaskModal from "../components/NewTaskModal.vue";
-import EditTaskModal from "../components/EditTaskModal.vue";
 import DayViewTask from "../components/DayViewTask.vue";
 import moment from "moment";
 import TaskService from "../services/TaskService.js";
 export default {
   name: "day-view",
   components: {
-    NewTaskModal,
-    EditTaskModal,
     DayViewTask
   },
   data() {

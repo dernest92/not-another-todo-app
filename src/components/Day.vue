@@ -63,6 +63,7 @@ export default {
     },
     startNewTask() {
       this.$store.dispatch("startNewTask", this.date);
+      this.$router.push("/new-task");
     },
     dragenterHandeler() {
       this.$store.dispatch("setDragDay", this.date);

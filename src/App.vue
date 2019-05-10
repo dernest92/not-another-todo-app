@@ -1,11 +1,5 @@
 <template>
   <div id="app">
-    <b-modal :active.sync="newModalOpen" :canCancel="['escape', 'x']" has-modal-card>
-      <NewTaskModal/>
-    </b-modal>
-    <b-modal :active.sync="editModalOpen" :canCancel="['escape', 'x']" has-modal-card>
-      <EditTaskModal/>
-    </b-modal>
     <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
     <nav-bar class="nav-area"/>
     <SideMenu class="menu-area"/>
@@ -25,16 +19,13 @@ import TaskService from "./services/TaskService.js";
 import LoadingModalVue from "./components/LoadingModal.vue";
 import NavBar from "./components/NavBar.vue";
 import SideMenu from "./components/SideMenu.vue";
-import NewTaskModal from "./components/NewTaskModal.vue";
-import EditTaskModal from "./components/EditTaskModal.vue";
+
 export default {
   name: "app",
   components: {
     LoadingModal,
     NavBar,
-    SideMenu,
-    NewTaskModal,
-    EditTaskModal
+    SideMenu
   },
   data() {
     return {};
