@@ -1,20 +1,38 @@
 <template>
   <div class="day-view-container">
-    <div class="day-card">
+    <div
+      class="day-card"
+      @dragenter.prevent="dragenterHandeler"
+      @dragover.prevent="dragover_handler"
+      @touchstart="touchstart_handler"
+      @touchend="touchend_handler"
+      @touchmove="touchmove_handler"
+    >
       <div class="day-card-header">
         <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
+        <button class="button button--round nav-button" @click="changeDay(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
         {{displayDate}}
+        <button
+          class="button button--round nav-button"
+          @click="changeDay(1)"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
       <div>
         <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
+    <Unassigned :tasks="filteredTasks.filter(task => task.date === false)"/>
     <AddEventBtn :date="todaysDate"/>
   </div>
 </template>
 
 <script>
 import DayViewTask from "../components/DayViewTask.vue";
+import Unassigned from "../components/Unassigned.vue";
 import AddEventBtn from "../components/AddEventBtn.vue";
 import moment from "moment";
 import TaskService from "../services/TaskService.js";
@@ -22,23 +40,33 @@ export default {
   name: "day-view",
   components: {
     DayViewTask,
-    AddEventBtn
+    AddEventBtn,
+    Unassigned
   },
   data() {
     return {
       firstOfMonth: {},
       weeks: [],
       month: "",
-      year: ""
+      year: "",
+      touchstart: {
+        clientX: null,
+        clientY: null
+      }
     };
   },
   methods: {
+    touchmove_handler(e) {},
     back() {
       this.$router.go(-1);
     },
+    dragenterHandeler() {
+      this.$store.dispatch("setDragDay", this.todaysDate);
+    },
+    dragover_handler() {},
     changeDay(qty) {
       const day = moment(this.todaysDate)
-        .add("days", qty)
+        .add(qty, "days")
         .toISOString();
       this.$store.dispatch("setCurrentDay", day);
     },
@@ -53,9 +81,7 @@ export default {
       const diffX = clientX - startX;
       const diffY = clientY - startY;
       if (diffY > 100 && diffX < 100) {
-        this.$store.dispatch("setNavMenu", true);
       } else if (diffY < -100 && diffX < 100) {
-        this.$store.dispatch("setNavMenu", false);
       } else if (diffY < 100 && diffX < -100) {
         this.changeDay(1);
       } else if (diffY < 100 && diffX > 100) {
@@ -106,7 +132,7 @@ export default {
     },
     displayDate() {
       return moment(this.$store.state.dayView.currentDay).format(
-        "dddd, MMMM Do YYYY"
+        "dddd, MMMM D"
       );
     },
     todaysTasks() {
@@ -130,27 +156,30 @@ export default {
 <style lang="scss" scoped>
 .back-btn {
   position: absolute;
-  left: 10px;
+  left: 12px;
+  top: 15px;
 }
 
 .day-view-container {
   height: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 
 .day-card {
   background: #fff;
   overflow: hidden;
-  padding: 10px;
   height: 100%;
-  max-width: 700px;
   width: 100%;
   border-right: 1px solid #ccc;
 }
 
 .day-card-header {
-  height: 40px;
+  padding-top: 20px;
+  height: 66px;
   font-size: 20px;
   font-weight: bold;
+  background: #ccc;
 }
 
 .full-page {
@@ -160,5 +189,25 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .day-view-container {
+    grid-template-columns: auto 0;
+  }
+}
+@media screen and (max-width: 700px) {
+  .day-card-header {
+    padding-top: 10px;
+    height: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #ccc;
+  }
+  .back-btn {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+  }
 }
 </style>

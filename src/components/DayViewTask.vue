@@ -1,5 +1,10 @@
 <template>
-  <div class="day-task">
+  <div
+    class="day-task"
+    draggable="true"
+    @dragstart="dragHandeler(task._id)"
+    @dragend="dragend_handler"
+  >
     <b-checkbox @input="toggleComplete" v-model="taskEdits.completed"></b-checkbox>
     <div
       @click="startEditTask(task._id)"
@@ -20,6 +25,16 @@ export default {
     };
   },
   methods: {
+    dragHandeler(task) {
+      this.$store.dispatch("setDragTask", task);
+    },
+    dragenterHandeler() {
+      this.$store.dispatch("setDragDay", this.date);
+    },
+    dragover_handler() {},
+    dragend_handler() {
+      this.$store.dispatch("finishDrag");
+    },
     toggleComplete() {
       this.$store.dispatch("updateTask", this.taskEdits);
     },
@@ -36,11 +51,12 @@ export default {
 
 <style lang="scss" scoped>
 .day-task {
-  margin: 5px 2px;
+  margin: 5px auto;
   display: grid;
   grid-template-columns: 25px calc(100% - 25px);
   justify-content: start;
   align-items: center;
+  max-width: 600px;
   .check {
     display: block;
     justify-self: center;

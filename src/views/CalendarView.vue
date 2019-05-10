@@ -20,7 +20,7 @@
         <div class="week-header">
           <div>Sun</div>
           <div>Mon</div>
-          <div>Teu</div>
+          <div>Tue</div>
           <div>Wed</div>
           <div>Thr</div>
           <div>Fri</div>

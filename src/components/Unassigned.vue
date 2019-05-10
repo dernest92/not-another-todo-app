@@ -7,17 +7,20 @@
     <div class="title-block">No Date</div>
 
     <div class="events-scroller">
-      <Task v-for="task in tasks" :key="task.id" :task="task"/>
+      <!-- <Task v-for="task in tasks" :key="task.id" :task="task"/> -->
+      <DayViewTask v-for="task in tasks" :key="task.id" :task="task"/>
     </div>
   </div>
 </template>
 
 <script>
 import Task from "./Task.vue";
+import DayViewTask from "./DayViewTask.vue";
 
 export default {
   components: {
-    Task
+    Task,
+    DayViewTask
   },
   props: {
     tasks: Array
