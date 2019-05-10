@@ -37,12 +37,13 @@ export default {
 <style lang="scss" scoped>
 .title-block {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-evenly;
   background: #ccc;
   font-weight: bold;
   height: 66px;
   padding: 4px;
+  font-size: 20px;
 }
 
 .events-scroller {
