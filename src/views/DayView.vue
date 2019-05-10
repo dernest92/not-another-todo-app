@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <div class="day-view-container">
     <div class="day-card">
-      {{displayDate}}
+      <div class="day-card-header">
+        <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
+        {{displayDate}}
+      </div>
       <div>
         <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
     <AddEventBtn :date="todaysDate"/>
-    <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
   </div>
 </template>
 
@@ -128,8 +130,11 @@ export default {
 <style lang="scss" scoped>
 .back-btn {
   position: absolute;
-  bottom: 10px;
   left: 10px;
+}
+
+.day-view-container {
+  height: 100%;
 }
 
 .day-card {
@@ -137,7 +142,15 @@ export default {
   overflow: hidden;
   padding: 10px;
   height: 100%;
+  max-width: 700px;
   width: 100%;
+  border-right: 1px solid #ccc;
+}
+
+.day-card-header {
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .full-page {
