@@ -38,6 +38,7 @@
     <div class="nodate-col unassinged-container">
       <Unassigned class="no-date-tasks"/>
     </div>
+    <AddEventBtn/>
   </div>
 </template>
 
@@ -46,12 +47,14 @@ import Week from "../components/Week.vue";
 import moment from "moment";
 import Unassigned from "../components/Unassigned.vue";
 import TaskService from "../services/TaskService.js";
+import AddEventBtn from "../components/AddEventBtn.vue";
 import { setTimeout } from "timers";
 export default {
   name: "app",
   components: {
     Week,
-    Unassigned
+    Unassigned,
+    AddEventBtn
   },
   data() {
     return {

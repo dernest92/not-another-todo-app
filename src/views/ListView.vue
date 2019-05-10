@@ -4,15 +4,18 @@
       <option v-for="(option, index) in queryOptions" :value="option" :key="index">{{option.name}}</option>
     </select>
     <task-list :title="query.name" :tasks="tasks"/>
+    <AddEventBtn/>
   </div>
 </template>
 
 <script>
 import TaskList from "../components/TaskList.vue";
+import AddEventBtn from "../components/AddEventBtn.vue";
 import moment from "moment";
 export default {
   components: {
-    TaskList
+    TaskList,
+    AddEventBtn
   },
   data() {
     return {

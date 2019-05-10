@@ -6,17 +6,20 @@
         <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
+    <AddEventBtn :date="todaysDate"/>
   </div>
 </template>
 
 <script>
 import DayViewTask from "../components/DayViewTask.vue";
+import AddEventBtn from "../components/AddEventBtn.vue";
 import moment from "moment";
 import TaskService from "../services/TaskService.js";
 export default {
   name: "day-view",
   components: {
-    DayViewTask
+    DayViewTask,
+    AddEventBtn
   },
   data() {
     return {

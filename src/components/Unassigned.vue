@@ -4,10 +4,7 @@
     @dragenter.prevent="dragenterHandeler"
     @dragover.prevent="dragover_handler"
   >
-    <div class="title-block">
-      No Date
-      <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
-    </div>
+    <div class="title-block">No Date</div>
 
     <div class="events-scroller">
       <Task v-for="task in tasks" :key="task.id" :task="task"/>
@@ -32,11 +29,7 @@ export default {
     dragenterHandeler() {
       this.$store.dispatch("setDragDay", false);
     },
-    dragover_handler() {},
-    startNewTask() {
-      this.$store.dispatch("startNewTask", false);
-      this.$router.push("/new-task");
-    }
+    dragover_handler() {}
   }
 };
 </script>
@@ -52,21 +45,6 @@ export default {
   padding: 4px;
 }
 
-.add-event-btn {
-  position: absolute;
-  right: 10px;
-  height: 18px;
-  border-radius: 15px;
-  padding: 0 10px;
-  display: inline-block;
-  background: #f4f4f4;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s, opacity 0.3s;
-  &:hover {
-    background: darken(#f4f4f4, 10%);
-  }
-}
 .events-scroller {
   padding: 0 5px;
   margin-right: 2px;
@@ -97,10 +75,6 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  &:hover {
-    background: #fcfcfc;
-  }
 
   &.selected {
     background: rgb(240, 255, 255);

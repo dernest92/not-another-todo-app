@@ -21,6 +21,7 @@ export default {
     },
     startEditTask(id) {
       this.$store.dispatch("startEditTask", id);
+      this.$router.push("/edit-task");
     }
   },
   created() {

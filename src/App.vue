@@ -6,9 +6,6 @@
     <div class="content-area">
       <router-view></router-view>
     </div>
-    <div id="add-event">
-      <i class="fas fa-plus"></i>
-    </div>
   </div>
 </template>
 
@@ -105,9 +102,6 @@ export default {
   height: 100%;
 }
 
-#add-event {
-  display: none;
-}
 @media screen and (max-width: 700px) {
   #app {
     grid-template-rows: 45px auto;
@@ -143,21 +137,6 @@ export default {
     left: 0;
     height: auto;
     background: #fff;
-  }
-  #add-event {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: #333;
-    color: #fff;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.375);
-    cursor: pointer;
   }
 }
 </style>
