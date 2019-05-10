@@ -49,13 +49,9 @@ export default {
     touchend_handler(e) {
       const durr = e.timeStamp - this.startTouch;
       if (!this.scrolled) {
-        if (durr < 250) {
+        setTimeout(() => {
           this.goToDay();
-        } else {
-          setTimeout(() => {
-            this.startNewTask();
-          }, 0);
-        }
+        }, 0);
       }
       this.scrolled = false;
     },

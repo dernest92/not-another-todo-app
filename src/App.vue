@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
-    <nav-bar class="nav-area"/>
+    <nav-bar v-if="showNav" class="nav-area"/>
     <SideMenu class="menu-area"/>
     <div class="content-area">
       <router-view></router-view>
@@ -29,6 +29,9 @@ export default {
   },
   methods: {},
   computed: {
+    showNav() {
+      return this.$route.name !== "login-view";
+    },
     loading() {
       return this.$store.state.loading;
     },
