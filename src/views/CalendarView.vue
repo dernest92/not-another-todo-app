@@ -10,6 +10,15 @@
           <i class="fas fa-chevron-right"></i>
         </button>
       </div>
+      <div class="week-header">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thr</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
       <div
         class="month"
         ref="month"
@@ -17,21 +26,11 @@
         @touchend="touchend_handler"
         @touchmove="touchmove_handler"
       >
-        <div class="week-header">
-          <div>Sun</div>
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thr</div>
-          <div>Fri</div>
-          <div>Sat</div>
-        </div>
         <Week
-          v-for="(week, index) in weeks"
+          v-for="week in weeks"
           class="week"
           :key="week"
           :startDay="week"
-          :isFirstWeek="index === 0 ? true : false "
           :tasks="filteredTasks"
         />
       </div>
@@ -236,6 +235,10 @@ export default {
   background: #34495e;
   color: #fff;
   border-radius: 50%;
+}
+
+.month-col {
+  height: 100%;
 }
 
 @media screen and (max-width: 700px) {
