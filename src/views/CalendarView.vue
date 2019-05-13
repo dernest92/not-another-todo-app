@@ -102,11 +102,11 @@ export default {
         setTimeout(() => {
           this.changeMonth(-1);
         }, 250);
+        monthEl.classList.add("last-month");
+        monthEl.addEventListener("animationend", () => {
+          monthEl.classList.remove("last-month");
+        });
       }
-      monthEl.classList.add("last-month");
-      monthEl.addEventListener("animationend", () => {
-        monthEl.classList.remove("last-month");
-      });
     },
     touchmove_handler(e) {
       const monthEl = this.$refs.month;
