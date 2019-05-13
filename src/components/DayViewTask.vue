@@ -73,6 +73,9 @@ export default {
   background: #f4f4f4;
   cursor: pointer;
   border-radius: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .high-priority {

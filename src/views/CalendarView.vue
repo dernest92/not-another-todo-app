@@ -36,8 +36,8 @@
         />
       </div>
     </div>
-    <div class="nodate-col unassinged-container">
-      <Unassigned class="no-date-tasks" :tasks="filteredTasks.filter(task => task.date === false)"/>
+    <div class="nodate-col">
+      <Unassigned :tasks="filteredTasks.filter(task => task.date === false)"/>
     </div>
     <AddEventBtn/>
   </div>

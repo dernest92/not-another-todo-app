@@ -21,7 +21,7 @@
           <i class="fas fa-chevron-right"></i>
         </button>
       </div>
-      <div>
+      <div class="day-tasks">
         <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
@@ -154,6 +154,10 @@ export default {
 
 
 <style lang="scss" scoped>
+.day-tasks {
+  padding: 0 5px;
+}
+
 .back-btn {
   position: absolute;
   left: 12px;
@@ -164,9 +168,15 @@ export default {
   height: 100%;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .day-card {
+  max-width: 100vw;
   background: #fff;
   overflow: hidden;
   height: 100%;

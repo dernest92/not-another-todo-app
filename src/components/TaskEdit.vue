@@ -6,7 +6,22 @@
           <b-input v-model="newTask.title" placeholder="title"></b-input>
         </b-field>
         <b-field label="Date">
-          <b-datepicker placeholder="Select date..." icon="calendar-today" v-model="datepickerDate"></b-datepicker>
+          <b-datepicker
+            placeholder="Select date..."
+            icon="calendar-today"
+            v-model="datepickerDate"
+            editable
+          >
+            <button class="button is-primary" @click.prevent="datepickerDate = new Date()">
+              <b-icon icon="calendar-today"></b-icon>
+              <span>Today</span>
+            </button>
+
+            <button class="button is-danger" @click.prevent="datepickerDate = false">
+              <b-icon icon="close"></b-icon>
+              <span>Clear</span>
+            </button>
+          </b-datepicker>
         </b-field>
 
         <b-field label="Category">
@@ -104,6 +119,7 @@ export default {
       });
     },
     closeModal(e) {
+      this.$store.dispatch("closeModal");
       this.$router.go(-1);
     },
     submitNewTask() {
@@ -147,7 +163,13 @@ export default {
         }
       },
       set(date) {
-        this.newTask.date = moment(date).toISOString();
+        if (date) {
+          this.newTask.date = moment(date)
+            .startOf("day")
+            .toISOString();
+        } else {
+          this.newTask.date = false;
+        }
       }
     },
     modalOpen() {
@@ -207,6 +229,12 @@ export default {
   max-width: 800px;
   padding: 10px 30px;
   height: calc(100vh - 46px);
+}
+
+.datepicker-footer {
+  .button {
+    margin-right: 5px;
+  }
 }
 </style>
 

@@ -239,6 +239,7 @@ export default new Vuex.Store({
     },
     closeModal({ commit }) {
       commit("SET_MODAL", false);
+      commit("SET_MODAL_DATE", false);
     },
     async submitNewTask({ commit }, task) {
       try {
