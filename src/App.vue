@@ -2,7 +2,7 @@
   <div id="app">
     <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
     <nav-bar v-if="showNav" class="nav-area"/>
-    <SideMenu class="menu-area"/>
+    <SideMenu v-if="showNav" class="menu-area"/>
     <div class="content-area">
       <router-view></router-view>
     </div>
