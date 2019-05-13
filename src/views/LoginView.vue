@@ -3,7 +3,7 @@
     <div class="login-image"></div>
     <div class="login-container">
       <div>
-        <form @submit.prevent>
+        <form @submit.prevent="submitLogin">
           <b-field v-if="newUser" label="Name" custom-class="has-text-white">
             <b-input v-model="username" placeholder="Your Name" icon="account"></b-input>
           </b-field>
@@ -21,8 +21,8 @@
           </b-field>
 
           <div class="btn-group">
-            <b-button v-if="newUser" @click="submitRegister" type="is-primary">Register</b-button>
-            <b-button v-else @click="submitLogin" type="is-primary">Login</b-button>
+            <b-button v-if="newUser" native-type="submit" type="is-primary">Register</b-button>
+            <b-button v-else native-type="submit" type="is-primary">Login</b-button>
           </div>
         </form>
         <div class="modal-footer">
@@ -65,11 +65,23 @@ export default {
   },
   methods: {
     async submitLogin(e) {
-      try {
-        await this.$store.dispatch("submitLogin", this.loginUser);
-        this.$router.push("calendar");
-      } catch (e) {
-        console.log("could not log in");
+      if (this.newUser) {
+        try {
+          await this.$store.dispatch("submitRegister", {
+            name: this.username,
+            ...this.loginUser
+          });
+          this.$router.push("calendar");
+        } catch (e) {
+          console.log("could not log in");
+        }
+      } else {
+        try {
+          await this.$store.dispatch("submitLogin", this.loginUser);
+          this.$router.push("calendar");
+        } catch (e) {
+          console.log("could not log in");
+        }
       }
     },
     async submitRegister(e) {
