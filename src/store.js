@@ -195,6 +195,23 @@ export default new Vuex.Store({
         commit("SET_LOADING", false);
       }
     },
+    async loginGuest({ commit }) {
+      try {
+        commit("SET_LOADING", true);
+        const res = await TaskService.loginGuest();
+        const { user, token } = await res.data;
+        commit("SET_USER", user);
+        commit("SET_TOKEN", token);
+        commit("SET_LOGGED_IN", true);
+        commit("SET_LOGIN_MODAL", false);
+        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("user", JSON.stringify(user));
+        TaskService.setToken(token);
+      } catch (e) {
+      } finally {
+        commit("SET_LOADING", false);
+      }
+    },
     async submitLogin({ commit, dispatch }, credentials) {
       try {
         commit("SET_LOADING", true);

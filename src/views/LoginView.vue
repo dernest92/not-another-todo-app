@@ -36,7 +36,7 @@
           </div>
           <div>
             Continue as
-            <a class="link">Guest</a>
+            <a @click="loginGuest" class="link">Guest</a>
           </div>
         </div>
       </div>
@@ -64,6 +64,10 @@ export default {
     };
   },
   methods: {
+    async loginGuest() {
+      await this.$store.dispatch("loginGuest");
+      this.$router.push("calendar");
+    },
     async submitLogin(e) {
       if (this.newUser) {
         try {

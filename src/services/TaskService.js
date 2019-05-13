@@ -10,6 +10,9 @@ const apiClient = axios.create({
 });
 
 export default {
+  loginGuest() {
+    return apiClient.post("/users/guest");
+  },
   getCategories() {
     return apiClient.get("/category");
   },
