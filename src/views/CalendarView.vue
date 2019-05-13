@@ -74,6 +74,7 @@ export default {
       this.touchstart = { clientX, clientY };
     },
     touchend_handler(e) {
+      const monthEl = this.$refs.month;
       const { clientX, clientY } = e.changedTouches[0];
       const startX = this.touchstart.clientX;
       const startY = this.touchstart.clientY;
@@ -90,10 +91,22 @@ export default {
         this.$store.dispatch("setNavMenu", false);
         this.$store.dispatch("startNewTask", false);
       } else if (diffY < 100 && diffX < -100) {
-        this.changeMonth(1);
+        setTimeout(() => {
+          this.changeMonth(1);
+        }, 250);
+        monthEl.classList.add("next-month");
+        monthEl.addEventListener("animationend", () => {
+          monthEl.classList.remove("next-month");
+        });
       } else if (diffY < 100 && diffX > 100) {
-        this.changeMonth(-1);
+        setTimeout(() => {
+          this.changeMonth(-1);
+        }, 250);
       }
+      monthEl.classList.add("last-month");
+      monthEl.addEventListener("animationend", () => {
+        monthEl.classList.remove("last-month");
+      });
     },
     touchmove_handler(e) {
       const monthEl = this.$refs.month;
@@ -121,32 +134,15 @@ export default {
     },
 
     changeMonth(qty) {
-      const monthEl = this.$refs.month;
-
-      setTimeout(() => {
-        if (this.month === 11 && qty > 0) {
-          this.month = 0;
-          this.year++;
-        } else if (this.month === 0 && qty < 0) {
-          this.month = 11;
-          this.year--;
-        } else {
-          this.month += qty;
-          this.setWeeks();
-        }
-      }, 250);
-
-      if (qty > 0) {
-        monthEl.classList.add("next-month");
-        monthEl.addEventListener("animationend", () => {
-          monthEl.classList.remove("next-month");
-        });
-      }
-      if (qty < 0) {
-        monthEl.classList.add("last-month");
-        monthEl.addEventListener("animationend", () => {
-          monthEl.classList.remove("last-month");
-        });
+      if (this.month === 11 && qty > 0) {
+        this.month = 0;
+        this.year++;
+      } else if (this.month === 0 && qty < 0) {
+        this.month = 11;
+        this.year--;
+      } else {
+        this.month += qty;
+        this.setWeeks();
       }
     },
     goToToday() {
@@ -255,103 +251,6 @@ export default {
 
   .nodate-col {
     display: none;
-  }
-}
-
-.last-month {
-  animation-name: slide-left;
-  animation-duration: 0.5s; /* or: Xms */
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-timing-function: ease-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
-  animation-fill-mode: forwards; /* or: backwards, both, none */
-}
-.next-month {
-  animation-name: slide-right;
-  animation-duration: 0.5s; /* or: Xms */
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-timing-function: ease-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
-  animation-fill-mode: forwards; /* or: backwards, both, none */
-}
-.fade-in {
-  animation-name: fade-in;
-  animation-duration: 0.5s; /* or: Xms */
-  animation-iteration-count: 1;
-  animation-direction: normal;
-  animation-timing-function: ease-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
-  animation-fill-mode: forwards; /* or: backwards, both, none */
-  animation-delay: 0.5s; /* or: Xms */
-}
-
-@keyframes slide-right {
-  0% {
-    transform: translate(0);
-    opacity: 1;
-  }
-
-  25% {
-    opacity: 1;
-  }
-
-  50% {
-    transform: translate(-100%);
-
-    opacity: 0;
-  }
-
-  55% {
-    transform: translate(0);
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes fade-in {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-@keyframes slide-left {
-  0% {
-    transform: translate(0);
-    opacity: 1;
-  }
-
-  25% {
-    opacity: 1;
-  }
-
-  50% {
-    transform: translate(100%);
-
-    opacity: 0;
-  }
-
-  55% {
-    transform: translate(0);
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes fade-in {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
   }
 }
 </style>

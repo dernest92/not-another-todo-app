@@ -90,7 +90,6 @@ body {
 
 .month {
   height: calc(100% - 40px);
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
   overflow: hidden;
 }
 $color-danger: #e74c3c;
@@ -446,5 +445,74 @@ $color-primary: #3498db;
       background: transparent; /* Optional: just make scrollbar invisible */
       cursor: pointer;
     }
+  }
+}
+
+.last-month {
+  animation-name: slide-left;
+  animation-duration: 0.5s; /* or: Xms */
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-timing-function: ease-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+  animation-fill-mode: forwards; /* or: backwards, both, none */
+}
+.next-month {
+  animation-name: slide-right;
+  animation-duration: 0.5s; /* or: Xms */
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-timing-function: ease-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+  animation-fill-mode: forwards; /* or: backwards, both, none */
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-100%);
+    opacity: 0;
+  }
+
+  55% {
+    transform: translate(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(100%);
+    opacity: 0;
+  }
+
+  55% {
+    transform: translate(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0);
+    opacity: 1;
   }
 }

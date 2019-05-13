@@ -21,7 +21,7 @@
           <i class="fas fa-chevron-right"></i>
         </button>
       </div>
-      <div class="day-tasks">
+      <div class="day-tasks" ref="tasks">
         <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
@@ -36,6 +36,7 @@ import Unassigned from "../components/Unassigned.vue";
 import AddEventBtn from "../components/AddEventBtn.vue";
 import moment from "moment";
 import TaskService from "../services/TaskService.js";
+import { setTimeout } from "timers";
 export default {
   name: "day-view",
   components: {
@@ -75,17 +76,29 @@ export default {
       this.touchstart = { clientX, clientY };
     },
     touchend_handler(e) {
+      const tasksEl = this.$refs.tasks;
       const { clientX, clientY } = e.changedTouches[0];
       const startX = this.touchstart.clientX;
       const startY = this.touchstart.clientY;
       const diffX = clientX - startX;
       const diffY = clientY - startY;
-      if (diffY > 100 && diffX < 100) {
-      } else if (diffY < -100 && diffX < 100) {
-      } else if (diffY < 100 && diffX < -100) {
-        this.changeDay(1);
+
+      if (diffY < 100 && diffX < -100) {
+        setTimeout(() => {
+          this.changeDay(1);
+        }, 250);
+        tasksEl.classList.add("next-month");
+        tasksEl.addEventListener("animationend", () => {
+          tasksEl.classList.remove("next-month");
+        });
       } else if (diffY < 100 && diffX > 100) {
-        this.changeDay(-1);
+        setTimeout(() => {
+          this.changeDay(-1);
+        }, 250);
+        tasksEl.classList.add("last-month");
+        tasksEl.addEventListener("animationend", () => {
+          tasksEl.classList.remove("last-month");
+        });
       }
     },
     setWeeks() {
