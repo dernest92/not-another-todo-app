@@ -84,8 +84,26 @@ export default {
 
 
 <style lang="scss">
+// Custom variables here
+$navbar-height: 20px;
+$navbar-padding-vertical: 8px;
+$vue-green: #41b883;
+$vue-dark-green: #35495e;
+$primary: $vue-dark-green;
+$link: $vue-green;
+
+// Bulma styling here
+@import "~bulma/sass/utilities/_all";
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+// Custom Styling here
 @import "./assets/styles/global.scss";
 @import "./assets/styles/layout.scss";
+
+// .button {
+//   box-shadow: 5px 5px 10px black;
+// }
 
 #app {
   display: grid;
@@ -110,7 +128,6 @@ export default {
 }
 
 .content-area {
-  background: #fff;
   height: 100%;
   overflow-y: auto;
   position: relative;
@@ -150,7 +167,6 @@ export default {
     right: 0;
     left: 0;
     height: auto;
-    background: #fff;
   }
 }
 </style>

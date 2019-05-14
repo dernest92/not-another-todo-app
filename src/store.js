@@ -38,7 +38,7 @@ export default new Vuex.Store({
     tasks: [],
     dragTask: "",
     dragDay: "",
-    sideMenu: true,
+    sideMenu: false,
     sideMenuMobile: false
   },
 

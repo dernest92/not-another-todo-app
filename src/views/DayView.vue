@@ -10,14 +10,14 @@
       <div class="day-card-header">
         <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
         <button class="button button--round nav-button" @click="changeDay(-1)">
-          <i class="fas fa-chevron-left"></i>
+          <i class="mdi mdi-chevron-left"></i>
         </button>
         {{displayDate}}
         <button
           class="button button--round nav-button"
           @click="changeDay(1)"
         >
-          <i class="fas fa-chevron-right"></i>
+          <i class="mdi mdi-chevron-right"></i>
         </button>
       </div>
       <div class="day-tasks" ref="tasks">
