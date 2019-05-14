@@ -5,21 +5,6 @@
         <div class="menu-btn">
           <b-button @click="toggleMenu" icon-left="menu" rounded></b-button>
         </div>
-        <b-dropdown aria-role="list" position="is-bottom-left" :mobile-modal="false">
-          <button class="button" slot="trigger">
-            <span>{{currentRoute}}</span>
-            <b-icon icon="menu-down"></b-icon>
-          </button>
-          <b-dropdown-item has-link aria-role="menuitem">
-            <router-link to="/calendar" class="link">Month</router-link>
-          </b-dropdown-item>
-          <b-dropdown-item has-link aria-role="menuitem">
-            <router-link to="/day" class="link">Day</router-link>
-          </b-dropdown-item>
-          <b-dropdown-item has-link aria-role="menuitem">
-            <router-link to="/list" class="link">List</router-link>
-          </b-dropdown-item>
-        </b-dropdown>
       </div>
     </nav>
   </div>

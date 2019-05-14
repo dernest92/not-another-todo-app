@@ -4,7 +4,6 @@ import Router from "vue-router";
 import LoginView from "./views/LoginView.vue";
 import CalendarView from "./views/CalendarView.vue";
 import DayView from "./views/DayView.vue";
-import ListView from "./views/ListView.vue";
 import NewTaskView from "./views/NewTaskView.vue";
 import EditTaskView from "./views/EditTaskView.vue";
 
@@ -27,11 +26,6 @@ export default new Router({
       path: "/day",
       name: "Day",
       component: DayView
-    },
-    {
-      path: "/list",
-      name: "List",
-      component: ListView
     },
     {
       path: "/new-task",
