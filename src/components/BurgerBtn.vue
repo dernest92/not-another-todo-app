@@ -57,7 +57,7 @@ export default {
     background-color: transparent;
     box-shadow: none;
     .burger-menu-piece {
-      border-top: 3px solid #fff !important;
+      border-top: 3px solid #333 !important;
     }
   }
 }

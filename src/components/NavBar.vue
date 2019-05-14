@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     toggleMenu() {
-      console.log("hello");
       this.$store.dispatch("toggleMenu");
     },
 

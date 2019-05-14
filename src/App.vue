@@ -1,15 +1,18 @@
 <template>
-  <div id="app">
-    <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
-    <nav-bar v-if="showNav" class="nav-area"/>
-    <SideMenu v-if="showNav" class="menu-area"/>
-    <div class="content-area">
-      <router-view></router-view>
+  <div>
+    <BugerBtn @toggle="toggleMenu" class="burger-btn"/>
+    <div id="app">
+      <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
+      <SideMenu v-if="showNav" class="menu-area"/>
+      <div class="content-area">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import BugerBtn from "./components/BurgerBtn";
 import moment from "moment";
 import TaskService from "./services/TaskService.js";
 import NavBar from "./components/NavBar.vue";
@@ -19,12 +22,17 @@ export default {
   name: "app",
   components: {
     NavBar,
-    SideMenu
+    SideMenu,
+    BugerBtn
   },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    toggleMenu() {
+      this.$store.dispatch("toggleMenu");
+    }
+  },
   computed: {
     showNav() {
       return this.$route.name !== "login-view";
@@ -84,6 +92,12 @@ export default {
 
 
 <style lang="scss">
+.burger-btn {
+  position: fixed;
+  top: 3px;
+  left: 3px;
+}
+
 // Custom variables here
 $navbar-height: 20px;
 $navbar-padding-vertical: 8px;
@@ -107,11 +121,8 @@ $link: $vue-green;
 
 #app {
   display: grid;
-  grid-template-rows: 45px auto;
   grid-auto-columns: minmax(0, max-content) auto;
-  grid-template-areas:
-    "top top"
-    "menu content";
+  grid-template-areas: "menu content";
   position: fixed;
   top: 0;
   bottom: 0;
@@ -135,11 +146,8 @@ $link: $vue-green;
 
 @media screen and (max-width: 700px) {
   #app {
-    grid-template-rows: 45px auto;
     grid-auto-columns: auto;
-    grid-template-areas:
-      "top"
-      "content";
+    grid-template-areas: "content";
     position: fixed;
     top: 0;
     bottom: 0;
@@ -162,7 +170,7 @@ $link: $vue-green;
 
   .content-area {
     position: fixed;
-    top: 45px;
+    top: 0;
     bottom: 0;
     right: 0;
     left: 0;

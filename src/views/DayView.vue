@@ -8,7 +8,6 @@
       @touchend="touchend_handler"
     >
       <div class="day-card-header">
-        <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>
         <button class="button button--round nav-button" @click="changeDay(-1)">
           <i class="mdi mdi-chevron-left"></i>
         </button>
@@ -26,6 +25,7 @@
     </div>
     <Unassigned :tasks="filteredTasks.filter(task => task.date === false)"/>
     <AddEventBtn :date="todaysDate"/>
+    <b-button class="back-btn" @click="back" icon-left="chevron-left"></b-button>
   </div>
 </template>
 
@@ -169,8 +169,11 @@ export default {
 
 .back-btn {
   position: absolute;
-  left: 12px;
-  top: 15px;
+  right: 10px;
+  bottom: 70px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .day-view-container {
@@ -222,11 +225,6 @@ export default {
     font-size: 20px;
     font-weight: bold;
     background: #ccc;
-  }
-  .back-btn {
-    position: absolute;
-    left: 5px;
-    top: 5px;
   }
 }
 </style>

@@ -98,6 +98,7 @@ export default {
   margin: 0;
 }
 .side-menu {
+  padding-top: 48px;
   z-index: 4;
   text-align: left;
   border-right: none;
