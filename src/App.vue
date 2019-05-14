@@ -10,17 +10,14 @@
 </template>
 
 <script>
-import LoadingModal from "./components/LoadingModal.vue";
 import moment from "moment";
 import TaskService from "./services/TaskService.js";
-import LoadingModalVue from "./components/LoadingModal.vue";
 import NavBar from "./components/NavBar.vue";
 import SideMenu from "./components/SideMenu.vue";
 
 export default {
   name: "app",
   components: {
-    LoadingModal,
     NavBar,
     SideMenu
   },

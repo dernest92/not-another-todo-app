@@ -60,11 +60,7 @@ export default {
     }, 0);
   },
   methods: {
-    changeShowComplete() {
-      console.log("toggle show complete");
-    },
     changeFilter() {
-      console.log("filter categories", this.filterCategories);
       this.$store.dispatch("toggleCatFilter", this.filterCategories);
     },
     closeMobileMenu() {

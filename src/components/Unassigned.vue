@@ -14,12 +14,10 @@
 </template>
 
 <script>
-import Task from "./Task.vue";
 import DayViewTask from "./DayViewTask.vue";
 
 export default {
   components: {
-    Task,
     DayViewTask
   },
   props: {
