@@ -6,7 +6,6 @@
       @dragover.prevent="dragover_handler"
       @touchstart="touchstart_handler"
       @touchend="touchend_handler"
-      @touchmove="touchmove_handler"
     >
       <div class="day-card-header">
         <b-button class="back-btn" @click="back" icon-left="chevron-left">back</b-button>

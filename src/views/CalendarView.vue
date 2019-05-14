@@ -19,13 +19,7 @@
         <div>Fri</div>
         <div>Sat</div>
       </div>
-      <div
-        class="month"
-        ref="month"
-        @touchstart="touchstart_handler"
-        @touchend="touchend_handler"
-        @touchmove="touchmove_handler"
-      >
+      <div class="month" ref="month" @touchstart="touchstart_handler" @touchend="touchend_handler">
         <Week
           v-for="week in weeks"
           class="week"
