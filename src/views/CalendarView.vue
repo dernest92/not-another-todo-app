@@ -217,6 +217,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-columns: auto 250px;
+  overflow-y: hidden;
 }
 .weekdays {
   display: grid;

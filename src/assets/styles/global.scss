@@ -23,51 +23,6 @@ html {
   }
 }
 
-.event {
-  background: #f4f4f4;
-  padding: 2px 5px;
-  text-align: left;
-  cursor: pointer;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  overflow-x: hidden;
-  transition: all 0.3s;
-  border-radius: 4px;
-  .event-title {
-    display: inline-block;
-    width: 100%;
-    white-space: nowrap;
-    align-self: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &.high-priority {
-    background: rgb(255, 182, 182);
-    &:hover {
-      background: darken(rgb(255, 182, 182), 5%);
-    }
-  }
-
-  &.completed {
-    text-decoration: line-through;
-    font-style: italic;
-    color: #aaa;
-    background: rgb(199, 224, 199);
-    &:hover {
-      background: darken(rgb(199, 224, 199), 10%);
-      color: darken(#aaa, 10%);
-    }
-  }
-
-  &:hover {
-    background: #ccc;
-    .event-title {
-      white-space: normal;
-    }
-  }
-}
 .no-date-tasks {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.14);
   overflow: hidden;
@@ -363,18 +318,12 @@ $color-primary: #3498db;
     }
   }
   .event {
-    background: #f4f4f4;
     padding: 1px;
-    text-align: left;
-    cursor: pointer;
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    overflow-x: hidden;
-    transition: all 0.3s;
+    margin-top: 1px;
     border-radius: 0;
     font-size: 10px;
     pointer-events: none;
+    line-height: 1.2;
     .event-title {
       display: inline-block;
       width: 100%;
@@ -430,7 +379,7 @@ $color-primary: #3498db;
     position: absolute;
     padding: 0;
     margin: 0;
-    top: 25px;
+    top: 22px;
     bottom: 0;
     left: 0;
     right: 0;
