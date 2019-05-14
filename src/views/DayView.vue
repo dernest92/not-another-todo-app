@@ -23,7 +23,7 @@
         <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
       </div>
     </div>
-    <Unassigned :tasks="filteredTasks.filter(task => task.date === false)"/>
+    <Unassigned class="day-view" :tasks="filteredTasks.filter(task => task.date === false)"/>
     <AddEventBtn :date="todaysDate"/>
     <b-button class="back-btn" @click="back" icon-left="chevron-left"></b-button>
   </div>
@@ -197,8 +197,10 @@ export default {
 }
 
 .day-card-header {
-  padding-top: 20px;
-  height: 66px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
   font-size: 20px;
   font-weight: bold;
   background: #ccc;
@@ -220,8 +222,6 @@ export default {
 }
 @media screen and (max-width: 700px) {
   .day-card-header {
-    padding-top: 10px;
-    height: 45px;
     font-size: 20px;
     font-weight: bold;
     background: #ccc;

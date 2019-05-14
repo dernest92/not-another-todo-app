@@ -32,9 +32,6 @@ html {
   height: 100%;
 }
 
-body {
-  background: #f4f4f4;
-}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -114,7 +111,7 @@ $color-primary: #3498db;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: 60px;
 }
 .nav-btn {
   height: 35px;
@@ -285,13 +282,7 @@ $color-primary: #3498db;
     width: 100%;
     padding: 0;
     margin: 0;
-    height: 50px;
     pointer-events: none;
-    .nav-btn {
-    }
-    .date-label {
-      font-size: 18px;
-    }
   }
   .modal-card {
     min-width: 50px;

@@ -94,8 +94,8 @@ export default {
 <style lang="scss">
 .burger-btn {
   position: fixed;
-  top: 3px;
-  left: 3px;
+  top: 5px;
+  left: 5px;
 }
 
 // Custom variables here

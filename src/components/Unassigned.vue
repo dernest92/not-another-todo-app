@@ -39,9 +39,15 @@ export default {
   justify-content: space-evenly;
   background: #ccc;
   font-weight: bold;
-  height: 66px;
+  height: 86px;
   padding: 4px;
   font-size: 20px;
+}
+
+.day-view {
+  .title-block {
+    height: 60px;
+  }
 }
 
 .events-scroller {

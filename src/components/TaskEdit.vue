@@ -228,6 +228,7 @@ export default {
 .task-edit-container {
   max-width: 800px;
   padding: 10px 30px;
+  padding-top: 60px;
   height: calc(100vh - 46px);
 }
 
