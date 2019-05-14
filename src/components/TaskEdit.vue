@@ -118,7 +118,7 @@ export default {
         }
       });
     },
-    closeModal(e) {
+    closeModal() {
       this.$store.dispatch("closeModal");
       this.$router.go(-1);
     },

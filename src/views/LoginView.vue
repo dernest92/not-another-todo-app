@@ -21,8 +21,13 @@
           </b-field>
 
           <div class="btn-group">
-            <b-button v-if="newUser" native-type="submit" type="is-primary">Register</b-button>
-            <b-button v-else native-type="submit" type="is-primary">Login</b-button>
+            <b-button
+              v-if="newUser"
+              native-type="submit"
+              type="is-primary"
+              :loading="btnLoading"
+            >Register</b-button>
+            <b-button v-else native-type="submit" type="is-primary" :loading="btnLoading">Login</b-button>
           </div>
         </form>
         <div class="modal-footer">
@@ -46,10 +51,12 @@
 
 <script>
 import TaskService from "../services/TaskService.js";
+import { setTimeout } from "timers";
 
 export default {
   data() {
     return {
+      btnLoading: false,
       newUser: false,
       username: "",
       loginUser: {
@@ -64,39 +71,44 @@ export default {
     };
   },
   methods: {
+    dangerToast(message) {
+      this.$toast.open({
+        message: message,
+        type: "is-danger",
+        position: "is-bottom"
+      });
+    },
     async loginGuest() {
       await this.$store.dispatch("loginGuest");
       this.$router.push("calendar");
     },
-    async submitLogin(e) {
+    async submitLogin() {
+      this.btnLoading = true;
       if (this.newUser) {
         try {
           await this.$store.dispatch("submitRegister", {
             name: this.username,
             ...this.loginUser
           });
-          this.$router.push("calendar");
+          this.$router.push("/calendar");
         } catch (e) {
-          console.log("could not log in");
+          this.dangerToast(e.message);
+        } finally {
+          setTimeout(() => {
+            this.btnLoading = false;
+          }, 200);
         }
       } else {
         try {
           await this.$store.dispatch("submitLogin", this.loginUser);
-          this.$router.push("calendar");
+          this.$router.push("/calendar");
         } catch (e) {
-          console.log("could not log in");
+          this.dangerToast(e.message);
+        } finally {
+          setTimeout(() => {
+            this.btnLoading = false;
+          }, 200);
         }
-      }
-    },
-    async submitRegister(e) {
-      try {
-        await this.$store.dispatch("submitRegister", {
-          name: this.username,
-          ...this.loginUser
-        });
-        this.$router.push("calendar");
-      } catch (e) {
-        console.log("could not log in");
       }
     }
   },

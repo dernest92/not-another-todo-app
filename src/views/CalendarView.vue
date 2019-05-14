@@ -46,7 +46,6 @@
 import Week from "../components/Week.vue";
 import moment from "moment";
 import Unassigned from "../components/Unassigned.vue";
-import TaskService from "../services/TaskService.js";
 import AddEventBtn from "../components/AddEventBtn.vue";
 import { setTimeout } from "timers";
 export default {
@@ -106,14 +105,6 @@ export default {
           monthEl.classList.remove("last-month");
         });
       }
-    },
-    touchmove_handler(e) {
-      const monthEl = this.$refs.month;
-      const startX = this.touchstart.clientX;
-      const { clientX, clientY } = e.changedTouches[0];
-      const diffX = clientX - startX;
-      // monthEl.style.position = "relative";
-      // monthEl.style.left = diffX + "px";
     },
     moment,
     setWeeks() {

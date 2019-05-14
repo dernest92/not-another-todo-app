@@ -35,7 +35,6 @@ import DayViewTask from "../components/DayViewTask.vue";
 import Unassigned from "../components/Unassigned.vue";
 import AddEventBtn from "../components/AddEventBtn.vue";
 import moment from "moment";
-import TaskService from "../services/TaskService.js";
 import { setTimeout } from "timers";
 export default {
   name: "day-view",
@@ -57,7 +56,6 @@ export default {
     };
   },
   methods: {
-    touchmove_handler(e) {},
     back() {
       this.$router.go(-1);
     },
@@ -156,8 +154,7 @@ export default {
   async created() {
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
-    if (token && user) {
-    } else {
+    if (!token || !user) {
       this.$router.push({ name: "login-view" });
     }
   }

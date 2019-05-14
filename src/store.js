@@ -180,7 +180,6 @@ export default new Vuex.Store({
     },
     async submitRegister({ commit }, credentials) {
       try {
-        commit("SET_LOADING", true);
         const res = await TaskService.register(credentials);
         const { user, token } = await res.data;
         commit("SET_USER", user);
@@ -191,13 +190,11 @@ export default new Vuex.Store({
         localStorage.setItem("user", JSON.stringify(user));
         TaskService.setToken(token);
       } catch (e) {
-      } finally {
-        commit("SET_LOADING", false);
+        throw new Error("Failed to register");
       }
     },
     async loginGuest({ commit }) {
       try {
-        commit("SET_LOADING", true);
         const res = await TaskService.loginGuest();
         const { user, token } = await res.data;
         commit("SET_USER", user);
@@ -208,13 +205,11 @@ export default new Vuex.Store({
         localStorage.setItem("user", JSON.stringify(user));
         TaskService.setToken(token);
       } catch (e) {
-      } finally {
-        commit("SET_LOADING", false);
+        throw new Error("Failed to log in as guest");
       }
     },
     async submitLogin({ commit, dispatch }, credentials) {
       try {
-        commit("SET_LOADING", true);
         const res = await TaskService.login(credentials);
         const { user, token } = await res.data;
         commit("SET_USER", user);
@@ -225,8 +220,7 @@ export default new Vuex.Store({
         localStorage.setItem("user", JSON.stringify(user));
         dispatch("fetchTasks");
       } catch (e) {
-      } finally {
-        commit("SET_LOADING", false);
+        throw new Error("Failed to log in");
       }
     },
     startEditTask({ commit, state }, id) {
@@ -239,12 +233,13 @@ export default new Vuex.Store({
         task => task._id === state.dragTask
       );
       selectedTask.date = state.dragDay;
-      const res = await TaskService.updateTask(selectedTask);
-      if (res.status === 200) {
+      try {
+        await TaskService.updateTask(selectedTask);
         commit("UPDATE_TASK", selectedTask);
         commit("SET_DRAG_TASK", "");
         commit("SET_DRAG_DAY", "");
-      } else {
+      } catch (e) {
+        throw new Error("Could not update task");
       }
     },
     setMonthStart({ commit }, start) {
@@ -261,14 +256,11 @@ export default new Vuex.Store({
     async submitNewTask({ commit }, task) {
       try {
         const res = await TaskService.postTask(task);
-
-        if (res.status === 201) {
-          const newTask = await res.data;
-          commit("ADD_TASK", { _id: newTask._id, ...task });
-        } else {
-          throw new Error("Failed to create");
-        }
-      } catch (e) {}
+        const newTask = await res.data;
+        commit("ADD_TASK", { _id: newTask._id, ...task });
+      } catch (e) {
+        throw new Error("Failed to create");
+      }
     },
     async fetchTasks({ commit }) {
       const res = await TaskService.getTasks();
