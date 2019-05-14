@@ -1,6 +1,6 @@
 <template>
   <div @click="addEvent" id="add-event">
-    <i class="fas fa-plus"></i>
+    <i class="mdi mdi-plus mdi-24px"></i>
   </div>
 </template>
 
