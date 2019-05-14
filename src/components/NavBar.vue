@@ -3,16 +3,21 @@
     <nav class="page__navbar" :class="{'nav-open': navMenuOpen}">
       <div class="nav-contents">
         <div class="menu-btn">
-          <b-button @click="toggleMenu" icon-left="menu" rounded></b-button>
+          <BugerBtn @toggle="toggleMenu"/>
         </div>
       </div>
     </nav>
   </div>
 </template>
 <script>
+import BugerBtn from "./BurgerBtn";
 export default {
+  components: {
+    BugerBtn
+  },
   methods: {
     toggleMenu() {
+      console.log("hello");
       this.$store.dispatch("toggleMenu");
     },
 

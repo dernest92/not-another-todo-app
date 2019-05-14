@@ -219,6 +219,7 @@ export default new Vuex.Store({
         localStorage.setItem("token", JSON.stringify(token));
         localStorage.setItem("user", JSON.stringify(user));
         dispatch("fetchTasks");
+        dispatch("fetchCategories");
       } catch (e) {
         throw new Error("Failed to log in");
       }

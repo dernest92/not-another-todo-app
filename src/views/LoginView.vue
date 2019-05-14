@@ -22,12 +22,19 @@
 
           <div class="btn-group">
             <b-button
+              class="is-fullwidth"
               v-if="newUser"
               native-type="submit"
               type="is-link"
               :loading="btnLoading"
             >Register</b-button>
-            <b-button v-else native-type="submit" type="is-link" :loading="btnLoading">Login</b-button>
+            <b-button
+              class="is-fullwidth"
+              v-else
+              native-type="submit"
+              type="is-link"
+              :loading="btnLoading"
+            >Login</b-button>
           </div>
         </form>
         <div class="modal-footer">
@@ -131,7 +138,6 @@ export default {
   width: 60%;
   height: 100%;
   background-image: url("../assets/images/neil-rosenstech-467457-unsplash-min.jpg");
-  // background-image: url("https://source.unsplash.com/1600x900/?nature");
 
   background-size: cover;
   background-repeat: no-repeat;
