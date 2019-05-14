@@ -138,12 +138,10 @@ export default {
       return this.$store.state.selectedCategories;
     },
     todaysDate() {
-      return this.$store.state.dayView.currentDay;
+      return this.$store.state.currentDate;
     },
     displayDate() {
-      return moment(this.$store.state.dayView.currentDay).format(
-        "dddd, MMMM D"
-      );
+      return moment(this.todaysDate).format("dddd, MMMM D");
     },
     todaysTasks() {
       const tasks = this.filteredTasks;

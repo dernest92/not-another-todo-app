@@ -54,10 +54,7 @@ export default {
         clientX: null,
         clientY: null
       },
-      firstOfMonth: {},
-      weeks: [],
-      month: "",
-      year: ""
+      firstOfMonth: {}
     };
   },
   methods: {
@@ -101,7 +98,25 @@ export default {
       }
     },
     moment,
-    setWeeks() {
+    changeMonth(qty) {
+      // if (this.month === 11 && qty > 0) {
+      //   this.month = 0;
+      //   this.year++;
+      // } else if (this.month === 0 && qty < 0) {
+      //   this.month = 11;
+      //   this.year--;
+      // } else {
+      //   this.month += qty;
+      //   this.setWeeks();
+      // }
+    },
+    goToToday() {
+      this.datepickerDate = new Date();
+      // this.setWeeks();
+    }
+  },
+  computed: {
+    weeks() {
       this.firstOfMonth = moment()
         .set("month", this.month)
         .set("year", this.year)
@@ -114,28 +129,29 @@ export default {
           .toISOString();
         weeks.push(week);
       }
-      this.weeks = weeks;
+      return weeks;
     },
-
-    changeMonth(qty) {
-      if (this.month === 11 && qty > 0) {
-        this.month = 0;
-        this.year++;
-      } else if (this.month === 0 && qty < 0) {
-        this.month = 11;
-        this.year--;
-      } else {
-        this.month += qty;
-        this.setWeeks();
+    month() {
+      return moment(this.datepickerDate).month();
+    },
+    year() {
+      return moment(this.datepickerDate).year();
+    },
+    datepickerDate: {
+      get() {
+        return new Date(this.$store.state.selectedDate);
+      },
+      set(date) {
+        if (date) {
+          const setDate = moment(date)
+            .startOf("day")
+            .toISOString();
+          this.$store.dispatch("setSelectedDate", setDate);
+        } else {
+          this.newTask.date = false;
+        }
       }
     },
-    goToToday() {
-      this.month = moment().month();
-      this.year = moment().year();
-      this.setWeeks();
-    }
-  },
-  computed: {
     filteredTasks() {
       return this.tasks.filter(task => {
         if (!this.showComplete && task.completed) return false;
@@ -153,21 +169,6 @@ export default {
     },
     selectedCategories() {
       return this.$store.state.selectedCategories;
-    },
-    sideMenu() {
-      return this.$store.state.sideMenu;
-    },
-    navMenuOpen() {
-      return this.$store.state.navmenu.isOpen;
-    },
-    loginModalOpen() {
-      return this.$store.state.loginModal.isOpen;
-    },
-    newModalOpen() {
-      return this.$store.getters.newTaskModal;
-    },
-    editModalState() {
-      return this.$store.getters.editTaskModal;
     },
     tasks() {
       return this.$store.state.tasks;

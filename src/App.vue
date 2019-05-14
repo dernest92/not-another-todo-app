@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BugerBtn @toggle="toggleMenu" class="burger-btn"/>
+    <BugerBtn v-if="showNav" @toggle="toggleMenu" class="burger-btn"/>
     <div id="app">
       <b-loading :is-full-page="true" :active.sync="loading" :can-cancel="false"></b-loading>
       <SideMenu v-if="showNav" class="menu-area"/>
@@ -15,13 +15,11 @@
 import BugerBtn from "./components/BurgerBtn";
 import moment from "moment";
 import TaskService from "./services/TaskService.js";
-import NavBar from "./components/NavBar.vue";
 import SideMenu from "./components/SideMenu.vue";
 
 export default {
   name: "app",
   components: {
-    NavBar,
     SideMenu,
     BugerBtn
   },

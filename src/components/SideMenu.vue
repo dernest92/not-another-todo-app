@@ -15,13 +15,31 @@
           <b-switch v-model="showCompleted">Show Completed</b-switch>
         </div>
       </div>
+      <b-field label="Select Date">
+        <b-datepicker
+          v-model="datepickerDate"
+          placeholder="Select date..."
+          icon="calendar-today"
+          editable
+        >
+          <button class="button is-primary" @click="datepickerDate = new Date()">
+            <b-icon icon="calendar-today"></b-icon>
+            <span>Today</span>
+          </button>
+
+          <button class="button is-danger" @click.prevent="datepickerDate = false">
+            <b-icon icon="close"></b-icon>
+            <span>Clear</span>
+          </button>
+        </b-datepicker>
+      </b-field>
       <button @click="logout" class="button is-primary">Logout</button>
     </div>
-    <!-- <b-datepicker inline size="is-small" class="date-picker"></b-datepicker> -->
   </div>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
@@ -33,6 +51,17 @@ export default {
     };
   },
   computed: {
+    datepickerDate: {
+      get() {
+        return new Date(this.$store.state.selectedDate);
+      },
+      set(date) {
+        const setDate = moment(date)
+          .startOf("day")
+          .toISOString();
+        this.$store.dispatch("setSelectedDate", setDate);
+      }
+    },
     sideMenu() {
       return this.$store.state.sideMenu;
     },
@@ -93,10 +122,6 @@ export default {
 
 
 <style lang="scss" scoped>
-.date-picker {
-  text-align: center;
-  margin: 0;
-}
 .side-menu {
   padding-top: 48px;
   z-index: 4;
@@ -126,7 +151,7 @@ export default {
   }
 
   &.open {
-    width: 275px;
+    width: 352px;
     border-right: 1px #ccc solid;
     padding-left: 5px;
 

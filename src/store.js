@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    selectedDate: undefined,
     showCompleted: false,
     filterCategory: false,
     selectedCategories: [],
@@ -43,6 +44,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    SET_SELECTED_DATE(state, date) {
+      state.selectedDate = date;
+    },
     SET_SHOW_COMPLETED(state, showCompleted) {
       state.showCompleted = showCompleted;
     },
@@ -121,6 +125,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setSelectedDate({ commit }, date) {
+      commit("SET_SELECTED_DATE", date);
+    },
     setShowCompleted({ commit }, showCompleted) {
       commit("SET_SHOW_COMPLETED", showCompleted);
     },
