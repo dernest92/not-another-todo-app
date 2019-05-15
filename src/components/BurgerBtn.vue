@@ -34,7 +34,6 @@ export default {
 
 <style lang="scss"  scoped>
 .burger-click-region {
-  position: relative;
   width: 48px;
   height: 48px;
   cursor: pointer;
