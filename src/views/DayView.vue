@@ -170,6 +170,10 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  color: #fff;
+  background: #333;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.375);
+  border: none;
 }
 
 .day-view-container {

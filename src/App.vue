@@ -82,6 +82,13 @@ export default {
     } else {
       this.$store.dispatch("setLoading", false);
     }
+    this.$nextTick(() => {
+      if (window.innerWidth > 1000) {
+        this.$store.dispatch("setSideMenu", true);
+      } else {
+        this.$store.dispatch("setSideMenu", false);
+      }
+    });
   }
 };
 </script>

@@ -39,8 +39,7 @@ export default new Vuex.Store({
     tasks: [],
     dragTask: "",
     dragDay: "",
-    sideMenu: false,
-    sideMenuMobile: false
+    sideMenu: false
   },
 
   mutations: {
@@ -58,9 +57,6 @@ export default new Vuex.Store({
     },
     SET_SIDE_MENU(state, isOpen) {
       state.sideMenu = isOpen;
-    },
-    SET_SIDE_MENU_MOBILE(state, isOpen) {
-      state.sideMenuMobile = isOpen;
     },
     SET_CATEGORIES(state, categories) {
       state.categories = categories;
@@ -147,12 +143,10 @@ export default new Vuex.Store({
     },
     toggleMenu({ commit, state }) {
       const menuOpen = !state.sideMenu;
-      const menuOpenMobile = !state.sideMenuMobile;
       commit("SET_SIDE_MENU", menuOpen);
-      commit("SET_SIDE_MENU_MOBILE", menuOpenMobile);
     },
-    closeMobileMenu({ commit }) {
-      commit("SET_SIDE_MENU_MOBILE", false);
+    setSideMenu({ commit }, isOpen) {
+      commit("SET_SIDE_MENU", isOpen);
     },
     setCategories({ commit }, categories) {
       commit("SET_CATEGORIES", categories);

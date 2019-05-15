@@ -21,14 +21,13 @@
           placeholder="Select date..."
           icon="calendar-today"
           editable
-        >
-          <button class="button is-link" @click="datepickerDate = new Date()">
-            <b-icon icon="calendar-today"></b-icon>
-            <span>Today</span>
-          </button>
-        </b-datepicker>
+        ></b-datepicker>
       </b-field>
-      <button @click="logout" class="button is-primary">Logout</button>
+      <button class="button is-link" @click="goToToday">
+        <b-icon icon="calendar-today"></b-icon>
+        <span>Today</span>
+      </button>
+      <button @click="logout" class="button logout is-primary">Logout</button>
     </div>
   </div>
 </template>
@@ -42,7 +41,8 @@ export default {
       addingCategory: false,
       newCatName: "",
       selectedCategories: [],
-      categoryOptions: []
+      categoryOptions: [],
+      screenWidth: undefined
     };
   },
   computed: {
@@ -82,13 +82,26 @@ export default {
     setTimeout(() => {
       this.selectedCategories = this.categories.map(cat => cat.id);
     }, 0);
+
+    this.$nextTick(() => {
+      this.screenWidth = window.innerWidth;
+      window.addEventListener("resize", () => {
+        this.screenWidth = window.innerWidth;
+      });
+    });
   },
   methods: {
+    goToToday() {
+      this.datepickerDate = new Date();
+      this.mobileCloseMenu();
+    },
+    mobileCloseMenu() {
+      if (this.screenWidth < 1000) {
+        this.$store.dispatch("toggleMenu");
+      }
+    },
     changeFilter() {
       this.$store.dispatch("toggleCatFilter", this.filterCategories);
-    },
-    closeMobileMenu() {
-      this.$store.dispatch("closeMobileMenu");
     },
     update() {
       this.$store.dispatch("selectCategory", this.selectedCategories);
@@ -141,7 +154,7 @@ export default {
     margin: 10px;
   }
 
-  .button {
+  .button.logout {
     margin-top: auto;
   }
 

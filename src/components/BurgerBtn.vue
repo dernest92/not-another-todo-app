@@ -1,5 +1,5 @@
 <template>
-  <div @click="update" class="burger-click-region" :class="{active, closing}">
+  <div @click="update" class="burger-click-region" :class="{active: isOpen, closing: !isOpen}">
     <span class="burger-menu-piece"></span>
     <span class="burger-menu-piece"></span>
     <span class="burger-menu-piece"></span>
@@ -11,22 +11,17 @@ export default {
   data() {
     return {
       active: false,
-      closing: false,
-      isOpen: false
+      closing: false
     };
   },
   methods: {
     update() {
-      if (this.isOpen) {
-        this.closing = true;
-        this.active = false;
-        this.isOpen = false;
-      } else {
-        this.closing = false;
-        this.active = true;
-        this.isOpen = true;
-      }
       this.$emit("toggle");
+    }
+  },
+  computed: {
+    isOpen() {
+      return this.$store.state.sideMenu;
     }
   }
 };
