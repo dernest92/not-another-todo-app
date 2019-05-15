@@ -29,7 +29,7 @@ export default new Vuex.Store({
     },
     newTaskModal: {
       isOpen: false,
-      selectedDate: ""
+      selectedDate: false
     },
     editTaskModal: {
       isOpen: false,

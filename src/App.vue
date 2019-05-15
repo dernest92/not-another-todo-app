@@ -68,17 +68,23 @@ export default {
     }
   },
   async created() {
-    const token = JSON.parse(localStorage.getItem("token"));
-    const user = JSON.parse(localStorage.getItem("user"));
     const today = moment()
       .startOf("day")
       .toISOString();
+    this.$store.dispatch("setSelectedDate", today);
+    const token = JSON.parse(localStorage.getItem("token"));
+    const user = JSON.parse(localStorage.getItem("user"));
+
     TaskService.setToken(token);
     if (token && user) {
-      this.$store.dispatch("setUserToken", { token, user });
-      await this.$store.dispatch("fetchTasks");
-      await this.$store.dispatch("fetchCategories");
-      this.$store.dispatch("setSelectedDate", today);
+      try {
+        this.$store.dispatch("setUserToken", { token, user });
+        await this.$store.dispatch("fetchTasks");
+        await this.$store.dispatch("fetchCategories");
+      } catch (e) {
+        this.$store.dispatch("setLoading", false);
+        this.$router.push("/");
+      }
     } else {
       this.$store.dispatch("setLoading", false);
     }

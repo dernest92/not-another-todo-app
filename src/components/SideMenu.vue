@@ -21,6 +21,7 @@
           placeholder="Select date..."
           icon="calendar-today"
           editable
+          :inline="screenWidth > 1087"
         ></b-datepicker>
       </b-field>
       <button class="button is-link" @click="goToToday">
@@ -139,13 +140,14 @@ export default {
   background: #f4f4f4;
   overflow: hidden;
   transition: all 0.5s;
+  overflow-y: auto;
 
   .menu-content {
     margin: 20px 10px;
     position: relative;
     right: 300px;
     transition: all 0.5s;
-    height: 95%;
+    height: calc(100% - 48px);
     display: flex;
     flex-direction: column;
   }
