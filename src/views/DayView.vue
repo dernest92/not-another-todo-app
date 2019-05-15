@@ -63,10 +63,11 @@ export default {
     },
     dragover_handler() {},
     changeDay(qty) {
-      const day = moment(this.todaysDate)
+      const newDay = moment(this.todaysDate)
         .add(qty, "days")
         .toISOString();
-      this.$store.dispatch("setCurrentDay", day);
+
+      this.todaysDate = new Date(newDay);
     },
     touchstart_handler(e) {
       const { clientX, clientY } = e.changedTouches[0];
@@ -97,21 +98,6 @@ export default {
           tasksEl.classList.remove("last-month");
         });
       }
-    },
-    setWeeks() {
-      this.firstOfMonth = moment()
-        .set("month", this.month)
-        .set("year", this.year)
-        .startOf("month")
-        .startOf("week");
-      const weeks = [];
-      for (let i = 0; i < 5; i++) {
-        const week = moment(this.firstOfMonth)
-          .add(i, "weeks")
-          .toISOString();
-        weeks.push(week);
-      }
-      this.weeks = weeks;
     }
   },
   computed: {
@@ -137,8 +123,20 @@ export default {
     selectedCategories() {
       return this.$store.state.selectedCategories;
     },
-    todaysDate() {
-      return this.$store.state.currentDate;
+    todaysDate: {
+      get() {
+        return this.$store.state.selectedDate;
+      },
+      set(date) {
+        if (date) {
+          const setDate = moment(date)
+            .startOf("day")
+            .toISOString();
+          this.$store.dispatch("setSelectedDate", setDate);
+        } else {
+          this.newTask.date = false;
+        }
+      }
     },
     displayDate() {
       return moment(this.todaysDate).format("dddd, MMMM D");

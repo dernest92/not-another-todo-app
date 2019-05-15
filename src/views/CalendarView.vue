@@ -99,20 +99,13 @@ export default {
     },
     moment,
     changeMonth(qty) {
-      // if (this.month === 11 && qty > 0) {
-      //   this.month = 0;
-      //   this.year++;
-      // } else if (this.month === 0 && qty < 0) {
-      //   this.month = 11;
-      //   this.year--;
-      // } else {
-      //   this.month += qty;
-      //   this.setWeeks();
-      // }
+      const newDate = moment(this.datepickerDate)
+        .startOf("month")
+        .add(qty, "months");
+      this.datepickerDate = new Date(newDate);
     },
     goToToday() {
       this.datepickerDate = new Date();
-      // this.setWeeks();
     }
   },
   computed: {
