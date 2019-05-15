@@ -38,10 +38,9 @@ export default {
   align-items: center;
   justify-content: space-evenly;
   background: #ccc;
-  font-weight: bold;
   height: 86px;
   padding: 4px;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .day-view {

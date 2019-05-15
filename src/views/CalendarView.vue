@@ -3,11 +3,11 @@
     <div class="month-col">
       <div class="month-banner">
         <button class="button button--round nav-button" @click="changeMonth(-1)">
-          <i class="mdi mdi-chevron-left"></i>
+          <i class="mdi mdi-chevron-left mdi-24px"></i>
         </button>
         <div class="date-label">{{displayDate}}</div>
         <button class="button button--round nav-button" @click="changeMonth(1)">
-          <i class="mdi mdi-chevron-right"></i>
+          <i class="mdi mdi-chevron-right mdi-24px"></i>
         </button>
       </div>
       <div class="week-header">

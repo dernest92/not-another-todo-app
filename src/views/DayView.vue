@@ -9,14 +9,11 @@
     >
       <div class="day-card-header">
         <button class="button button--round nav-button" @click="changeDay(-1)">
-          <i class="mdi mdi-chevron-left"></i>
+          <i class="mdi mdi-chevron-left mdi-24px"></i>
         </button>
-        {{displayDate}}
-        <button
-          class="button button--round nav-button"
-          @click="changeDay(1)"
-        >
-          <i class="mdi mdi-chevron-right"></i>
+        <span>{{displayDate}}</span>
+        <button class="button button--round nav-button" @click="changeDay(1)">
+          <i class="mdi mdi-chevron-right mdi-24px"></i>
         </button>
       </div>
       <div class="day-tasks" ref="tasks">
@@ -25,7 +22,9 @@
     </div>
     <Unassigned class="day-view" :tasks="filteredTasks.filter(task => task.date === false)"/>
     <AddEventBtn :date="todaysDate"/>
-    <b-button class="back-btn" @click="back" icon-left="chevron-left"></b-button>
+    <b-button class="back-btn" @click="back">
+      <i class="mdi mdi-calendar mdi-24px"></i>
+    </b-button>
   </div>
 </template>
 
@@ -201,9 +200,11 @@ export default {
   justify-content: center;
   align-items: center;
   height: 60px;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 25px;
   background: #ccc;
+  span {
+    width: 310px;
+  }
 }
 
 .full-page {
@@ -223,8 +224,6 @@ export default {
 @media screen and (max-width: 700px) {
   .day-card-header {
     font-size: 20px;
-    font-weight: bold;
-    background: #ccc;
   }
 }
 </style>
