@@ -70,19 +70,18 @@ export default {
   async created() {
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
+    const today = moment()
+      .startOf("day")
+      .toISOString();
     TaskService.setToken(token);
     if (token && user) {
       this.$store.dispatch("setUserToken", { token, user });
       await this.$store.dispatch("fetchTasks");
       await this.$store.dispatch("fetchCategories");
+      this.$store.dispatch("setSelectedDate", today);
     } else {
       this.$store.dispatch("setLoading", false);
     }
-
-    const today = moment()
-      .startOf("day")
-      .toISOString();
-    this.$store.dispatch("setCurrentDay", today);
   }
 };
 </script>

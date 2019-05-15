@@ -175,13 +175,9 @@ export default {
     }
   },
   async created() {
-    this.$store.dispatch("setNavMenu", false);
-
     const token = JSON.parse(localStorage.getItem("token"));
     const user = JSON.parse(localStorage.getItem("user"));
-    if (token && user) {
-      this.goToToday();
-    } else {
+    if (!token || !user) {
       this.$router.push({ name: "login-view" });
     }
   }

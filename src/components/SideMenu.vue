@@ -22,14 +22,9 @@
           icon="calendar-today"
           editable
         >
-          <button class="button is-primary" @click="datepickerDate = new Date()">
+          <button class="button is-link" @click="datepickerDate = new Date()">
             <b-icon icon="calendar-today"></b-icon>
             <span>Today</span>
-          </button>
-
-          <button class="button is-danger" @click.prevent="datepickerDate = false">
-            <b-icon icon="close"></b-icon>
-            <span>Clear</span>
           </button>
         </b-datepicker>
       </b-field>
