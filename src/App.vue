@@ -129,6 +129,10 @@ $link: $vue-green;
 //   box-shadow: 5px 5px 10px black;
 // }
 
+::selection {
+  background: lighten($vue-green, 20%);
+}
+
 #app {
   display: grid;
   grid-auto-columns: minmax(0, max-content) auto;
