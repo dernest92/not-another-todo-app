@@ -1,6 +1,6 @@
 <template>
   <div class="side-menu" :class="{open: sideMenu, 'mobile-open': mobileOpen}">
-    <div class="overlay"></div>
+    <div @click="mobileCloseMenu" class="overlay"></div>
     <div class="menu-content">
       <div class="categories">
         <b-switch v-model="filterCategories" @input="changeFilter">Filter Categories</b-switch>
@@ -217,6 +217,7 @@ export default {
         right: 0;
         top: 0;
         bottom: 0;
+        z-index: 500;
       }
     }
   }

@@ -33,9 +33,8 @@ export default {
   height: 48px;
   cursor: pointer;
   z-index: 20;
-  background-color: #2d3436;
+  background-color: transparent;
   border-radius: 50%;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
   transition: all 1s;
 
   &.flat {
@@ -64,7 +63,7 @@ $menu-animation-timing: ease-out;
   display: block;
   position: absolute;
   width: 24px;
-  border-top: 3px solid #fff;
+  border-top: 3px solid #333;
   transform-origin: 50% 50%;
   transition: all $menu-animation-duration $menu-animation-timing;
   transition: border-top 0.5s;

@@ -76,6 +76,7 @@ export default {
         font-size: 14px;
         padding: 1px;
         line-height: 1.2;
+        text-overflow: clip;
       }
     }
   }
