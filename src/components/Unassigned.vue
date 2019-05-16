@@ -8,7 +8,7 @@
 
     <div class="events-scroller">
       <!-- <Task v-for="task in tasks" :key="task.id" :task="task"/> -->
-      <DayViewTask v-for="task in tasks" :key="task.id" :task="task"/>
+      <DayViewTask v-for="task in tasks" :key="task.id" :task="task" :hoverCheckbox="true"/>
     </div>
   </div>
 </template>

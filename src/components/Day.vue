@@ -14,18 +14,18 @@
       <button @click="startNewTask" class="add-event-btn btn-flat">Add</button>
     </div>
     <div class="events-scroller">
-      <Task v-for="task in tasks" :key="task.id" :task="task"/>
+      <DayViewTask v-for="task in tasks" :key="task.id" :task="task" :hoverCheckbox="true"/>
     </div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
-import Task from "./Task.vue";
+import DayViewTask from "./DayViewTask.vue";
 import { setTimeout } from "timers";
 export default {
   components: {
-    Task
+    DayViewTask
   },
   props: {
     date: String,

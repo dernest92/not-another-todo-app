@@ -2,10 +2,11 @@
   <div
     class="day-task"
     draggable="true"
+    :class="{hoverCheckbox, checkbox}"
     @dragstart="dragHandeler(task._id)"
     @dragend="dragend_handler"
   >
-    <b-checkbox @input="toggleComplete" v-model="taskEdits.completed"></b-checkbox>
+    <b-checkbox @input="toggleComplete" v-model="taskEdits.completed" class="chkbx"></b-checkbox>
     <div
       @click="startEditTask(task._id)"
       class="task-title"
@@ -17,7 +18,9 @@
 <script>
 export default {
   props: {
-    task: Object
+    task: Object,
+    checkbox: Boolean,
+    hoverCheckbox: Boolean
   },
   data() {
     return {
@@ -50,13 +53,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chkbx {
+  display: none;
+}
+.checkbox {
+  .chkbx {
+    display: inherit;
+  }
+
+  &.day-task {
+    grid-template-columns: 25px calc(100% - 25px);
+  }
+}
+
+.hoverCheckbox {
+  .chkbx {
+    display: none;
+  }
+
+  &:hover {
+    &.day-task {
+      grid-template-columns: 25px calc(100% - 25px);
+    }
+    .chkbx {
+      display: inherit;
+    }
+  }
+}
+
 .day-task {
   margin: 5px auto;
   display: grid;
-  grid-template-columns: 25px calc(100% - 25px);
+  grid-template-columns: 1fr;
+  // grid-template-columns: 25px calc(100% - 25px);
   justify-content: start;
   align-items: center;
+  width: 100%;
   max-width: 600px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   .check {
     display: block;
     justify-self: center;
@@ -66,7 +101,6 @@ export default {
 }
 
 .task-title {
-  width: 100%;
   text-align: left;
   padding: 2px 8px;
   text-overflow: ellipsis;

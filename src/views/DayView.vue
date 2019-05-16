@@ -17,7 +17,7 @@
         </button>
       </div>
       <div class="day-tasks" ref="tasks">
-        <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task"/>
+        <DayViewTask v-for="task in todaysTasks" :key="task._id" :task="task" :checkbox="true"/>
       </div>
     </div>
     <Unassigned class="day-view" :tasks="filteredTasks.filter(task => task.date === false)"/>
