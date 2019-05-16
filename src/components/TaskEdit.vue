@@ -5,24 +5,6 @@
         <b-field label="Title">
           <b-input v-model="newTask.title" placeholder="title"></b-input>
         </b-field>
-        <b-field label="Date">
-          <b-datepicker
-            placeholder="Select date..."
-            icon="calendar-today"
-            v-model="datepickerDate"
-            editable
-          >
-            <button class="button is-primary" @click.prevent="datepickerDate = new Date()">
-              <b-icon icon="calendar-today"></b-icon>
-              <span>Today</span>
-            </button>
-
-            <button class="button is-danger" @click.prevent="datepickerDate = false">
-              <b-icon icon="close"></b-icon>
-              <span>Clear</span>
-            </button>
-          </b-datepicker>
-        </b-field>
 
         <b-field label="Category">
           <b-select placeholder="Select a category" expanded v-model="newTask.category">
@@ -45,7 +27,26 @@
             >{{priority}}</option>
           </b-select>
         </b-field>
-        <b-field label="Completed">
+        <b-field label="Date">
+          <b-datepicker
+            placeholder="Select date..."
+            icon="calendar-today"
+            v-model="datepickerDate"
+            editable
+            :open-on-focus="false"
+          >
+            <button class="button is-primary" @click.prevent="datepickerDate = new Date()">
+              <b-icon icon="calendar-today"></b-icon>
+              <span>Today</span>
+            </button>
+
+            <button class="button is-danger" @click.prevent="datepickerDate = false">
+              <b-icon icon="close"></b-icon>
+              <span>Clear</span>
+            </button>
+          </b-datepicker>
+        </b-field>
+        <b-field v-if="!isNew" label="Completed">
           <b-switch v-model="newTask.completed"></b-switch>
         </b-field>
 
@@ -102,7 +103,7 @@ export default {
     },
     async deleteTask() {
       await this.$store.dispatch("deleteTask", this.newTask._id);
-      this.$router.go(-1);
+      this.closeModal();
     },
     addCategory() {
       this.$dialog.prompt({
@@ -124,7 +125,7 @@ export default {
     },
     submitNewTask() {
       this.$store.dispatch("submitNewTask", this.newTask);
-      this.$router.go(-1);
+      this.closeModal();
     },
     resize(e) {
       const field = e.currentTarget;

@@ -53,6 +53,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.day {
+  .day-task {
+    margin: 2px 0;
+    border-radius: 0;
+
+    .task-title {
+      line-height: 1.4;
+    }
+  }
+}
+@media screen and (max-width: 700px) {
+  .day {
+    .day-task {
+      margin: 2px auto;
+      padding: 0;
+      border-radius: 0;
+
+      .task-title {
+        border-radius: 0;
+        padding: 0;
+        font-size: 14px;
+        padding: 1px;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
 .chkbx {
   display: none;
 }
@@ -85,7 +113,6 @@ export default {
   margin: 5px auto;
   display: grid;
   grid-template-columns: 1fr;
-  // grid-template-columns: 25px calc(100% - 25px);
   justify-content: start;
   align-items: center;
   width: 100%;
