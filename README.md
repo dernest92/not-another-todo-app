@@ -1,4 +1,9 @@
-# client
+# Not Another Todo App
+Like all of the other 'hello world' todo apps...  but better.
+
+To be used in conjuction with [not-another-todo-app-api](https://github.com/dernest92/not-another-todo-app-api).
+
+You can veiw a live demo [here](https://calendar-app.davidernest.io/)
 
 ## Project setup
 ```
@@ -14,16 +19,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
